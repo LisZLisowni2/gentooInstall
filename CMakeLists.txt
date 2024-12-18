@@ -4,8 +4,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 include_directories(include)
-add_subdirectory(termcolor)
-include_directories(${termcolor_SOURCE_DIR})
+find_package(termcolor REQUIRED)
+target_link_libraries(gentooInstall termcolor::termcolor)
 
 set(SOURCES 
     src/main.cpp
