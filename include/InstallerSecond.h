@@ -1,13 +1,13 @@
-#ifndef INSTALLER_FIRST_H
-#define INSTALLER_FIRST_H
+#ifndef INSTALLER_SECOND_H
+#define INSTALLER_SECOND_H
 
 #include <string>
 #include "GentooInstaller.h"
 
-class InstallerFirst : GentooInstaller {
+class InstallerSecond : GentooInstaller {
 public:
-    InstallerFirst();
-    ~InstallerFirst();
+    InstallerSecond();
+    ~InstallerSecond();
     void install();
 private:
     void startMenu();
