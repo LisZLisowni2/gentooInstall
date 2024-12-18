@@ -10,3 +10,7 @@ InstallerFirst::InstallerFirst() {
 InstallerFirst::~InstallerFirst() {
     std::cout << "Gentoo Installer Completed.\n"; 
 }
+
+void InstallerFirst::install() {
+    startMenu();
+}
