@@ -5,5 +5,7 @@
 #include <string>
 
 void executeCommand(const std::string& command);
+char getch();
+void clearScreen();
 
 #endif
