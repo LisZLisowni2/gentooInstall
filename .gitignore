@@ -1,3 +1,7 @@
 *.txt
 !CMakeLists.txt
 *.log
+*.o
+build
+.vscode
+.DS_STORE
