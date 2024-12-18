@@ -1,5 +1,6 @@
 #ifndef INSTALLER_FIRST_H
 #define INSTALLER_FIRST_H
+#pragma once
 
 #include <string>
 #include "GentooInstaller.h"
@@ -8,9 +9,9 @@ class InstallerFirst : GentooInstaller {
 public:
     InstallerFirst();
     ~InstallerFirst();
-    void install();
+    void install() override;
 private:
-    void startMenu();
+    inline void startMenu();
 };
 
 #endif

@@ -10,3 +10,7 @@ InstallerSecond::InstallerSecond() {
 InstallerSecond::~InstallerSecond() {
     std::cout << "Gentoo Installer Completed.\n"; 
 }
+
+void InstallerSecond::install() {
+    std::cout << "Hello!\n";
+}

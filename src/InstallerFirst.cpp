@@ -1,4 +1,5 @@
 #include "InstallerFirst.h"
+#include "startMenu.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>

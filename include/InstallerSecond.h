@@ -1,5 +1,6 @@
 #ifndef INSTALLER_SECOND_H
 #define INSTALLER_SECOND_H
+#pragma once
 
 #include <string>
 #include "GentooInstaller.h"
@@ -8,7 +9,7 @@ class InstallerSecond : GentooInstaller {
 public:
     InstallerSecond();
     ~InstallerSecond();
-    void install();
+    void install() override;
 private:
     void startMenu();
 };
