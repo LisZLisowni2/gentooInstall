@@ -12,4 +12,13 @@ set(SOURCES
     src/utils.cpp
 )
 
-add_executable(gentoo_installer ${VERSION})
+add_executable(installer_part1 
+    src/InstallerFirst.cpp
+    src/main.cpp
+    utils/utils.cpp
+)
+
+add_executable(installer_part2
+    src/InstallerSecond.cpp
+    utils/utils.cpp
+)
