@@ -1,0 +1,3 @@
+[submodule "termcolor"]
+	path = termcolor
+	url = git@github.com:ikalnytskyi/termcolor.git
