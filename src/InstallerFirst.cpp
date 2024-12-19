@@ -1,5 +1,6 @@
 #include "InstallerFirst.h"
 #include "startMenu.cpp"
+#include "networkConfig.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>

@@ -12,8 +12,9 @@ void InstallerFirst::networkConfig() {
         OptionMenu("Next", -1),
     };
     while (true) {
-        int key = selectMenu(options, "Internet configuration", "Internet is required to continue, because we have to in future sync with emerge database to install or update packages.");
         clearScreen();
+        int key = selectMenu(options, "Internet configuration", "Internet is required to continue, because we have to in future sync with emerge database to install or update packages.");
+        std::cout << "\n";
         switch (key) {
             case -1:
                 return;

@@ -29,6 +29,17 @@ char getch() {
     newt.c_lflag &= ~(ICANON | ECHO); // Disable bufforing and echoing
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
     ch = getchar();
+    if (ch == '\x1b') {
+        if (getchar() == '[') {
+            switch (getchar()) {
+                case 'A': ch = KEY_UP; break;
+                case 'B': ch = KEY_DOWN; break;
+                case 'C': ch = KEY_RIGHT; break;
+                case 'D': ch = KEY_LEFT; break;
+                default: ch = '\x1b'; break;
+            }
+        }
+    }
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
     return ch;
 }
@@ -41,7 +52,6 @@ int selectMenu(const std::vector<OptionMenu>& options, const std::string& title,
     int selected = 0;
     int optionsLength = options.size();
     while (true) {
-        clearScreen();
         std::cout << title << "\n";
         std::cout << description << "\n\n\n";
         int i = 0;
@@ -54,6 +64,7 @@ int selectMenu(const std::vector<OptionMenu>& options, const std::string& title,
             i++;
         }
         int key = getch();
+        clearScreen();
         switch (key) {
             case KEY_UP:
                 if (selected > 0) selected--;
@@ -62,6 +73,7 @@ int selectMenu(const std::vector<OptionMenu>& options, const std::string& title,
                 if (selected < optionsLength - 1) selected++;
                 break;
             case KEY_RIGHT:
+                clearScreen();
                 return options[selected].actionID;
                 break;
         }
