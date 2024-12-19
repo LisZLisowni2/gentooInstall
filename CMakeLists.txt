@@ -11,6 +11,7 @@ set(SOURCES
     src/main.cpp
     src/InstallerFirst.cpp
     src/InstallerSecond.cpp
+    src/networkConfig.cpp
     utils/utils.cpp
     src/startMenu.cpp
     utils/Option.cpp
@@ -20,6 +21,7 @@ add_executable(installer_part1
     src/InstallerFirst.cpp
     src/main_part1.cpp
     src/startMenu.cpp
+    src/networkConfig.cpp
     utils/utils.cpp
     utils/Option.cpp
 )

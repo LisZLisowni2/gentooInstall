@@ -12,6 +12,7 @@ public:
     void install() override;
 private:
     inline void startMenu();
+    inline void networkConfig();
 };
 
 #endif

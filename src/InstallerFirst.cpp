@@ -14,4 +14,5 @@ InstallerFirst::~InstallerFirst() {
 
 void InstallerFirst::install() {
     startMenu();
+    networkConfig();
 }
