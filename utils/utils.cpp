@@ -1,10 +1,18 @@
 #include "utils.h"
+#include "Option.h"
+#include <termcolor/termcolor.hpp>
 #include <iostream>
+#include <vector>
 #include <cstdlib>
 #include <string>
 #include <stdexcept>
 #include <termios.h>
 #include <unistd.h>
+
+#define KEY_UP 65
+#define KEY_DOWN 66
+#define KEY_LEFT 67
+#define KEY_RIGHT 68
 
 void executeCommand(const std::string& command) {
     int result = std::system(command.c_str());
@@ -27,4 +35,35 @@ char getch() {
 
 void clearScreen() {
     std::cout << "\033[2J\033[H";
+}
+
+int selectMenu(const std::vector<OptionMenu>& options, const std::string& title, const std::string& description) {
+    int selected = 0;
+    int optionsLength = options.size();
+    while (true) {
+        clearScreen();
+        std::cout << title << "\n";
+        std::cout << description << "\n";
+        int i = 0;
+        for (auto option : options) {
+            if (i == selected) {
+                std::cout << " " << termcolor::on_bright_white << termcolor::dark << option.title << termcolor::reset << "\n";
+            } else {
+                std::cout << " " << option.title << "\n";
+            }
+            i++;
+        }
+        int key = getch();
+        switch (key) {
+            case KEY_UP:
+                if (selected > 0 && selected < optionsLength - 1) selected--;
+                break;
+            case KEY_DOWN:
+                if (selected > 0 && selected < optionsLength - 1) selected++;
+                break;
+            case KEY_RIGHT:
+                return options[selected].actionID;
+                break;
+        }
+    }
 }

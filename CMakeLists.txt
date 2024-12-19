@@ -11,8 +11,9 @@ set(SOURCES
     src/main.cpp
     src/InstallerFirst.cpp
     src/InstallerSecond.cpp
-    src/utils.cpp
+    utils/utils.cpp
     src/startMenu.cpp
+    utils/Option.cpp
 )
 
 add_executable(installer_part1 
@@ -20,10 +21,12 @@ add_executable(installer_part1
     src/main_part1.cpp
     src/startMenu.cpp
     utils/utils.cpp
+    utils/Option.cpp
 )
 
 add_executable(installer_part2
     src/InstallerSecond.cpp
     utils/utils.cpp
     src/main_part2.cpp
+    utils/Option.cpp
 )
