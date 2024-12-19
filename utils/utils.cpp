@@ -11,8 +11,8 @@
 
 #define KEY_UP 65
 #define KEY_DOWN 66
-#define KEY_LEFT 67
-#define KEY_RIGHT 68
+#define KEY_RIGHT 67
+#define KEY_LEFT 68
 
 void executeCommand(const std::string& command) {
     int result = std::system(command.c_str());
@@ -43,7 +43,7 @@ int selectMenu(const std::vector<OptionMenu>& options, const std::string& title,
     while (true) {
         clearScreen();
         std::cout << title << "\n";
-        std::cout << description << "\n";
+        std::cout << description << "\n\n\n";
         int i = 0;
         for (auto option : options) {
             if (i == selected) {
@@ -56,10 +56,10 @@ int selectMenu(const std::vector<OptionMenu>& options, const std::string& title,
         int key = getch();
         switch (key) {
             case KEY_UP:
-                if (selected > 0 && selected < optionsLength - 1) selected--;
+                if (selected > 0) selected--;
                 break;
             case KEY_DOWN:
-                if (selected > 0 && selected < optionsLength - 1) selected++;
+                if (selected < optionsLength - 1) selected++;
                 break;
             case KEY_RIGHT:
                 return options[selected].actionID;
