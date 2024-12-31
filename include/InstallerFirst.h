@@ -13,6 +13,12 @@ public:
 private:
     inline void startMenu();
     inline void networkConfig();
+    inline void partitions();
+    inline void format();
+    inline void mount();
+    inline void tarball();
+    inline void make();
+    inline void chroot();
 };
 
 #endif

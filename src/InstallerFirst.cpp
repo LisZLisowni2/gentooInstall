@@ -1,6 +1,7 @@
 #include "InstallerFirst.h"
 #include "startMenu.cpp"
 #include "networkConfig.cpp"
+#include "disk.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
@@ -16,4 +17,5 @@ InstallerFirst::~InstallerFirst() {
 void InstallerFirst::install() {
     startMenu();
     networkConfig();
+    partitions();
 }
