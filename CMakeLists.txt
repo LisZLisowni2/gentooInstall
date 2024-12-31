@@ -15,6 +15,7 @@ set(SOURCES
     utils/utils.cpp
     src/startMenu.cpp
     src/disk.cpp
+    src/format.cpp
     utils/Option.cpp
 )
 
@@ -25,6 +26,7 @@ add_executable(installer_part1
     src/networkConfig.cpp
     utils/utils.cpp
     src/disk.cpp
+    src/format.cpp
     utils/Option.cpp
 )
 
