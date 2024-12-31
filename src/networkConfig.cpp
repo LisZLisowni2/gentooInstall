@@ -23,11 +23,24 @@ void InstallerFirst::networkConfig() {
                 executeCommand("ping google.com -c 5");
                 break;
             case 1:
+                std::string interface;
+                std::string ssid;
+                std::string password;
                 std::cout << "List of available network interfaces\n\n";
                 executeCommand("ip link");
                 std::cout << "\nSelect your interface";
-                std::string interface;
                 std::cin >> interface;
+                executeCommand("ip link set " + interface + " up");
+                std::cout << "\nAll available networks";
+                executeCommand("iwlist " + interface + " scan | grep ESSID");
+                std::cout << "\nInput SSID (Network name): ";
+                std::cin >> ssid;
+                std::cout << "\nInput password for your network: ";
+                std::cin >> password;
+                executeCommand("wpa_passphrase \"" + ssid + "\" \"" + password + "\" > /etc/wpa_supplicant.conf");
+                executeCommand("wpa_supplicant -B -i " + interface + " -c /etc/wpa_supplicant.conf");
+                executeCommand("dhcpcd " + interface);
+                std::cout << "\nWifi configured";
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";
