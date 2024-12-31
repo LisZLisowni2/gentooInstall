@@ -14,7 +14,7 @@ enum Formats {
     NTFS = 3
 };
 
-void InstallerFirst::partitions() {
+void InstallerFirst::format() {
     std::vector<OptionMenu> options = {
         OptionMenu("Format root partition", 0),
         OptionMenu("Format boot partition", 1),
@@ -30,7 +30,7 @@ void InstallerFirst::partitions() {
     };
     while (true) {
         clearScreen();
-        int key = selectMenu(options, "Partitions", "You have to configure a partitions to install the system. At this point depends on you how would you like to configure the partitions, but if you doesn't have any idea how configure, there are the example layout. Example layout:	/dev/sda1 1GB EFI Partition | /dev/sda2 RAMsize * 2 SWAP Partition | /dev/sda3 'remainder of the disk' Root partition.		If you want home partition, division the root for two parts: root partition and home partition. WARNING! Be careful, you can accidentally erase data on other partitions. Before procedding make backup!");
+        int key = selectMenu(options, "Format partitions", "Format the partitions you want. In this point I will prompt you to input the partitions you want to format, on next screen instructions. Script will format root (ext4), swap and boot (fat32) partition. But if you want own special configuration (example you have home partition), you have to exit from this program using Ctrl+C right now. You can back to it, simply rerun the script and skip this part. The script remember the last procedding menu until the reboot.");
         std::cout << "\n";
         std::string partition;
         executeCommand("fdisk -l");
