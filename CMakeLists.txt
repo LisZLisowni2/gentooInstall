@@ -16,6 +16,7 @@ set(SOURCES
     src/startMenu.cpp
     src/disk.cpp
     src/format.cpp
+    src/mount.cpp
     utils/Option.cpp
 )
 
@@ -27,6 +28,7 @@ add_executable(installer_part1
     utils/utils.cpp
     src/disk.cpp
     src/format.cpp
+    src/mount.cpp
     utils/Option.cpp
 )
 

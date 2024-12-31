@@ -52,6 +52,7 @@ void InstallerFirst::format() {
                 std::cout << "\n\nInput partition that you want to format to swap partition (e.g. /dev/sda3): ";
                 std::cin >> partition;
                 executeCommand("mkswap " + partition);
+                executeCommand("swapon " + partition);
                 break;
             case 3:
                 std::string format;
