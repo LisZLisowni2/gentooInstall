@@ -7,25 +7,12 @@
 #include <vector>
 #include <map>
 
-enum Formats {
-    EXT4 = 0,
-    FAT32 = 1,
-    EXT3 = 2,
-    NTFS = 3
-};
-
 void InstallerFirst::mount() {
     std::vector<OptionMenu> options = {
         OptionMenu("Mount root partition", 0),
         OptionMenu("Mount boot partition", 1),
         OptionMenu("Format other partition", 2),
         OptionMenu("Next", -1),
-    };
-    std::map<std::string, Formats> formatsMap = {
-        {"EXT4", EXT4},
-        {"FAT32", FAT32},
-        {"EXT3", EXT3},
-        {"NTFS", NTFS},
     };
     while (true) {
         clearScreen();
