@@ -3,6 +3,7 @@
 #include "networkConfig.cpp"
 #include "format.cpp"
 #include "disk.cpp"
+#include "mount.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
@@ -20,4 +21,5 @@ void InstallerFirst::install() {
     networkConfig();
     partitions();
     format();
+    mount();
 }
