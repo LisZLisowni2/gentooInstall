@@ -8,37 +8,38 @@ add_subdirectory(termcolor)
 include_directories(${termcolor_SOURCE_DIR}/include)
 
 set(SOURCES 
-    src/main.cpp
-    src/InstallerFirst.cpp
-    src/InstallerSecond.cpp
-    src/networkConfig.cpp
+    src/firstPart/main.cpp
+    src/secondPart/main.cpp
+    src/firstPart/InstallerFirst.cpp
+    src/firstSecond/InstallerSecond.cpp
+    src/firstPart/networkConfig.cpp
     utils/utils.cpp
-    src/startMenu.cpp
-    src/disk.cpp
-    src/format.cpp
-    src/tarball.cpp
-    src/chroot.cpp
-    src/mount.cpp
+    src/firstPart/startMenu.cpp
+    src/firstPart/disk.cpp
+    src/firstPart/format.cpp
+    src/firstPart/tarball.cpp
+    src/firstPart/chroot.cpp
+    src/firstPart/mount.cpp
     utils/Option.cpp
 )
 
 add_executable(installer_part1 
-    src/InstallerFirst.cpp
-    src/main_part1.cpp
-    src/startMenu.cpp
-    src/networkConfig.cpp
+    src/firstPart/InstallerFirst.cpp
+    src/firstPart/main.cpp
+    src/firstPart/startMenu.cpp
+    src/firstPart/networkConfig.cpp
     utils/utils.cpp
-    src/disk.cpp
-    src/format.cpp
-    src/mount.cpp
-    src/tarball.cpp
-    src/chroot.cpp
+    src/firstPart/disk.cpp
+    src/firstPart/format.cpp
+    src/firstPart/mount.cpp
+    src/firstPart/tarball.cpp
+    src/firstPart/chroot.cpp
     utils/Option.cpp
 )
 
 add_executable(installer_part2
-    src/InstallerSecond.cpp
+    src/secondPart/InstallerSecond.cpp
     utils/utils.cpp
-    src/main_part2.cpp
+    src/secondPart/main.cpp
     utils/Option.cpp
 )

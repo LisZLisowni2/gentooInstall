@@ -7,7 +7,7 @@
 #include <vector>
 #include <map>
 
-void InstallerFirst::tarball() {
+void InstallerFirst::chroot() {
     std::cout << "Now you will chroot to system. After script execution end run ./installer_part2 command";
     getch();
     clearScreen();
