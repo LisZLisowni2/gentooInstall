@@ -1,5 +1,6 @@
 #include "InstallerSecond.h"
 #include "utils.h"
+#include "makeMain.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>

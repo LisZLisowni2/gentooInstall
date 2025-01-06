@@ -4,6 +4,7 @@
 #include "format.cpp"
 #include "disk.cpp"
 #include "mount.cpp"
+#include "chroot.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
