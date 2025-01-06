@@ -20,6 +20,7 @@ set(SOURCES
     src/firstPart/tarball.cpp
     src/firstPart/chroot.cpp
     src/firstPart/mount.cpp
+    src/secondPart/makeMain.cpp
     utils/Option.cpp
 )
 
@@ -42,4 +43,5 @@ add_executable(installer_part2
     utils/utils.cpp
     src/secondPart/main.cpp
     utils/Option.cpp
+    src/secondPart/makeMain.cpp
 )

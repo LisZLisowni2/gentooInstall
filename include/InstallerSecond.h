@@ -11,7 +11,7 @@ public:
     ~InstallerSecond();
     void install() override;
 private:
-    void startMenu();
+    inline void makeMain();
 };
 
 #endif

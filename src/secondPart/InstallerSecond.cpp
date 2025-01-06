@@ -1,4 +1,5 @@
 #include "InstallerSecond.h"
+#include "utils.h"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
@@ -12,5 +13,6 @@ InstallerSecond::~InstallerSecond() {
 }
 
 void InstallerSecond::install() {
-    std::cout << "Hello!\n";
+    executeCommand("emerge-webrsync");
+    makeMain();
 }
