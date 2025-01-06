@@ -17,7 +17,6 @@ private:
     inline void format();
     inline void mount();
     inline void tarball();
-    inline void make();
     inline void chroot();
 };
 

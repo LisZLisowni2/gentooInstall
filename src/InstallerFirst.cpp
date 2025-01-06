@@ -22,4 +22,5 @@ void InstallerFirst::install() {
     partitions();
     format();
     mount();
+    chroot();
 }
