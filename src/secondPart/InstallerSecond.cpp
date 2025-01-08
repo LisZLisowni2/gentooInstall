@@ -1,6 +1,7 @@
 #include "InstallerSecond.h"
 #include "utils.h"
 #include "makeMain.cpp"
+#include "profile.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
@@ -16,4 +17,6 @@ InstallerSecond::~InstallerSecond() {
 void InstallerSecond::install() {
     executeCommand("emerge-webrsync");
     makeMain();
+    profile();
+    executeCommand("emerge --deep --update --newuse --verbose @world");
 }

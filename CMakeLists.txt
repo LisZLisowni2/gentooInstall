@@ -21,6 +21,7 @@ set(SOURCES
     src/firstPart/chroot.cpp
     src/firstPart/mount.cpp
     src/secondPart/makeMain.cpp
+    src/secondPart/profile.cpp
     utils/Option.cpp
 )
 
@@ -44,4 +45,5 @@ add_executable(installer_part2
     src/secondPart/main.cpp
     utils/Option.cpp
     src/secondPart/makeMain.cpp
+    src/secondPart/profile.cpp
 )
