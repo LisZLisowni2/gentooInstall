@@ -23,6 +23,7 @@ set(SOURCES
     src/secondPart/makeMain.cpp
     src/secondPart/profile.cpp
     src/secondPart/kernel.cpp
+    src/secondPart/networkConfig.cpp
     utils/Option.cpp
 )
 
@@ -46,6 +47,7 @@ add_executable(installer_part2
     src/secondPart/main.cpp
     utils/Option.cpp
     src/secondPart/makeMain.cpp
+    src/secondPart/networkConfig.cpp
     src/secondPart/profile.cpp
     src/secondPart/kernel.cpp
 )
