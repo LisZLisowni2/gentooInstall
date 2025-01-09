@@ -3,7 +3,7 @@
 #pragma once
 
 #include <string>
-#include "GentooInstaller.h"
+#include "GentooInstaller.h"k
 
 class InstallerSecond : GentooInstaller {
 public:
@@ -13,6 +13,13 @@ public:
 private:
     inline void makeMain();
     inline void profile();
+    inline void kernelConfig();
+    inline void kernelInstall();
+    inline void networkConfig();
+    inline void passwordForAdmin();
+    inline void additionalPrograms();
+    inline void GRUB();
+    inline void reboot();
 };
 
 #endif
