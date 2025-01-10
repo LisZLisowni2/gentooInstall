@@ -2,18 +2,27 @@
 
 ## Introduction
 
-...
+Gentoo linux is hard to install and only manual. You have to configure everything manually from language to kernel.
+GentooInstaller is iteractive installation script for Gentoo that automate many processes.
+It is easy to use using arrows and beginner-friendly.
+
+## Features
+
+- Automates the process of installation of Gentoo linux system
+- Explanations and guides how to choose wisely
+- Automates bootloader setup
 
 ## Installation
 
 Installation of GentooInstaller depends on your needs. If you want install all your system using GentooInstaller use first or third method,<br>
-if you want compile, use second method.
+if you want finish installation after chroot to environment, use second method.
 
 ### First method: Precompiled
 
 Download the precompiled files in bin folder.
 
-`wget LINK_TO_BIN_RELEASE`
+`wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.0/installer_part1`
+`wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.0/installer_part2`
 
 Move to created folder, run `./installer_part1` and follow the instructions.
 
