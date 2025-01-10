@@ -2,6 +2,8 @@
 #include "utils.h"
 #include "makeMain.cpp"
 #include "profile.cpp"
+#include "kernel.cpp"
+#include "networkConfig.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
