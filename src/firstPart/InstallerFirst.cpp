@@ -5,6 +5,7 @@
 #include "disk.cpp"
 #include "mount.cpp"
 #include "chroot.cpp"
+#include "tarball.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
@@ -23,5 +24,6 @@ void InstallerFirst::install() {
     partitions();
     format();
     mount();
+    tarball();
     chroot();
 }
