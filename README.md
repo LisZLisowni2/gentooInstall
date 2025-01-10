@@ -37,7 +37,7 @@ To use that method you have to compile it in your host system. Make sure you hav
 
 Download all files from github.
 
-`wget https://github.com/LisZLisowni2/GentooInstaller`
+`git clone https://github.com/LisZLisowni2/GentooInstaller`
 
 Move to created folder and compile the program using that command:
 
