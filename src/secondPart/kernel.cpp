@@ -38,15 +38,13 @@ void InstallerSecond::kernelConfig() {
         }
         std::cout << "\n\nPress any key to continue.\n";
         getch();
-        return;
     }
 }
 
 void InstallerSecond::kernelInstall() {
     std::vector<OptionMenu> options = {
         OptionMenu("Install precompiled kernel", 0),
-        OptionMenu("Install and configure kernel", 1),
-        OptionMenu("Next", -1),
+        OptionMenu("Install and configure kernel", 1)
     };
     while (true) {
         clearScreen();
@@ -54,9 +52,6 @@ void InstallerSecond::kernelInstall() {
         int id;
         std::cout << "\n";
         switch (key) {
-            case -1:
-                return;
-                break;
             case 0:
                 executeCommand("emerge sys-kernel/gentoo-kernel-bin");
                 break;

@@ -11,7 +11,7 @@ void InstallerFirst::mount() {
     std::vector<OptionMenu> options = {
         OptionMenu("Mount root partition", 0),
         OptionMenu("Mount boot partition", 1),
-        OptionMenu("Format other partition", 2),
+        OptionMenu("Mount other partition", 2),
         OptionMenu("Next", -1),
     };
     while (true) {

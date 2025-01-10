@@ -25,6 +25,5 @@ void InstallerSecond::makeMain() {
         }
         std::cout << "\n\nPress any key to continue.\n";
         getch();
-        return;
     }
 }

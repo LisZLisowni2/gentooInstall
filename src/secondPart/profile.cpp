@@ -34,6 +34,5 @@ void InstallerSecond::profile() {
         }
         std::cout << "\n\nPress any key to continue.\n";
         getch();
-        return;
     }
 }

@@ -21,20 +21,20 @@ void InstallerFirst::tarball() {
         std::cout << "\n";
         switch (key) {
             case 0:
-                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-openrc-" + DATETIME + ".tar.xz");
-                executeCommand("tar xpvf stage3-amd64-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && tar xpvf stage3-amd64-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
             case 1:
-                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-systemd-" + DATETIME + ".tar.xz");
-                executeCommand("tar xpvf stage3-amd64-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && tar xpvf stage3-amd64-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
             case 2:
-                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-desktop-openrc-" + DATETIME + ".tar.xz");
-                executeCommand("tar xpvf stage3-amd64-desktop-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-desktop-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && tar xpvf stage3-amd64-desktop-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
             case 3:
-                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-desktop-systemd-" + DATETIME + ".tar.xz");
-                executeCommand("tar xpvf stage3-amd64-desktop-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-desktop-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && tar xpvf stage3-amd64-desktop-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";
