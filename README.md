@@ -21,8 +21,10 @@ if you want finish installation after chroot to environment, use second method.
 
 Download the precompiled files in bin folder.
 
-`wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.0/installer_part1`
-`wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.0/installer_part2`
+```
+wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.0/installer_part1
+wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.0/installer_part2
+```
 
 Move to created folder, run `./installer_part1` and follow the instructions.
 
@@ -32,11 +34,18 @@ Move to created folder, run `./installer_part1` and follow the instructions.
 
 Download all files from github.
 
-`wget https://github.com/LisZLisowni2/GentooInstaller`
+```
+wget https://github.com/LisZLisowni2/GentooInstaller
+```
 
 Move to created folder and compile the program using that command:
 
-`mkdir build && cd build && cmake -DFIRST_INSTALLER_INCLUDE=OFF .. && make`
+```
+mkdir build
+cd build
+cmake -DFIRST_INSTALLER_INCLUDE=OFF ..
+make
+```
 
 Run `./installer_part2` and follow the instructions.
 
@@ -46,10 +55,16 @@ To use that method you have to compile it in your host system. Make sure you hav
 
 Download all files from github.
 
-`git clone https://github.com/LisZLisowni2/GentooInstaller`
+```
+git clone https://github.com/LisZLisowni2/GentooInstaller
+```
 
 Move to created folder and compile the program using that command:
 
-`mkdir build && cd build && cmake .. && make`
+```
+mkdir build 
+cd build && cmake ..
+make
+```
 
 Run `./installer_part1` and follow the instructions.
