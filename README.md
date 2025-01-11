@@ -68,3 +68,16 @@ make
 ```
 
 Run `./installer_part1` and follow the instructions.
+
+## Support 
+
+If you encounter the issue write it in issue section. Describe your machine, architecture, method you used to install the script, which step has issue, details of error and any other useful information.
+
+Example:
+Architecture: AMD64
+Method of installation: First method
+Step: Downloading tarball
+Details: The tarball doesn't download correctly. I got information about no space left.
+...HERE SOME LOGS FROM TERMINAL...
+
+If you have idea how to improve programe, fork the repo, made changes you want and pull request to main repo.
