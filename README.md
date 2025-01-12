@@ -28,7 +28,7 @@ wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.0/insta
 
 Move to created folder, run `./installer_part1` and follow the instructions.
 
-### Second method: Compilation from source in chrooted environment (DO NOT USE IT RIGHT NOW! IN VERSION 1.0.1 WILL BE AVAILABLE)
+### Second method: Compilation from source in chrooted environment (DO NOT USE IT RIGHT NOW! IN FUTURE WILL BE AVAILABLE)
 
 **WARNING! YOU HAVE TO CONFIG NETWORK, CONFIG DISK'S PARTITIONS, MOUNTING PARTITIONS, DOWNLOAD TARBALL FILE, COPY DNS INFO AND MOUNT NECESSARY PARTITIONS (LIKE /proc) AND CHROOTING TO NEW SYSTEM BY YOURSELF BEFORE USING THAT METHOD.**
 
