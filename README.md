@@ -35,7 +35,7 @@ Move to created folder, run `./installer_part1` and follow the instructions.
 Download all files from github.
 
 ```
-wget https://github.com/LisZLisowni2/GentooInstaller
+wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/1.0.0.tar.gz
 ```
 
 Move to created folder and compile the program using that command:
@@ -51,19 +51,24 @@ Run `./installer_part2` and follow the instructions.
 
 ### Third method: Compilation from source in host system
 
-To use that method you have to compile it in your host system. Make sure you have git, cmake, make and gcc/g++ compilers.
+To use that method you have to compile it in your host system. Make sure you have git/wget, cmake, make and gcc/g++ compilers.
 
 Download all files from github.
 
 ```
-git clone https://github.com/LisZLisowni2/GentooInstaller
+wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/1.0.0.tar.gz
+```
+OR
+```
+git clone https://github.com/LisZLisowni2/gentooInstall
 ```
 
 Move to created folder and compile the program using that command:
 
 ```
 mkdir build 
-cd build && cmake ..
+cd build
+cmake ..
 make
 ```
 
