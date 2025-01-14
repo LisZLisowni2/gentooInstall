@@ -22,14 +22,15 @@ void InstallerSecond::profile() {
                 return;
                 break;
             case 0:
-                executeCommand("eselect profile list | nano");
+                executeCommand("eselect profile list | less");
                 break;
             case 1:
                 executeCommand("eselect profile list");
                 std::cout << "\n\n";
                 std::cout << "Select the id: ";
                 std::cin >> id;
-                executeCommand("eselect profile set " + id);
+                std::cout << "eselect profile set " << id << "\n"; // Debugging
+                executeCommand("eselect profile set " + id); // Produced error, fix me
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";
