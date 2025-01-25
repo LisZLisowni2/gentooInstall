@@ -30,7 +30,7 @@ void InstallerSecond::profile() {
                 std::cout << "Select the id: ";
                 std::cin >> id;
                 std::cout << "eselect profile set " << id << "\n"; // Debugging
-                executeCommand("eselect profile set " + id); // FIXME: Error produced
+                executeCommand("eselect profile set " + id); // FIXME: Error produced, irmware command not found
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";
