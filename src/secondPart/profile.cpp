@@ -15,7 +15,6 @@ void InstallerSecond::profile() {
     while (true) {
         clearScreen();
         int key = selectMenu(options, "Profile", "In Gentoo profiles defines the basic packages to be installed. The default profile depends on extracted tarball. If you want change profile select the second option");
-        int id;
         std::cout << "\n";
         switch (key) {
             case -1:
@@ -25,12 +24,12 @@ void InstallerSecond::profile() {
                 executeCommand("eselect profile list | less");
                 break;
             case 1:
+                std::string id;
                 executeCommand("eselect profile list");
                 std::cout << "\n\n";
                 std::cout << "Select the id: ";
                 std::cin >> id;
-                std::cout << "eselect profile set " << id << "\n"; // Debugging
-                executeCommand("eselect profile set " + id); // FIXME: Error produced, irmware command not found
+                executeCommand("eselect profile set " + id); 
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";

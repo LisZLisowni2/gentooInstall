@@ -32,10 +32,21 @@ Move to created folder, run `./installer_part1` and follow the instructions.
 
 **WARNING! YOU HAVE TO CONFIG NETWORK, CONFIG DISK'S PARTITIONS, MOUNTING PARTITIONS, DOWNLOAD TARBALL FILE, COPY DNS INFO AND MOUNT NECESSARY PARTITIONS (LIKE /proc) AND CHROOTING TO NEW SYSTEM BY YOURSELF BEFORE USING THAT METHOD.**
 
-Download all files from github.
+Sync with emerge using `emerge-webrsync`  
+
+Install a CMake and git
+
+```
+emerge --ask cmake dev/vcs-git
+```
+
+Download all files from github and unpack it.
 
 ```
 wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/1.0.0.tar.gz
+tar xzvf 1.0.0.tar.gz
+cd gentooInstall-1.0.0
+git clone https://github.com/ikalnytskyi/termcolor.git
 ```
 
 Move to created folder and compile the program using that command:
