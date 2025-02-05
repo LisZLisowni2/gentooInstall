@@ -22,8 +22,8 @@ if you want finish installation after chroot to environment, use second method.
 Download the precompiled files in bin folder.
 
 ```
-wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.0/installer_part1
-wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.0/installer_part2
+wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.1/installer_part1
+wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.1/installer_part2
 ```
 
 Move to created folder, run `./installer_part1` and follow the instructions.
@@ -43,9 +43,9 @@ emerge --ask cmake dev/vcs-git
 Download all files from github and unpack it.
 
 ```
-wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/1.0.0.tar.gz
-tar xzvf 1.0.0.tar.gz
-cd gentooInstall-1.0.0
+wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/1.0.1.tar.gz
+tar xzvf 1.0.1.tar.gz
+cd gentooInstall-1.0.1
 git clone https://github.com/ikalnytskyi/termcolor.git
 ```
 
@@ -67,7 +67,7 @@ To use that method you have to compile it in your host system. Make sure you hav
 Download all files from github.
 
 ```
-wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/1.0.0.tar.gz
+wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/1.0.1.tar.gz
 ```
 OR
 ```
