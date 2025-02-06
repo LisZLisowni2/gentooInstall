@@ -31,9 +31,9 @@ void InstallerSecond::install() {
     std::cout << "Enter your hostname: ";
     std::cin >> hostname;
     executeCommand("echo \"" + hostname + "\" > /etc/hostname");
-    executeCommand("echo \"127.0.0.1\t" + hostname + "\" > /etc/hosts");
-    executeCommand("echo \"sys-boot/grub efi\" >> /etc/portage/portage.use/grub");
-    installPackages("sys-fs/grub");
+    executeCommand("echo \"127.0.0.1\t" + hostname + "\" >> /etc/hosts");
+    executeCommand("echo \"sys-boot/grub efi\" > /etc/portage/portage.use/grub");
+    installPackages("sys-boot/grub");
     executeCommand("grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GENTOO");
     executeCommand("grub-mkconfig -o /boot/grub/grub.cfg");
     std::cout << "You have finished installation of Gentoo... the most basic parts of it.\nThere are some other thing to do like root password, add local users, etc..\nIn future this Installer grants more interactive actions.\nIf you finish the work, exit the chrooted mode and reboot.";
