@@ -53,7 +53,7 @@ void InstallerSecond::kernelInstall() {
         std::cout << "\n";
         switch (key) {
             case 0:
-                executeCommand("emerge sys-kernel/gentoo-kernel-bin");
+                executeCommand("emerge sys-kernel/gentoo-kernel-bin"); // FIXME: Masked packages
                 break;
             case 1:
                 std::cout << "This option work in progress\n";
