@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Download code
-        run: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Install essential packages
         run: sudo apt update && sudo apt upgrade && sudo apt install -y cmake g++ 
