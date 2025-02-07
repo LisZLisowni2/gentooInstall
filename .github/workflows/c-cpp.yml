@@ -1,0 +1,27 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download code
+        run: actions/checkout@v4
+
+      - name: Install essential packages
+        run: sudo apt update && sudo apt upgrade && sudo apt install -y cmake g++ 
+
+      - name: Build the configuration
+        run: |
+          mkdir -p build
+          cd build
+          cmake ..
+
+      - name: Compile
+        run: make
