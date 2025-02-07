@@ -15,10 +15,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install essential packages
-        run: sudo apt update && sudo apt upgrade && sudo apt install -y cmake g++ 
+        run: sudo apt update && sudo apt install -y cmake g++ git
 
       - name: Build the configuration
         run: |
+          git submodule update --init --recursive
           mkdir -p build
           cd build
           cmake ..
