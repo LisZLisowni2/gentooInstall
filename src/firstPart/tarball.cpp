@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <vector>
 #include <map>
-const std::string DATETIME = "20250202T154819Z";
+const std::string DATETIME = "20250209T170331Z";
 
 void InstallerFirst::tarball() {
     std::vector<OptionMenu> options = {
