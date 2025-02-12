@@ -10,8 +10,7 @@ void InstallerSecond::kernelConfig() {
     std::vector<OptionMenu> options = {
         OptionMenu("Install linux firmware", 0),
         OptionMenu("Install intel microcode", 1),
-        OptionMenu("Install amd microcode", 2),
-        OptionMenu("Install sof firmware", 3),
+        OptionMenu("Install sof firmware", 2),
         OptionMenu("Next", -1),
     };
     while (true) {
@@ -24,16 +23,13 @@ void InstallerSecond::kernelConfig() {
                 return;
                 break;
             case 0:
-                executeCommand("emerge sys-kernel/linux-firmware");
+                installPackages("sys-kernel/linux-firmware");
                 break;
             case 1:
-                executeCommand("emerge sys-firmware/intel-microcode");
+                installPackages("sys-firmware/intel-microcode");
                 break;
             case 2:
-                executeCommand("emerge sys-firmware/amd-microcode");
-                break;
-            case 3:
-                executeCommand("emerge sys-firmware/sof-firmware");
+                installPackages("sys-firmware/sof-firmware");
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";
