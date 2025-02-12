@@ -6,9 +6,10 @@
 #include <string>
 #include <vector>
 
-void executeCommand(const std::string& command);
+int executeCommand(const std::string& command);
+void installPackages(const std::string& packages); // For masked packages, dependency conflicts
 char getch();
 void clearScreen();
-int selectMenu(const std::vector<OptionMenu>& options, const std::string& title, const std::string& description);
+int selectMenu(const std::vector<OptionMenu>& options, const std::string& title, const std::string& description); 
 
 #endif
