@@ -52,11 +52,44 @@ void InstallerSecond::kernelInstall() {
                 installPackages("gentoo-kernel-bin");
                 break;
             case 1:
-                installPackages("sys-kernel/gentoo-sources sys-kernel/installkernel");
+                installPackages("sys-kernel/gentoo-sources sys-kernel/installkernel sys-apps/pciutils");
+                executeCommand("lspci > /tmp/lspci.tmp");
+                std::cout << "Preconfiguration\n";
+                executeCommand("mv /usr/src/linux-* /usr/src/linux");
+                executeCommand("cd /usr/src/linux && make localmodconfig");
+                kernelCompile();
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";
         getch();
         return;
+    }
+}
+
+void InstallerSecond::kernelCompile() {
+    std::vector<OptionMenu> options = {
+        OptionMenu("Read the lspci file (your PC's specs)", 0),
+        OptionMenu("Config kernel", 1),
+        OptionMenu("Compile", 2)
+    };
+    while (true) {
+        clearScreen();
+        int key = selectMenu(options, "Kernel - Install", "After basic configuration we can install kernel. There are some options, I mention only two.\n1) Precompiled - The fastest and the easiest way. Installs the precompiled kernel that doesn't need to config.\n2) Own kernel - For more advanced users there is option for them. Second option give free hand to configure own kernel for your specific requirements.");
+        int id;
+        std::cout << "\n";
+        switch (key) {
+            case 0:
+                installPackages("less /tmp/lspci.tmp");
+                break;
+            case 1:
+                executeCommand("cd /usr/src/linux && make nconfig");
+                break;
+            case 2:
+                executeCommand("cd /usr/src/linux && make -j$(nproc) && make -j$(nproc) modules_install && make -j$(nproc) install");
+                return;
+                break;
+        }
+        std::cout << "\n\nPress any key to continue.\n";
+        getch();
     }
 }
