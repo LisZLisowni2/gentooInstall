@@ -40,7 +40,7 @@ void InstallerSecond::kernelConfig() {
 void InstallerSecond::kernelInstall() {
     std::vector<OptionMenu> options = {
         OptionMenu("Install precompiled kernel", 0),
-        OptionMenu("Install and configure kernel", 1)
+        OptionMenu("Install and configure kernel (For Advanced Users)", 1)
     };
     while (true) {
         clearScreen();
@@ -52,7 +52,7 @@ void InstallerSecond::kernelInstall() {
                 installPackages("gentoo-kernel-bin");
                 break;
             case 1:
-                std::cout << "This option work in progress\n";
+                installPackages("sys-kernel/gentoo-sources sys-kernel/installkernel");
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";

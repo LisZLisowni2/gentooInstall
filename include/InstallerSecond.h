@@ -15,6 +15,7 @@ private:
     inline void profile();
     inline void kernelConfig();
     inline void kernelInstall();
+    inline void kernelCompile();
     inline void networkConfig();
     inline void reboot();
 };
