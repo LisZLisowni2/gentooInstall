@@ -7,8 +7,10 @@
 #include <vector>
 
 void InstallerSecond::makeMain() {
+    bool autoUsed = false;
     std::vector<OptionMenu> options = {
         OptionMenu("Edit file", 0),
+        OptionMenu("Automatic", 1),
         OptionMenu("Next", -1),
     };
     while (true) {
@@ -21,6 +23,21 @@ void InstallerSecond::makeMain() {
                 break;
             case 0:
                 executeCommand("nano /etc/portage/make.conf");
+                break;
+            case 1:
+                if (autoUsed) {
+                    break;
+                }
+                executeCommand("cp /etc/portage/make.conf /etc/portage/make.conf.old");
+                executeCommand("echo \"MAKEOPTS=\"-j$(nproc) -l$(nproc)\"\" >> /etc/portage/make.conf");
+                executeCommand("echo \"EMERGE_DEFAULT_OPTS=\"--jobs=$(nproc) --load-average=$(nproc)\"\" >> /etc/portage/make.conf");
+                executeCommand("echo \"FEATURES=\"parallel-fetch\"\" >> /etc/portage/make.conf");
+                executeCommand("echo \"CXXFLAGS=\"${CXXFLAGS} -march=native\"\" >> /etc/portage/make.conf");
+                executeCommand("echo \"ACCEPT_LICENSE=\"*\"\" >> /etc/portage/make.conf");
+                executeCommand("echo \"PORTDIR=\"/var/db/repos/gentoo\"\" >> /etc/portage/make.conf");
+                executeCommand("echo \"DISTDIR=\"/var/cache/distfiles\"\" >> /etc/portage/make.conf");
+                executeCommand("echo \"PKGDIR=\"/var/cache/binpkgs\"\" >> /etc/portage/make.conf");
+                autoUsed = true;
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";
