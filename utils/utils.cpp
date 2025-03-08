@@ -8,6 +8,8 @@
 #include <stdexcept>
 #include <termios.h>
 #include <unistd.h>
+#include <cpr/cpr.h>
+#include <regex>
 
 #define KEY_UP 65
 #define KEY_DOWN 66
@@ -79,6 +81,62 @@ int selectMenu(const std::vector<OptionMenu>& options, const std::string& title,
                 break;
         }
     }
+}
+std::vector<std::string> getFoldersFromServer(const std::string& url) {
+    cpr::Url{
+        "https://gentoo.osuosl.org/releases/amd64/autobuilds/"
+    };
+
+    cpr::Response response = cpr::Get(URL);
+    std::vector<std::string> folders;
+    if (response.status_code == 200) {
+        std::regex folderRegex(R"((\d{8}T\d{6}Z))");
+        std::smatch match;
+        std::string content = response.text;
+
+        auto begin = std::sregex_iterator(content.begin(), content.end(), folderRegex);
+        auto end = std::sregex_iterator();
+
+        for (auto it = begin; it != end; it++) {
+            folders.push_back(it->str());
+        }
+    }
+
+    return folders;
+}
+
+std::tm parseDate(const std::string& folderName) {
+    std::regex datePatern(R"((\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z)");
+    std::smatch match;
+    std::tm tmDate = {};
+    if (std::regex_search(folderName, match, datePatern)) {
+        tmDate.tm_year = std::stoi(match[1]) - 1900;
+        tmDate.tm_mon = std::stoi(match[2]) - 1;
+        tmDate.tm_mday = std::stoi(match[3]);
+        tmDate.tm_hour = std::stoi(match[4]);
+        tmDate.tm_min = std::stoi(match[5]);
+        tmDate.tm_sec = std::stoi(match[6]);
+    }
+
+    return tmDate;
+}
+
+bool isNewer(const std::string& folderName1, const std::string& folderName2) {
+    return std::mktime(&parseDate(folderName1)) > std::mktime(&parseDate(folderName2));
+}
+
+std::string latestVersion() {
+    std::vector<string> folders = getFoldersFromServer("https://gentoo.osuosl.org/releases/amd64/autobuilds/");
+    if (folders.empty()) return "";
+
+    std::string latest = folders[0];
+    for (const auto& folder : folders) {
+        if (isNewer(folder, latest)) {
+            latest = folder;
+        }
+    }
+
+    return latest;
 }
 
 void installPackages(const std::string& packages) {

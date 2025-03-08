@@ -74,19 +74,22 @@ void InstallerSecond::kernelCompile() {
     };
     while (true) {
         clearScreen();
-        int key = selectMenu(options, "Kernel - Install", "After basic configuration we can install kernel. There are some options, I mention only two.\n1) Precompiled - The fastest and the easiest way. Installs the precompiled kernel that doesn't need to config.\n2) Own kernel - For more advanced users there is option for them. Second option give free hand to configure own kernel for your specific requirements.");
-        int id;
+        int key = selectMenu(options, "Kernel - Compilation", "It is important to correctly configure the kernel unless you don't want to run the OS. If you have no idea, what to do, check the official Gentoo Handbook");
         std::cout << "\n";
         switch (key) {
             case 0:
-                installPackages("less /tmp/lspci.tmp");
+                executeCommand("less /tmp/lspci.tmp");
                 break;
             case 1:
                 executeCommand("cd /usr/src/linux && make nconfig");
                 break;
             case 2:
-                executeCommand("cd /usr/src/linux && make -j$(nproc) && make -j$(nproc) modules_install && make -j$(nproc) install");
-                return;
+                int res = executeCommand("cd /usr/src/linux && make -j$(nproc) && make -j$(nproc) modules_install && make -j$(nproc) install");
+                if (res == 0) return;
+                executeCommand("cd /usr/src/linux && make clean");
+                res = executeCommand("cd /usr/src/linux && make -j$(nproc) && make -j$(nproc) modules_install && make -j$(nproc) install");
+                if (res == 0) return;
+                std::cout << "Something wrong is in your kernel configuration. Check out the config and retry compilation";
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";

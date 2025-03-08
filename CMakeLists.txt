@@ -7,6 +7,7 @@ option(FIRST_INSTALLER_INCLUDE "First installer has enabled, compiling first par
 
 include_directories(include)
 add_subdirectory(termcolor)
+add_subdirectory(cpr)
 include_directories(${termcolor_SOURCE_DIR}/include)
 
 set(SOURCES 
