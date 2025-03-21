@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "Option.h"
+#include <cpr/cpr.h>
 #include <termcolor/termcolor.hpp>
 #include <iostream>
 #include <vector>
@@ -8,7 +9,6 @@
 #include <stdexcept>
 #include <termios.h>
 #include <unistd.h>
-#include <cpr/cpr.h>
 #include <regex>
 
 #define KEY_UP 65
@@ -82,12 +82,11 @@ int selectMenu(const std::vector<OptionMenu>& options, const std::string& title,
         }
     }
 }
-std::vector<std::string> getFoldersFromServer(const std::string& url) {
-    cpr::Url{
-        "https://gentoo.osuosl.org/releases/amd64/autobuilds/"
-    };
 
-    cpr::Response response = cpr::Get(URL);
+std::vector<std::string> getFoldersFromServer(const std::string& url) {
+    cpr::Response response = cpr::Get(cpr::Url{
+        "https://gentoo.osuosl.org/releases/amd64/autobuilds/"
+    });
     std::vector<std::string> folders;
     if (response.status_code == 200) {
         std::regex folderRegex(R"((\d{8}T\d{6}Z))");
@@ -122,11 +121,15 @@ std::tm parseDate(const std::string& folderName) {
 }
 
 bool isNewer(const std::string& folderName1, const std::string& folderName2) {
-    return std::mktime(&parseDate(folderName1)) > std::mktime(&parseDate(folderName2));
+    std::tm dataA = parseDate(folderName1);
+    std::tm* dataAptr = &dataA; 
+    std::tm dataB = parseDate(folderName2);
+    std::tm* dataBptr = &dataB; 
+    return std::mktime(dataAptr) > std::mktime(dataBptr);
 }
 
 std::string latestVersion() {
-    std::vector<string> folders = getFoldersFromServer("https://gentoo.osuosl.org/releases/amd64/autobuilds/");
+    std::vector<std::string> folders = getFoldersFromServer("https://gentoo.osuosl.org/releases/amd64/autobuilds/");
     if (folders.empty()) return "";
 
     std::string latest = folders[0];

@@ -8,6 +8,9 @@
 #include <map>
 
 void InstallerFirst::tarball() {
+    clearScreen();
+    std::cout << "Reading the latest version of taball\n\n";
+    std::string DATETIME = latestVersion();
     std::vector<OptionMenu> options = {
         OptionMenu("OpenRC", 0),
         OptionMenu("Systemd", 1),

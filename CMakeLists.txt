@@ -3,11 +3,16 @@ project(gentooInstall)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
+include(FetchContent)
+
+FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+                        GIT_TAG dd967cb48ea6bcbad9f1da5ada0db8ac0d532c06)
+FetchContent_MakeAvailable(cpr)
+
 option(FIRST_INSTALLER_INCLUDE "First installer has enabled, compiling first part." ON)
 
 include_directories(include)
 add_subdirectory(termcolor)
-add_subdirectory(cpr)
 include_directories(${termcolor_SOURCE_DIR}/include)
 
 set(SOURCES 
@@ -27,6 +32,7 @@ set(SOURCES
     src/secondPart/profile.cpp
     src/secondPart/kernel.cpp
     src/secondPart/networkConfig.cpp
+    Dev/main.cpp
     utils/Option.cpp
 )
 
@@ -45,6 +51,7 @@ if (FIRST_INSTALLER_INCLUDE)
         src/firstPart/chroot.cpp
         utils/Option.cpp
     )
+    target_link_libraries(installer_part1 PRIVATE cpr)
 else()
     message(STATUS "Installer first part excluded")
 endif()
@@ -59,3 +66,4 @@ add_executable(installer_part2
     src/secondPart/profile.cpp
     src/secondPart/kernel.cpp
 )
+target_link_libraries(installer_part2 PRIVATE cpr)
