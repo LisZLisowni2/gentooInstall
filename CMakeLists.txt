@@ -2,11 +2,20 @@ cmake_minimum_required(VERSION 3.10)
 project(gentooInstall)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
+set(CMAKE_INSTALL_RPATH "\$ORIGIN/libs:\$ORIGIN/_deps/cpr-build/cpr:\$ORIGIN/_deps/curl-build/lib:\$ORIGIN/_deps/zlib-build/:/usr/local/lib:/usr/lib64:/usr/lib")
+set(CMAKE_BUILD_WITH_INSTALL_RPATH true)
 
 include(FetchContent)
 
-FetchContent_Declare(cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
-                        GIT_TAG dd967cb48ea6bcbad9f1da5ada0db8ac0d532c06)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LIBSSH2 REQUIRED libssh2)
+
+FetchContent_Declare(
+    cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+    GIT_TAG dd967cb48ea6bcbad9f1da5ada0db8ac0d532c06
+    OVERRIDE_FIND_PACKAGE    
+)
+set(CPR_BUILD_SHARED_LIBS OFF) 
 FetchContent_MakeAvailable(cpr)
 
 option(FIRST_INSTALLER_INCLUDE "First installer has enabled, compiling first part." ON)
@@ -51,7 +60,7 @@ if (FIRST_INSTALLER_INCLUDE)
         src/firstPart/chroot.cpp
         utils/Option.cpp
     )
-    target_link_libraries(installer_part1 PRIVATE cpr)
+    target_link_libraries(installer_part1 PRIVATE cpr ssh2)
 else()
     message(STATUS "Installer first part excluded")
 endif()
@@ -66,4 +75,4 @@ add_executable(installer_part2
     src/secondPart/profile.cpp
     src/secondPart/kernel.cpp
 )
-target_link_libraries(installer_part2 PRIVATE cpr)
+target_link_libraries(installer_part2 PRIVATE cpr ssh2)
