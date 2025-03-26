@@ -11,6 +11,13 @@ It is easy to use using arrows and beginner-friendly.
 - Automates the process of installation of Gentoo linux system
 - Explanations and guides how to choose wisely
 - Automates bootloader setup
+- Automates configuration of the system
+
+## Dependencies
+
+- [**CPR**](https://github.com/libcpr/cpr) - Modern API to serve HTTP requests in C++
+- [**termcolor**](https://github.com/ikalnytskyi/termcolor) - Singel-header library to add colors in C++
+- [**libssh2**](https://www.libssh2.org/) - Library to operate SSH2 protocol
 
 ## Installation
 
@@ -19,11 +26,10 @@ if you want finish installation after chroot to environment, use second method.
 
 ### First method: Precompiled
 
-Download the precompiled files in bin folder.
+Download the build directory in bin folder.
 
 ```
-wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.2/installer_part1
-wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.0.2/installer_part2
+wget https://github.com/LisZLisowni2/gentooInstall/releases/download/1.FUTURE_VERSION/build
 ```
 
 Move to created folder, run `./installer_part1` and follow the instructions.
@@ -55,21 +61,26 @@ Move to created folder and compile the program using that command:
 mkdir build
 cd build
 cmake -DFIRST_INSTALLER_INCLUDE=OFF ..
+```
+
+You have to compile libssh2 static library. Copy that command and run (in build directory):
+
+```
+rm -rf libssh2-build
+cmake -S _deps/libssh2-src -B _deps/libssh2-build -DBUILD_SHARED_LIBS=OFF
+cmake --build _deps/libssh2-build
 make
 ```
+
 
 Run `./installer_part2` and follow the instructions.
 
 ### Third method: Compilation from source in host system
 
-To use that method you have to compile it in your host system. Make sure you have git/wget, cmake, make and gcc/g++ compilers.
+To use that method you have to compile it in your host system. Make sure you have git, cmake, make and gcc/g++ compilers.
 
 Download all files from github.
 
-```
-wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/1.0.2.tar.gz
-```
-OR
 ```
 git clone https://github.com/LisZLisowni2/gentooInstall
 ```
@@ -80,6 +91,14 @@ Move to created folder and compile the program using that command:
 mkdir build 
 cd build
 cmake ..
+```
+
+You have to compile libssh2 static library. Copy that command and run (in build directory):
+
+```
+rm -rf libssh2-build
+cmake -S _deps/libssh2-src -B _deps/libssh2-build -DBUILD_SHARED_LIBS=OFF
+cmake --build _deps/libssh2-build
 make
 ```
 
