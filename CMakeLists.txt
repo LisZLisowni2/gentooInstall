@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(gentooInstall)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
-set(CMAKE_INSTALL_RPATH "\$ORIGIN/_deps")
+set(CMAKE_INSTALL_RPATH "\$ORIGIN/_deps/cpr-build/cpr:\$ORIGIN/_deps")
 set(CMAKE_BUILD_WITH_INSTALL_RPATH true)
 set(ENABLE_STATIC ON CACHE BOOL "Enable static library" FORCE)
 # set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
@@ -12,6 +12,7 @@ option(FIRST_INSTALLER_INCLUDE "First installer has enabled, compiling first par
 
 include(FetchContent)
 
+set(CPR_BUILD_SHARED_LIBS OFF CACHE BOOL "Use static cpr instead of shared" FORCE)
 FetchContent_Declare(
     cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
     GIT_TAG dd967cb48ea6bcbad9f1da5ada0db8ac0d532c06
