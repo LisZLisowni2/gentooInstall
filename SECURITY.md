@@ -6,10 +6,7 @@ Since I am the sole contributor, the following versions are currently supported 
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   |	:x:                |
+| 1.0.x   | :white_check_mark: |
 
 - :white_check_mark: indicates that the version is supported with security updates.
 - :x: indicates that the version is no longer supported and will not receive security updates.
