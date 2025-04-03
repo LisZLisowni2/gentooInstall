@@ -13,7 +13,7 @@ Since I am the sole contributor, the following versions are currently supported 
 
 ## Reporting a Vulnerability
 
-Since I’m the only contributor, please feel free to report any vulnerabilities directly to me via GitHub issues or by sending me an email at [your-email@domain.com].
+Since I’m the only contributor (at this moment), please feel free to report any vulnerabilities directly to me via GitHub issues or by sending me an email at [rafalkozikowski735@gmail.com].
 
 1. How to Report:
 - Please create a new Issue in this repository with the label "security" if you identify a vulnerability.
