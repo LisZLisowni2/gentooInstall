@@ -17,7 +17,7 @@ Since I’m the only contributor, please feel free to report any vulnerabilities
 
 1. How to Report:
 - Please create a new Issue in this repository with the label "security" if you identify a vulnerability.
-- Alternatively, you can email me directly at [your-email@domain.com].
+- Alternatively, you can email me directly at [rafalkozikowski735@gmail.com].
 2. What to Expect:
 - I’ll acknowledge your report within 24-48 hours.
 - If the vulnerability is confirmed, I will prioritize fixing it and push a patch as soon as possible, usually within 1-3 days for critical issues.
