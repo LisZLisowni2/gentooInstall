@@ -13,19 +13,19 @@ InstallerSecond::InstallerSecond() {
     std::cout << "Gentoo Installer Initialized.\n"; 
     executeCommand("uname -m > /tmp/uname.tmp");
     executeCommand("echo $([ -d /sys/firmware/efi ] && echo UEFI || echo BIOS) > /tmp/uefi.tmp");
+    executeCommand("echo $(if ! rc-service; then echo SYSTEMD else echo OPENRC fi) > /tmp/init.tmp");
     std::ifstream unameFile("/tmp/uname.tmp");
     std::ifstream uefiFile("/tmp/uefi.tmp");
+    std::ifstream initFile("/tmp/init.tmp");
     std::string line;
     while (getline(unameFile, line)) {
         if (!line.empty() && line[line.length() - 1] == '\n') {
             line.erase(line.length() - 1);
         }
 
-        if (line == "x86_64") {
-            isARM = false;
-        } else if (line == "aarch64" || line == "arm64") {
-            isARM = true;
-        } else {
+        if (line == "x86_64") isARM = false;
+        else if (line == "aarch64" || line == "arm64") isARM = true;
+        else {
             std::cout << "Unknown architecture. Select default option";
             isARM = false;
         }
@@ -40,6 +40,15 @@ InstallerSecond::InstallerSecond() {
         else isEFI = false;
     }
     uefiFile.close();
+    while (getline(initFile, line)) {
+        if (!line.empty() && line[line.length() - 1] == '\n') {
+            line.erase(line.length() - 1);
+        }
+
+        if (line == "OPENRC") isOpenRC = true;
+        else isOpenRC = false;
+    }
+    initFile.close();
 }
 
 InstallerSecond::~InstallerSecond() {
@@ -47,8 +56,6 @@ InstallerSecond::~InstallerSecond() {
 }
 
 void InstallerSecond::install() {
-    std::string hostname;
-    std::string username;
     executeCommand("emerge-webrsync");
     makeMain();
     profile();
@@ -59,15 +66,8 @@ void InstallerSecond::install() {
     executeCommand("genfstab -U / >> /etc/fstab");
     clearScreen();
     networkConfig();
-    std::cout << "Enter your hostname: ";
-    std::cin >> hostname;
-    executeCommand("echo \"" + hostname + "\" > /etc/hostname");
-    executeCommand("echo \"127.0.0.1\t" + hostname + "\" >> /etc/hosts");
-    executeCommand("echo \"sys-boot/grub efi\" > /etc/portage/portage.use/grub");
-    installPackages("sys-boot/grub");
-    executeCommand("grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GENTOO");
-    executeCommand("grub-mkconfig -o /boot/grub/grub.cfg");
-    executeCommand("passwd");
+    bootloader();
+    std::string username;
     std::cin.ignore(256, '\n');
     std::cout << "Enter your username: ";
     getline(std::cin, username);

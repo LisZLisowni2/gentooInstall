@@ -86,6 +86,7 @@ void InstallerSecond::kernelCompile() {
             case 2:
                 int res = executeCommand("cd /usr/src/linux && make -j$(nproc) && make -j$(nproc) modules_install && make -j$(nproc) install");
                 if (res == 0) return;
+                std::cout << "Something is wrong, retrying\n";
                 executeCommand("cd /usr/src/linux && make clean");
                 res = executeCommand("cd /usr/src/linux && make -j$(nproc) && make -j$(nproc) modules_install && make -j$(nproc) install");
                 if (res == 0) return;

@@ -11,13 +11,14 @@ public:
     ~InstallerSecond();
     void install() override;
 private:
+    bool isOpenRC;
     inline void makeMain();
     inline void profile();
     inline void kernelConfig();
     inline void kernelInstall();
     inline void kernelCompile();
     inline void networkConfig();
-    inline void reboot();
+    inline void bootloader();
 };
 
 #endif

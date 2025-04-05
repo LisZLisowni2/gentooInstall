@@ -6,6 +6,13 @@
 #include <vector>
 
 void InstallerSecond::networkConfig() {
+    clearScreen();
+    std::string hostname;
+    std::cout << "Enter your hostname: ";
+    std::cin >> hostname;
+    executeCommand("echo \"" + hostname + "\" > /etc/hostname");
+    executeCommand("echo \"127.0.0.1\t" + hostname + "\" >> /etc/hosts");
+    executeCommand("echo \"sys-boot/grub efi\" > /etc/portage/portage.use/grub");
     std::vector<OptionMenu> options = {
         OptionMenu("Use DHCPCD", 0),
         OptionMenu("Use NetworkManager", 1),
@@ -17,12 +24,14 @@ void InstallerSecond::networkConfig() {
         switch (key) {
             case 0:
                 installPackages("net-misc/dhcpcd");        
-                executeCommand("rc-update add dhcpcd default");
+                if (isOpenRC) executeCommand("rc-update add dhcpcd default");
+                else executeCommand("systemctl enable dhcpcd");
                 return;
                 break;
             case 1:
                 installPackages("net-misc/networkmanager");
-                executeCommand("rc-update add NetworkManager default");
+                if (isOpenRC) executeCommand("rc-update add NetworkManager default");
+                else executeCommand("systemctl enable NetworkManager");
                 return;
                 break;
         }

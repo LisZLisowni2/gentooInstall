@@ -23,9 +23,6 @@ jobs:
           mkdir -p build
           cd build
           cmake ..
-          rm -rf libssh2-build
-          cmake -S _deps/libssh2-src -B _deps/libssh2-build -DBUILD_SHARED_LIBS=OFF
-          cmake --build _deps/libssh2-build
 
       - name: Compile
         run: |
