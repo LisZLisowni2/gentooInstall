@@ -40,7 +40,7 @@ void InstallerSecond::kernelConfig() {
 void InstallerSecond::kernelInstall() {
     std::vector<OptionMenu> options = {
         OptionMenu("Install precompiled kernel", 0),
-        OptionMenu("Install and configure kernel", 1)
+        OptionMenu("Install and configure kernel (For Advanced Users)", 1)
     };
     while (true) {
         clearScreen();
@@ -52,11 +52,48 @@ void InstallerSecond::kernelInstall() {
                 installPackages("gentoo-kernel-bin");
                 break;
             case 1:
-                std::cout << "This option work in progress\n";
+                installPackages("sys-kernel/gentoo-sources sys-kernel/installkernel sys-apps/pciutils");
+                executeCommand("lspci > /tmp/lspci.tmp");
+                std::cout << "Preconfiguration\n";
+                executeCommand("mv /usr/src/linux-* /usr/src/linux");
+                executeCommand("cd /usr/src/linux && make localmodconfig");
+                kernelCompile();
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";
         getch();
         return;
+    }
+}
+
+void InstallerSecond::kernelCompile() {
+    std::vector<OptionMenu> options = {
+        OptionMenu("Read the lspci file (your PC's specs)", 0),
+        OptionMenu("Config kernel", 1),
+        OptionMenu("Compile", 2)
+    };
+    while (true) {
+        clearScreen();
+        int key = selectMenu(options, "Kernel - Compilation", "It is important to correctly configure the kernel unless you don't want to run the OS. If you have no idea, what to do, check the official Gentoo Handbook");
+        std::cout << "\n";
+        switch (key) {
+            case 0:
+                executeCommand("less /tmp/lspci.tmp");
+                break;
+            case 1:
+                executeCommand("cd /usr/src/linux && make nconfig");
+                break;
+            case 2:
+                int res = executeCommand("cd /usr/src/linux && make -j$(nproc) && make -j$(nproc) modules_install && make -j$(nproc) install");
+                if (res == 0) return;
+                std::cout << "Something is wrong, retrying\n";
+                executeCommand("cd /usr/src/linux && make clean");
+                res = executeCommand("cd /usr/src/linux && make -j$(nproc) && make -j$(nproc) modules_install && make -j$(nproc) install");
+                if (res == 0) return;
+                std::cout << "Something wrong is in your kernel configuration. Check out the config and retry compilation";
+                break;
+        }
+        std::cout << "\n\nPress any key to continue.\n";
+        getch();
     }
 }

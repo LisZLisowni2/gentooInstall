@@ -3,13 +3,20 @@
 #pragma once
 
 #include "Option.h"
-#include <string>
+#include "utils.h"
 #include <vector>
+#include <cstdlib>
+#include <string>
+#include <regex>
 
 int executeCommand(const std::string& command);
 void installPackages(const std::string& packages); // For masked packages, dependency conflicts
 char getch();
 void clearScreen();
 int selectMenu(const std::vector<OptionMenu>& options, const std::string& title, const std::string& description); 
+std::string latestVersion();
+bool isNewer(const std::string& folderName1, const std::string& folderName2);
+std::tm parseDate(const std::string& folderName);
+std::vector<std::string> getFoldersFromServer(const std::string& url);
 
 #endif
