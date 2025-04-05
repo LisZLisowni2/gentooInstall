@@ -16,7 +16,7 @@ It is easy to use using arrows and beginner-friendly.
 ## Dependencies
 
 - [**CPR**](https://github.com/libcpr/cpr) - Modern API to serve HTTP requests in C++
-- [**termcolor**](https://github.com/ikalnytskyi/termcolor) - Singel-header library to add colors in C++
+- [**termcolor**](https://github.com/ikalnytskyi/termcolor) - Single-header library to add colors in C++
 - [**libssh2**](https://www.libssh2.org/) - Library to operate SSH2 protocol
 
 ## Installation
