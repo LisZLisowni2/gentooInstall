@@ -4,6 +4,7 @@
 #include "profile.cpp"
 #include "kernel.cpp"
 #include "networkConfig.cpp"
+#include "bootloader.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>

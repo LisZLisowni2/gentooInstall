@@ -37,19 +37,28 @@ ExternalProject_Add(
     INSTALL_DIR ${OPENSSL_INSTALL_DIR}
 )
 
-add_library(OpenSSL_Lib STATIC IMPORTED)
+add_library(OpenSSL_Lib STATIC IMPORTED GLOBAL)
+add_library(OpenSSL::Crypto STATIC IMPORTED GLOBAL)
 
 set_target_properties(OpenSSL_Lib PROPERTIES
     IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib64/libssl.a
-    INTERFACE_INCLUDE_DIRECTORIES ${OPENSSL_INCLUDE_DIR}
 )
-
-add_library(OpenSSL::Crypto STATIC IMPORTED)
 
 set_target_properties(OpenSSL::Crypto PROPERTIES
     IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib64/libcrypto.a
-    INTERFACE_INCLUDE_DIRECTORIES ${OPENSSL_INCLUDE_DIR}
 )
+
+if (EXISTS "${OPENSSL_INCLUDE_DIR}")
+    set_target_properties(OpenSSL_Lib PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${OPENSSL_INCLUDE_DIR}
+    )
+    set_target_properties(OpenSSL::Crypto PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${OPENSSL_INCLUDE_DIR}
+    )
+endif()
+
+add_dependencies(OpenSSL_Lib openssl)
+add_dependencies(OpenSSL::Crypto STATIC IMPORTED GLOBAL)
 
 # CPR
 set(CPR_SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/cpr-src)
@@ -87,26 +96,38 @@ ExternalProject_Add(
     INSTALL_DIR ${CPR_INSTALL_DIR}
 )
 
-add_library(cpr_lib STATIC IMPORTED)
+add_library(cpr_lib STATIC IMPORTED GLOBAL)
+add_library(libcurl STATIC IMPORTED GLOBAL)
+add_library(zlib_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(cpr_lib PROPERTIES
     IMPORTED_LOCATION ${CPR_INSTALL_DIR}/lib/libcpr.a
-    INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
 )
-
-add_library(libcurl STATIC IMPORTED GLOBAL)
 
 set_target_properties(libcurl PROPERTIES
     IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libcurl.a"
-    INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
 )
-
-add_library(zlib_lib STATIC IMPORTED)
 
 set_target_properties(zlib_lib PROPERTIES
     IMPORTED_LOCATION ${CPR_INSTALL_DIR}/lib/libz.a
-    INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
 )
+
+if (EXISTS "${CPR_INCLUDE_DIR}")
+    set_target_properties(cpr_lib PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
+    )
+    set_target_properties(zlib_lib PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
+    )
+    set_target_properties(libcurl PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
+    )
+endif()
+
+add_dependencies(cpr_lib cpr)
+add_dependencies(libcurl cpr)
+add_dependencies(zlib_lib cpr)
+
 
 # Libssh2
 set(PC_LIBSSH2_STATIC_LDFLAGS "-L/usr/lib -lssh2 -lssl -lcrypto -ldl -pthread -lz")
@@ -136,12 +157,19 @@ ExternalProject_Add(
     INSTALL_DIR ${LIBSSH2_INSTALL_DIR}
 )
 
-add_library(libssh2_lib STATIC IMPORTED)
+add_library(libssh2_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(libssh2_lib PROPERTIES
     IMPORTED_LOCATION ${LIBSSH2_INSTALL_DIR}/lib/libssh2.a
-    INTERFACE_INCLUDE_DIRECTORIES ${LIBSSH2_INCLUDE_DIR}
 )
+
+if(EXISTS "${LIBSSH2_INCLUDE_DIR}")
+    set_target_properties(libssh2_lib PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${LIBSSH2_INCLUDE_DIR}
+    )
+endif()
+
+add_dependencies(libssh2_lib libssh2)
 
 # Nghttp2
 set(NGHTTP2_SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/nghttp2-src)
@@ -175,12 +203,19 @@ ExternalProject_Add(
     INSTALL_DIR ${NGHTTP2_INSTALL_DIR}
 )
 
-add_library(nghttp2_lib STATIC IMPORTED)
+add_library(nghttp2_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(nghttp2_lib PROPERTIES
     IMPORTED_LOCATION ${NGHTTP2_INSTALL_DIR}/lib/libnghttp2.a
-    INTERFACE_INCLUDE_DIRECTORIES ${NGHTTP2_INCLUDE_DIR}
 )
+
+if(EXISTS "${NGHTTP2_INCLUDE_DIR}")
+    set_target_properties(nghttp2_lib PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${NGHTTP2_INCLUDE_DIR}
+    )
+endif()
+
+add_dependencies(nghttp2_lib nghttp2)
 
 include_directories(${OPENSSL_INCLUDE_DIR} ${CPR_INCLUDE_DIR} ${LIBSSH2_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR} ${NGHTTP2_INCLUDE_DIR})
 
