@@ -4,8 +4,7 @@
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-A clear and concise steps how to reproduce the error.
-
+A clear and concise description of steps to reproduce the error.
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
