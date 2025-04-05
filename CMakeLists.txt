@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15)
 project(gentooInstall)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
@@ -17,13 +17,14 @@ set(OPENSSL_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/openssl)
 set(OPENSSL_INCLUDE_DIR ${CMAKE_INSTALL_DIR}/include)
 set(OPENSSL_CONFIGURE_COMMAND ${OPENSSL_SOURCE_DIR}/config)
 ExternalProject_Add(
-    OpenSSL
+    openssl
     SOURCE_DIR ${OPENSSL_SOURCE_DIR}
     GIT_REPOSITORY https://github.com/openssl/openssl.git
-    GIT_TAG OpenSSL_1_1_1n
+    GIT_TAG a26d85337dbdcd33c971f38eb3fa5150e75cea87
     CMAKE_ARGS
         -DBUILD_SHARED_LIBS=OFF
         -DUSE_STATIC_LIBS=ON
+        -DCMAKE_BUILD_TYPE=release
         # -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/_install
     CONFIGURE_COMMAND 
         ${OPENSSL_CONFIGURE_COMMAND}
@@ -31,21 +32,22 @@ ExternalProject_Add(
             --openssldir=${OPENSSL_INSTALL_DIR}
     BUILD_COMMAND make
     TEST_COMMAND ""
-    INSTALL_COMMAND make install
+    INSTALL_COMMAND 
+        make install && rm -rf ${CMAKE_CURRENT_BINARY_DIR}/openssl-*
     INSTALL_DIR ${OPENSSL_INSTALL_DIR}
 )
 
 add_library(OpenSSL_Lib STATIC IMPORTED)
 
 set_target_properties(OpenSSL_Lib PROPERTIES
-    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib/libssl.a
+    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib64/libssl.a
     INTERFACE_INCLUDE_DIRECTORIES ${OPENSSL_INCLUDE_DIR}
 )
 
 add_library(OpenSSL::Crypto STATIC IMPORTED)
 
 set_target_properties(OpenSSL::Crypto PROPERTIES
-    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib/libcrypto.a
+    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib64/libcrypto.a
     INTERFACE_INCLUDE_DIRECTORIES ${OPENSSL_INCLUDE_DIR}
 )
 
@@ -80,7 +82,8 @@ ExternalProject_Add(
             -DWITH_LIBPSL=ON
     BUILD_COMMAND make -C ${CPR_SOURCE_DIR}/build
     TEST_COMMAND ""
-    INSTALL_COMMAND make -C ${CPR_SOURCE_DIR}/build install
+    INSTALL_COMMAND 
+        make -C ${CPR_SOURCE_DIR}/build install && rm -rf ${CMAKE_CURRENT_BINARY_DIR}/cpr-*
     INSTALL_DIR ${CPR_INSTALL_DIR}
 )
 
@@ -128,7 +131,8 @@ ExternalProject_Add(
             -DCMAKE_INSTALL_PREFIX=${LIBSSH2_INSTALL_DIR}
     BUILD_COMMAND make -C ${LIBSSH2_SOURCE_DIR}/build
     TEST_COMMAND ""
-    INSTALL_COMMAND make -C ${LIBSSH2_SOURCE_DIR}/build install
+    INSTALL_COMMAND 
+        make -C ${LIBSSH2_SOURCE_DIR}/build install && rm -rf ${CMAKE_CURRENT_BINARY_DIR}/libssh2-*
     INSTALL_DIR ${LIBSSH2_INSTALL_DIR}
 )
 
@@ -166,7 +170,8 @@ ExternalProject_Add(
             -DUSE_STATIC_LIBS=ON
     BUILD_COMMAND make -C ${NGHTTP2_SOURCE_DIR}/build
     TEST_COMMAND ""
-    INSTALL_COMMAND make -C ${NGHTTP2_SOURCE_DIR}/build install
+    INSTALL_COMMAND 
+        make -C ${NGHTTP2_SOURCE_DIR}/build install && rm -rf ${CMAKE_CURRENT_BINARY_DIR}/nghttp2-* 
     INSTALL_DIR ${NGHTTP2_INSTALL_DIR}
 )
 

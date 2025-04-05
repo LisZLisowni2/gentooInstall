@@ -61,14 +61,6 @@ Move to created folder and compile the program using that command:
 mkdir build
 cd build
 cmake -DFIRST_INSTALLER_INCLUDE=OFF ..
-```
-
-You have to compile libssh2 static library. Copy that command and run (in build directory):
-
-```
-rm -rf libssh2-build
-cmake -S _deps/libssh2-src -B _deps/libssh2-build -DBUILD_SHARED_LIBS=OFF
-cmake --build _deps/libssh2-build
 make
 ```
 
@@ -91,14 +83,6 @@ Move to created folder and compile the program using that command:
 mkdir build 
 cd build
 cmake ..
-```
-
-You have to compile libssh2 static library. Copy that command and run (in build directory):
-
-```
-rm -rf libssh2-build
-cmake -S _deps/libssh2-src -B _deps/libssh2-build -DBUILD_SHARED_LIBS=OFF
-cmake --build _deps/libssh2-build
 make
 ```
 
