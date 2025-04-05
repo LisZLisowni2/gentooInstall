@@ -69,8 +69,10 @@ bool isNewer(const std::string& folderName1, const std::string& folderName2) {
     return std::mktime(dataAptr) > std::mktime(dataBptr);
 }
 
-std::string latestVersion() {
-    std::vector<std::string> folders = getFoldersFromServer("https://gentoo.osuosl.org/releases/amd64/autobuilds/");
+std::string latestVersion(const bool& isARM) {
+    std::vector<std::string> folders;
+    if (!isARM) folders = getFoldersFromServer("https://gentoo.osuosl.org/releases/amd64/autobuilds/");
+    else folders = getFoldersFromServer("https://gentoo.osuosl.org/releases/arm64/autobuilds/");
     if (folders.empty()) return "";
 
     std::cout << "Find the latest datetime\n";

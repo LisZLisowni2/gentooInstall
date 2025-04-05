@@ -12,6 +12,7 @@ void InstallerFirst::partitions() {
     };
     while (true) {
         clearScreen();
+        std::cout << "UEFI mode: " << isEFI << "\n";
         int key = selectMenu(options, "Partitions", "You have to configure a partitions to install the system. At this point depends on you how would you like to configure the partitions, but if you doesn't have any idea how configure, there are the example layout. Example layout:	/dev/sda1 1GB EFI Partition | /dev/sda2 RAMsize * 2 SWAP Partition | /dev/sda3 'remainder of the disk' Root partition.		If you want home partition, division the root for two parts: root partition and home partition. WARNING! Be careful, you can accidentally erase data on other partitions. Before procedding make backup!");
         std::cout << "\n";
         switch (key) {

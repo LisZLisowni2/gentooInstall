@@ -16,7 +16,7 @@ void InstallerSecond::networkConfig() {
         std::cout << "\n";
         switch (key) {
             case 0:
-                installPackages("net-misc/dhcpcd");
+                installPackages("net-misc/dhcpcd");        
                 executeCommand("rc-update add dhcpcd default");
                 return;
                 break;

@@ -48,6 +48,7 @@ InstallerSecond::~InstallerSecond() {
 
 void InstallerSecond::install() {
     std::string hostname;
+    std::string username;
     executeCommand("emerge-webrsync");
     makeMain();
     profile();
@@ -66,5 +67,12 @@ void InstallerSecond::install() {
     installPackages("sys-boot/grub");
     executeCommand("grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GENTOO");
     executeCommand("grub-mkconfig -o /boot/grub/grub.cfg");
-    std::cout << "You have finished installation of Gentoo... the most basic parts of it.\nThere are some other thing to do like root password, add local users, etc..\nIn future this Installer grants more interactive actions.\nIf you finish the work, exit the chrooted mode and reboot.";
+    executeCommand("passwd");
+    std::cin.ignore(256, '\n');
+    std::cout << "Enter your username: ";
+    getline(std::cin, username);
+    executeCommand("passwd " + username);
+    std::cout << "You have finished installation of minimal Gentoo.\nPress enter to reboot system.";
+    getch();
+    executeCommand("exit && reboot");
 }
