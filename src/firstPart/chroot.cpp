@@ -8,7 +8,7 @@
 #include <map>
 
 void InstallerFirst::chroot() {
-    std::cout << "Now you will chroot to system. After script execution end run ./installer_part2 command";
+    std::cout << "Now you will chroot to system. After script execution end second part of installer will run";
     getch();
     clearScreen();
     executeCommand("cp --dereference /etc/resolv.conf /mnt/gentoo/etc");

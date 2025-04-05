@@ -1,5 +1,6 @@
 #include "InstallerFirst.h"
 #include "utils.h"
+#include "requests.h"
 #include <string>
 #include <iostream>
 #include <algorithm>

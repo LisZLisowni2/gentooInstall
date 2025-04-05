@@ -206,6 +206,7 @@ set(SOURCES
     src/secondPart/kernel.cpp
     src/secondPart/networkConfig.cpp
     utils/Option.cpp
+    utils/requests.cpp
 )
 add_library("${PROJECT_NAME}_lib" STATIC ${SOURCES})
 target_link_libraries("${PROJECT_NAME}_lib" PRIVATE cpr_lib libcurl OpenSSL_Lib OpenSSL::Crypto libssh2_lib zlib_lib nghttp2_lib idn2 psl ssl crypto dl pthread)
@@ -224,6 +225,7 @@ if (FIRST_INSTALLER_INCLUDE)
         src/firstPart/tarball.cpp
         src/firstPart/chroot.cpp
         utils/Option.cpp
+        utils/requests.cpp
     )
     target_link_libraries(installer_part1 PRIVATE "${PROJECT_NAME}_lib")
 else()
@@ -240,4 +242,3 @@ add_executable(installer_part2
     src/secondPart/profile.cpp
     src/secondPart/kernel.cpp
 )
-target_link_libraries(installer_part2 PRIVATE "${PROJECT_NAME}_lib")
