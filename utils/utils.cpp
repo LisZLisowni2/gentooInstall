@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <termios.h>
 #include <unistd.h>
+#include <regex>
 
 #define KEY_UP 65
 #define KEY_DOWN 66
