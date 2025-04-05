@@ -4,11 +4,7 @@
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+A clear and concise steps how to reproduce the error.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
@@ -17,7 +13,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - OS: [e.g. iOS]
+ - Architecture [e.g. ARM64]
+ - Init system [Systemd, OpenRC or something else]
+ - Interface [UEFI, BIOS (Legacy mode) or something else]
  - Version [e.g. 22]
 
 **Additional context**
