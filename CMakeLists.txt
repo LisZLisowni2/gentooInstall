@@ -205,6 +205,7 @@ set(SOURCES
     src/secondPart/profile.cpp
     src/secondPart/kernel.cpp
     src/secondPart/networkConfig.cpp
+    src/secondPart/bootloader.cpp
     utils/Option.cpp
     utils/requests.cpp
 )
@@ -241,4 +242,5 @@ add_executable(installer_part2
     src/secondPart/networkConfig.cpp
     src/secondPart/profile.cpp
     src/secondPart/kernel.cpp
+    src/secondPart/bootloader.cpp
 )
