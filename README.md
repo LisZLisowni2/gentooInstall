@@ -13,11 +13,13 @@ It is easy to use using arrows and beginner-friendly.
 - Automates bootloader setup
 - Automates configuration of the system
 
-## Dependencies
+## Used libraries
 
 - [**CPR**](https://github.com/libcpr/cpr) - Modern API to serve HTTP requests in C++
 - [**termcolor**](https://github.com/ikalnytskyi/termcolor) - Single-header library to add colors in C++
 - [**libssh2**](https://www.libssh2.org/) - Library to operate SSH2 protocol
+- [**OpenSSL**](https://www.openssl.org/) - Software to provide secure communications over computer network
+- [**nghttp2**](https://nghttp2.org/) - Implementaion of HTTP/2
 
 ## Installation
 
@@ -49,9 +51,9 @@ emerge --ask cmake dev/vcs-git
 Download all files from github and unpack it.
 
 ```
-wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/1.0.1.tar.gz
-tar xzvf 1.0.2.tar.gz
-cd gentooInstall-1.0.2
+wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/v2.0.0.tar.gz
+tar xzvf v2.0.0.tar.gz
+cd gentooInstall-v2.0.0
 git clone https://github.com/ikalnytskyi/termcolor.git
 ```
 
@@ -69,12 +71,15 @@ Run `./installer_part2` and follow the instructions.
 
 ### Third method: Compilation from source in host system
 
-To use that method you have to compile it in your host system. Make sure you have git, cmake, make and gcc/g++ compilers.
+To use that method you have to compile it in your host system. Make sure you have cmake, make and gcc/g++ compilers.
 
 Download all files from github.
 
 ```
-git clone https://github.com/LisZLisowni2/gentooInstall
+wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/v2.0.0.tar.gz
+tar xzvf v2.0.0.tar.gz
+cd gentooInstall-v2.0.0
+git clone https://github.com/ikalnytskyi/termcolor.git
 ```
 
 Move to created folder and compile the program using that command:
@@ -98,5 +103,7 @@ Method of installation: First method
 Step: Downloading tarball
 Details: The tarball doesn't download correctly. I got information about no space left.
 ...HERE SOME LOGS FROM TERMINAL...
+
+You can use bug or feature template also.
 
 If you have idea how to improve programe, fork the repo, made changes you want and pull request to main repo.
