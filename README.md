@@ -31,7 +31,7 @@ if you want finish installation after chroot to environment, use second method.
 Download the build directory in bin folder.
 
 ```
-wget https://github.com/LisZLisowni2/gentooInstall/releases/download/2.0.0/gentooInstall
+wget https://github.com/LisZLisowni2/gentooInstall/releases/download/v2.0.0/gentooInstall.tar.gz
 ```
 
 Move to created folder, run `./installer_part1` and follow the instructions.
