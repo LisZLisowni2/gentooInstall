@@ -32,7 +32,8 @@ void InstallerFirst::mount() {
             case 1:
                 std::cout << "\n\nInput boot partition (e.g. /dev/sda2): ";
                 std::cin >> partition;
-                executeCommand("mount --mkdir " + partition + " /mnt/gentoo/boot/efi");
+                if (isEFI) executeCommand("mount --mkdir " + partition + " /mnt/gentoo/boot/efi");
+                else executeCommand("mount --mkdir " + partition + " /mnt/gentoo/boot/");
                 break;
             case 2:
                 std::string path;

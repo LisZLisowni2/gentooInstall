@@ -20,7 +20,7 @@ ExternalProject_Add(
     openssl
     SOURCE_DIR ${OPENSSL_SOURCE_DIR}
     GIT_REPOSITORY https://github.com/openssl/openssl.git
-    GIT_TAG a26d85337dbdcd33c971f38eb3fa5150e75cea87
+    GIT_TAG 636dfadc70ce26f2473870570bfd9ec352806b1d
     CMAKE_ARGS
         -DBUILD_SHARED_LIBS=OFF
         -DUSE_STATIC_LIBS=ON
@@ -69,7 +69,7 @@ ExternalProject_Add(
     cpr
     SOURCE_DIR ${CPR_SOURCE_DIR}
     GIT_REPOSITORY https://github.com/libcpr/cpr.git
-    GIT_TAG dd967cb48ea6bcbad9f1da5ada0db8ac0d532c06
+    GIT_TAG da40186618909b1a7363d4e4495aa899c6e0eb75
     CMAKE_ARGS
         -DBUILD_SHARED_LIBS=OFF
         -DUSE_STATIC_LIBS=ON
