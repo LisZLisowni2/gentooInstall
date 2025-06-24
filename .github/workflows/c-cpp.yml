@@ -15,16 +15,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install essential packages
-        run: sudo apt update && sudo apt install -y cmake g++ git
+        run: sudo apt update && sudo apt install -y cmake g++ git ninja
 
       - name: Build the configuration
         run: |
           git submodule update --init --recursive
           mkdir -p build
           cd build
-          cmake ..
+          cmake -G "Ninja" ..
 
       - name: Compile
         run: |
           cd build
-          make
+          ninja -v -j$(nproc) -l$(nproc)
