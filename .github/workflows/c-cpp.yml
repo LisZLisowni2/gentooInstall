@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install essential packages
-        run: sudo apt update && sudo apt install -y cmake g++ git ninja
+        run: sudo apt update && sudo apt install -y cmake g++ git ninja-build
 
       - name: Build the configuration
         run: |
