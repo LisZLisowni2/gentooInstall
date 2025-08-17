@@ -74,10 +74,13 @@ ExternalProject_Add(
         -DBUILD_SHARED_LIBS=OFF
         -DUSE_STATIC_LIBS=ON
         -DCPR_ENABLE_SSL=ON
-        -DWITH_SSL=ON
-        -DWITH_ZLIB=ON
+	-DWITH_ZLIB=ON
+	-DWITH_SSL=ON
         -DWITH_LIBIDN2=ON
         -DWITH_LIBPSL=ON
+	-DCURL_BROTLI=OFF
+	-DCURL_ZSTD=OFF
+	-DBUILD_TESTING=OFF
         # -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/_install
     CONFIGURE_COMMAND 
         ${CPR_CONFIGURE_COMMAND}
@@ -85,10 +88,13 @@ ExternalProject_Add(
             -DBUILD_SHARED_LIBS=OFF
             -DUSE_STATIC_LIBS=ON
             -DCPR_ENABLE_SSL=ON
+	    -DWITH_ZLIB=ON
             -DWITH_SSL=ON
-            -DWITH_ZLIB=ON
             -DWITH_LIBIDN2=ON
             -DWITH_LIBPSL=ON
+	    -DCURL_BROTLI=OFF
+	    -DCURL_ZSTD=OFF
+	    -DBUILD_TESTING=OFF
     BUILD_COMMAND make -C ${CPR_SOURCE_DIR}/build
     TEST_COMMAND ""
     INSTALL_COMMAND 
@@ -100,16 +106,16 @@ add_library(cpr_lib STATIC IMPORTED GLOBAL)
 add_library(libcurl STATIC IMPORTED GLOBAL)
 add_library(zlib_lib STATIC IMPORTED GLOBAL)
 
-set_target_properties(cpr_lib PROPERTIES
-    IMPORTED_LOCATION ${CPR_INSTALL_DIR}/lib/libcpr.a
+set_target_properties(cpr_lib PROPERTIES 
+	IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib64/libcpr.a"
 )
 
 set_target_properties(libcurl PROPERTIES
-    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libcurl.a"
+    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib64/libcurl.a"
 )
 
 set_target_properties(zlib_lib PROPERTIES
-    IMPORTED_LOCATION ${CPR_INSTALL_DIR}/lib/libz.a
+    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib64/libz.a"
 )
 
 if (EXISTS "${CPR_INCLUDE_DIR}")
@@ -160,7 +166,7 @@ ExternalProject_Add(
 add_library(libssh2_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(libssh2_lib PROPERTIES
-    IMPORTED_LOCATION ${LIBSSH2_INSTALL_DIR}/lib/libssh2.a
+    IMPORTED_LOCATION ${LIBSSH2_INSTALL_DIR}/lib64/libssh2.a
 )
 
 if(EXISTS "${LIBSSH2_INCLUDE_DIR}")
@@ -206,7 +212,7 @@ ExternalProject_Add(
 add_library(nghttp2_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(nghttp2_lib PROPERTIES
-    IMPORTED_LOCATION ${NGHTTP2_INSTALL_DIR}/lib/libnghttp2.a
+    IMPORTED_LOCATION ${NGHTTP2_INSTALL_DIR}/lib64/libnghttp2.a
 )
 
 if(EXISTS "${NGHTTP2_INCLUDE_DIR}")
