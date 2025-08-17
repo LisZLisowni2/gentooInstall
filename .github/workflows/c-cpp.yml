@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install essential packages
-        run: sudo apt update && sudo apt install -y cmake g++ git
+        run: sudo apt update && sudo apt install -y cmake g++ git meson ninja-build libpsl-dev libidn2-dev libunistring-dev
 
       - name: Build the configuration
         run: |
@@ -27,4 +27,4 @@ jobs:
       - name: Compile
         run: |
           cd build
-          make
+          make -j$(nproc)
