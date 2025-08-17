@@ -27,7 +27,6 @@ ExternalProject_Add(
         -DBUILD_SHARED_LIBS=OFF
         -DUSE_STATIC_LIBS=ON
         -DCMAKE_BUILD_TYPE=release
-        # -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/_install
     CONFIGURE_COMMAND 
         ${OPENSSL_CONFIGURE_COMMAND}
             --prefix=${OPENSSL_INSTALL_DIR}
@@ -78,6 +77,7 @@ ExternalProject_Add(
         -DUSE_STATIC_LIBS=ON
         -DCPR_ENABLE_SSL=ON
 		-DWITH_SSL=ON
+  		-DWITH_ZLIB=ON
         -DWITH_LIBIDN2=ON
         -DWITH_LIBPSL=ON
 		-DCURL_BROTLI=OFF
@@ -124,7 +124,7 @@ endif()
 
 add_dependencies(cpr_lib cpr)
 add_dependencies(libcurl cpr)
-##add_dependencies(zlib_lib cpr)
+add_dependencies(zlib_lib cpr)
 
 
 # Libssh2
