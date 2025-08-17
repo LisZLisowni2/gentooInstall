@@ -77,13 +77,13 @@ ExternalProject_Add(
         -DBUILD_SHARED_LIBS=OFF
         -DUSE_STATIC_LIBS=ON
         -DCPR_ENABLE_SSL=ON
-		-DWITH_ZLIB=ON
 		-DWITH_SSL=ON
         -DWITH_LIBIDN2=ON
         -DWITH_LIBPSL=ON
 		-DCURL_BROTLI=OFF
 		-DCURL_ZSTD=OFF
 		-DBUILD_TESTING=OFF
+    	#-DWITH_ZLIB=OFF
         -DCMAKE_INSTALL_LIBDIR={CPR_INSTALL_DIR}/lib
     CONFIGURE_COMMAND 
         ${CPR_CONFIGURE_COMMAND}
@@ -106,17 +106,17 @@ set_target_properties(libcurl PROPERTIES
     IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libcurl.a"
 )
 
-set_target_properties(zlib_lib PROPERTIES
-    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libz.a"
-)
+##set_target_properties(zlib_lib PROPERTIES
+##    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libz.a"
+##)
 
 if (EXISTS "${CPR_INCLUDE_DIR}")
     set_target_properties(cpr_lib PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
     )
-    set_target_properties(zlib_lib PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
-    )
+    ##set_target_properties(zlib_lib PROPERTIES
+    ##    INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
+    ##)
     set_target_properties(libcurl PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES ${CPR_INCLUDE_DIR}
     )
@@ -124,12 +124,12 @@ endif()
 
 add_dependencies(cpr_lib cpr)
 add_dependencies(libcurl cpr)
-add_dependencies(zlib_lib cpr)
+##add_dependencies(zlib_lib cpr)
 
 
 # Libssh2
-set(PC_LIBSSH2_STATIC_LDFLAGS "-L/usr/lib -lssh2 -lssl -lcrypto -ldl -pthread -lz")
-set(PC_LIBSSH2_STATIC_LIBRARIES "ssh2;ssl;crypto;dl;z")
+##set(PC_LIBSSH2_STATIC_LDFLAGS "-L/usr/lib -lssh2 -lssl -lcrypto -ldl -pthread ")
+##set(PC_LIBSSH2_STATIC_LIBRARIES "ssh2;ssl;crypto;dl;z")
 set(LIBSSH2_SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/libssh2-src)
 set(LIBSSH2_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/libssh2)
 set(LIBSSH2_INCLUDE_DIR ${LIBSSH2_INSTALL_DIR}/include)
@@ -210,7 +210,7 @@ endif()
 
 add_dependencies(nghttp2_lib nghttp2)
 
-include_directories(${OPENSSL_INCLUDE_DIR} ${CPR_INCLUDE_DIR} ${LIBSSH2_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR} ${NGHTTP2_INCLUDE_DIR})
+include_directories(${OPENSSL_INCLUDE_DIR} ${CPR_INCLUDE_DIR} ${LIBSSH2_INCLUDE_DIR} ${NGHTTP2_INCLUDE_DIR})
 
 include_directories(include)
 add_subdirectory(termcolor)
