@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a;.lib")
 set(ENABLE_STATIC ON CACHE BOOL "Enable static library" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Use static libraries" FORCE)
+set(CMAKE_INSTALL_LIBDIR "lib64" CACHE PATH "Library install directory" FORCE)
 
 option(FIRST_INSTALLER_INCLUDE "First installer has enabled, compiling first part." ON)
 
