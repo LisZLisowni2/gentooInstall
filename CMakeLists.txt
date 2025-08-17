@@ -43,11 +43,11 @@ add_library(OpenSSL_Lib STATIC IMPORTED GLOBAL)
 add_library(OpenSSL::Crypto STATIC IMPORTED GLOBAL)
 
 set_target_properties(OpenSSL_Lib PROPERTIES
-    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib64/libssl.a
+    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib/libssl.a
 )
 
 set_target_properties(OpenSSL::Crypto PROPERTIES
-    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib64/libcrypto.a
+    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib/libcrypto.a
 )
 
 if (EXISTS "${OPENSSL_INCLUDE_DIR}")
@@ -109,15 +109,15 @@ add_library(libcurl STATIC IMPORTED GLOBAL)
 add_library(zlib_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(cpr_lib PROPERTIES 
-	IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib64/libcpr.a"
+	IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libcpr.a"
 )
 
 set_target_properties(libcurl PROPERTIES
-    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib64/libcurl.a"
+    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libcurl.a"
 )
 
 set_target_properties(zlib_lib PROPERTIES
-    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib64/libz.a"
+    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libz.a"
 )
 
 if (EXISTS "${CPR_INCLUDE_DIR}")
@@ -168,7 +168,7 @@ ExternalProject_Add(
 add_library(libssh2_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(libssh2_lib PROPERTIES
-    IMPORTED_LOCATION ${LIBSSH2_INSTALL_DIR}/lib64/libssh2.a
+    IMPORTED_LOCATION ${LIBSSH2_INSTALL_DIR}/lib/libssh2.a
 )
 
 if(EXISTS "${LIBSSH2_INCLUDE_DIR}")
@@ -214,7 +214,7 @@ ExternalProject_Add(
 add_library(nghttp2_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(nghttp2_lib PROPERTIES
-    IMPORTED_LOCATION ${NGHTTP2_INSTALL_DIR}/lib64/libnghttp2.a
+    IMPORTED_LOCATION ${NGHTTP2_INSTALL_DIR}/lib/libnghttp2.a
 )
 
 if(EXISTS "${NGHTTP2_INCLUDE_DIR}")
