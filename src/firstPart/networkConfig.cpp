@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <vector>
 
-void InstallerFirst::interfaceSelection(std::string& interface) {
+std::string InstallerFirst::interfaceSelection() {
     executeCommand("(ip link | awk '{ print $2 }' | sed 's/:/*/') > /tmp/interfaces.tmp");
     std::ifstream interfacesFile("/tmp/interfaces.tmp");
     std::string line;
@@ -17,15 +17,18 @@ void InstallerFirst::interfaceSelection(std::string& interface) {
             line.erase(line.length() - 1);
         }
 
-        options.push_back(OptionMenu(line, index));
-        index++;
+        if (line.at(line.length() - 1) == '*') { 
+            line.erase(line.length() - 1);
+            options.push_back(OptionMenu(line, index));
+            index++;
+        }
     }
 
     clearScreen();
     int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
     std::cout << "\n";
  
-    interface = options[key].actionID;
+    return options[key].title;
 }
 
 void InstallerFirst::networkConfig() {
@@ -49,7 +52,7 @@ void InstallerFirst::networkConfig() {
                 std::string interface;
                 std::string ssid;
                 std::string password;
-                interfaceSelection(interface);
+                interface = interfaceSelection();
                 executeCommand("ip link set " + interface + " up");
                 std::cout << "\nAll available networks";
                 executeCommand("iwlist " + interface + " scan | grep ESSID");
