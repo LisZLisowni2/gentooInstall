@@ -18,6 +18,7 @@ private:
     inline void mount();
     inline void tarball();
     inline void chroot();
+    inline void interfaceSelection(std::string& interface);
 };
 
 #endif
