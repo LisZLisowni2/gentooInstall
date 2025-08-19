@@ -6,6 +6,14 @@
 #include <stdexcept>
 #include <vector>
 
+void interfaceSelection(std::string& interface) {
+    std::cout << "List of available network interfaces\n\n";
+    executeCommand("(ip link | awk '{ print $2 }' | sed 's/:/*/') > /tmp/interfaces.tmp");
+    std::ifstream interfacesFile("/tmp/interfaces.tmp");
+
+    interface = "CHOOSEN";
+}
+
 void InstallerFirst::networkConfig() {
     std::vector<OptionMenu> options = {
         OptionMenu("Test the Internet", 0),
@@ -27,8 +35,7 @@ void InstallerFirst::networkConfig() {
                 std::string interface;
                 std::string ssid;
                 std::string password;
-                std::cout << "List of available network interfaces\n\n";
-                executeCommand("(ip link | awk '{ print $2 }' | sed 's/:/*/') > /tmp/interfaces.tmp");
+                
                 std::cout << "\nSelect your interface";
                 std::cin >> interface;
                 executeCommand("ip link set " + interface + " up");
