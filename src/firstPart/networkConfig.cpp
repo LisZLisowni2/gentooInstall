@@ -53,7 +53,7 @@ std::string InstallerFirst::wifiSelection() {
         int key = selectMenu(options, "List of available wifi access points", "To configure Wifi choose correct access point");
         std::cout << "\n";
     
-        if (key == -1) {
+        if (key != -1) {
             return options[key].title;
         }
     }
