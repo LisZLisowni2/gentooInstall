@@ -32,22 +32,31 @@ std::string InstallerFirst::interfaceSelection() {
 }
 
 std::string InstallerFirst::wifiSelection() {
-    executeCommand("(iwlist wlan0 scan | awk -F ':' '/ESSID:/ {gsub(/\"/,\"\",$2); if(!seen[$2]++) print $2}' | sed 's/\"//; s/\(.*\)\"$/\1/') > /tmp/wifi.tmp");
-    std::ifstream interfacesFile("/tmp/interfaces.tmp");
-    std::string line;
-    std::vector<OptionMenu> options = {};
-    int index = 0;
-    while (getline(interfacesFile, line)) {
-        if (!line.empty() && line[line.length() - 1] == '\n') {
-            line.erase(line.length() - 1);
+    while (true) {
+        executeCommand("(iwlist wlan0 scan | awk -F ':' '/ESSID:/ {gsub(/\"/,\"\",$2); if(!seen[$2]++) print $2}' | sed 's/\"//; s/\(.*\)\"$/\1/') > /tmp/wifi.tmp");
+        std::ifstream interfacesFile("/tmp/interfaces.tmp");
+        std::string line;
+        std::vector<OptionMenu> options = {};
+        int index = 0;
+        while (getline(interfacesFile, line)) {
+            if (!line.empty() && line[line.length() - 1] == '\n') {
+                line.erase(line.length() - 1);
+            }
+    
+            options.push_back(OptionMenu(line, index));
+            index++;
+        }
+    
+        options.push_back(OptionMenu("Refresh", -1)); // -1 -> Default
+    
+        clearScreen();
+        int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
+        std::cout << "\n";
+    
+        if (key == -1) {
+            return options[key].title;
         }
     }
-
-    clearScreen();
-    int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
-    std::cout << "\n";
- 
-    return options[key].title;
 }
 
 void InstallerFirst::networkConfig() {
