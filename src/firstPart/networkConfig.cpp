@@ -50,7 +50,7 @@ std::string InstallerFirst::wifiSelection() {
         options.push_back(OptionMenu("Refresh", -1)); // -1 -> Default
     
         clearScreen();
-        int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
+        int key = selectMenu(options, "List of available wifi access points", "To configure Wifi choose correct access point");
         std::cout << "\n";
     
         if (key == -1) {
@@ -82,10 +82,7 @@ void InstallerFirst::networkConfig() {
                 std::string password;
                 interface = interfaceSelection();
                 executeCommand("ip link set " + interface + " up");
-                std::cout << "\nAll available networks";
-                executeCommand("iwlist " + interface + " scan | grep ESSID");
-                std::cout << "\nInput SSID (Network name): ";
-                std::cin >> ssid;
+                ssid = wifiSelection();
                 std::cout << "\nInput password for your network: ";
                 std::cin >> password;
                 executeCommand("wpa_passphrase \"" + ssid + "\" \"" + password + "\" > /etc/wpa_supplicant.conf");
