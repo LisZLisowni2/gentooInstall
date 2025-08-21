@@ -19,6 +19,7 @@ private:
     inline void tarball();
     inline void chroot();
     inline std::string interfaceSelection();
+    inline std::string wifiSelection();
 };
 
 #endif
