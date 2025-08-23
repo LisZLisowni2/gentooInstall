@@ -3,7 +3,9 @@
 #include <iostream>
 #include <stdexcept>
 
-OptionMenu::OptionMenu(std::string _title, int _actionID) {
+template<typename T>
+OptionMenu<T>::OptionMenu(std::string _title, int _actionID, T _value = NULL) {
     title = _title;
     actionID = _actionID;
+    value = _value;
 }
