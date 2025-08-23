@@ -50,7 +50,8 @@ void clearScreen() {
     std::cout << "\033[2J\033[H";
 }
 
-int selectMenu(const std::vector<OptionMenu>& options, const std::string& title, const std::string& description) {
+template <typename ValueType = std::string>
+int selectMenu(const std::vector<OptionMenu<ValueType>>& options, const std::string& title, const std::string& description) {
     int selected = 0;
     int optionsLength = options.size();
     while (true) {

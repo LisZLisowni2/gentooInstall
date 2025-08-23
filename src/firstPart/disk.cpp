@@ -10,7 +10,7 @@ void InstallerFirst::partitions() {
     executeCommand("(lsblk -rd | awk '!/NAME/ { print $1 }') > /tmp/devices.tmp");
     std::ifstream deviceFile("/tmp/devices.tmp");
     std::string line;
-    std::vector<OptionMenu> options = {};
+    std::vector<OptionMenu<std::string>> options = {};
     int index = 0;
     while (getline(deviceFile, line)) {
         if (!line.empty() && line[line.length() - 1] == '\n') {
@@ -39,7 +39,7 @@ void InstallerFirst::partitions() {
             continue;
         }
 
-        std::string device = options[key].title;
+        std::string device = options[key].value;
         executeCommand("cfdisk /dev/" + device);
         
         if (!optionContinueCreated) { 

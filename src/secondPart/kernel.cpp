@@ -7,7 +7,7 @@
 #include <vector>
 
 void InstallerSecond::kernelConfig() {
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Install linux firmware", 0),
         OptionMenu("Install intel microcode", 1),
         OptionMenu("Install sof firmware", 2),
@@ -38,7 +38,7 @@ void InstallerSecond::kernelConfig() {
 }
 
 void InstallerSecond::kernelInstall() {
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Install precompiled kernel", 0),
         OptionMenu("Install and configure kernel (For Advanced Users)", 1)
     };
@@ -67,7 +67,7 @@ void InstallerSecond::kernelInstall() {
 }
 
 void InstallerSecond::kernelCompile() {
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Read the lspci file (your PC's specs)", 0),
         OptionMenu("Config kernel", 1),
         OptionMenu("Compile", 2)

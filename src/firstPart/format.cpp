@@ -15,7 +15,7 @@ enum Formats {
 };
 
 void InstallerFirst::format() {
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Format root partition", 0),
         OptionMenu("Format boot partition", 1),
         OptionMenu("Format swap partition", 2),

@@ -12,7 +12,7 @@ void InstallerFirst::tarball() {
     clearScreen();
     std::cout << "Reading the latest version of taball\n\n";
     std::string DATETIME = latestVersion(isARM);
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("OpenRC", 0),
         OptionMenu("Systemd", 1),
         OptionMenu("OpenRC | desktop profile", 2),

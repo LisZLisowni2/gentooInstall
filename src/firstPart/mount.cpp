@@ -8,7 +8,7 @@
 #include <map>
 
 void InstallerFirst::mount() {
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Mount root partition", 0),
         OptionMenu("Mount boot partition", 1),
         OptionMenu("Mount other partition", 2),

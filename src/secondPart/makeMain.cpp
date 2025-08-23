@@ -8,7 +8,7 @@
 
 void InstallerSecond::makeMain() {
     bool autoUsed = false;
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Edit file", 0),
         OptionMenu("Automatic", 1),
         OptionMenu("Next", -1),

@@ -7,7 +7,7 @@
 #include <vector>
 
 void InstallerSecond::profile() {
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("All profiles", 0),
         OptionMenu("Set profile", 1),
         OptionMenu("Next", -1),

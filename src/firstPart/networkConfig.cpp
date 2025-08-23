@@ -10,7 +10,7 @@ std::string InstallerFirst::interfaceSelection() {
     executeCommand("(ip link | awk '{ print $2 }' | sed 's/:/*/') > /tmp/interfaces.tmp");
     std::ifstream interfacesFile("/tmp/interfaces.tmp");
     std::string line;
-    std::vector<OptionMenu> options = {};
+    std::vector<OptionMenu<std::string>> options = {};
     int index = 0;
     while (getline(interfacesFile, line)) {
         if (!line.empty() && line[line.length() - 1] == '\n') {
@@ -19,13 +19,13 @@ std::string InstallerFirst::interfaceSelection() {
 
         if (line.at(line.length() - 1) == '*') { 
             line.erase(line.length() - 1);
-            options.push_back(OptionMenu(line, index));
+            options.push_back(OptionMenu<std::string>(line, index, line));
             index++;
         }
     }
 
     clearScreen();
-    int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
+    int key = selectMenu<std::string>(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
     std::cout << "\n";
  
     return options[key].title;
@@ -36,7 +36,7 @@ std::string InstallerFirst::wifiSelection() {
         executeCommand("(iwlist wlan0 scan | awk -F ':' '/ESSID:/ {gsub(/\"/,\"\",$2); if(!seen[$2]++) print $2}' | sed 's/\"//; s/\(.*\)\"$/\1/') > /tmp/wifi.tmp");
         std::ifstream interfacesFile("/tmp/wifi.tmp");
         std::string line;
-        std::vector<OptionMenu> options = {};
+        std::vector<OptionMenu<std::string>> options = {};
         int index = 0;
         while (getline(interfacesFile, line)) {
             if (!line.empty() && line[line.length() - 1] == '\n') {
@@ -60,7 +60,7 @@ std::string InstallerFirst::wifiSelection() {
 }
 
 void InstallerFirst::networkConfig() {
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Test the Internet", 0),
         OptionMenu("Configure Wifi", 1),
         OptionMenu("Next", -1),
