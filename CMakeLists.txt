@@ -33,7 +33,6 @@ ExternalProject_Add(
             -DUSE_STATIC_LIBS=ON
             -DCMAKE_BUILD_TYPE=release
             -no-docs 
-            -no-man
     BUILD_COMMAND make
     TEST_COMMAND ""
     INSTALL_COMMAND 
