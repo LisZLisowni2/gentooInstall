@@ -23,15 +23,17 @@ ExternalProject_Add(
     SOURCE_DIR ${OPENSSL_SOURCE_DIR}
     GIT_REPOSITORY https://github.com/openssl/openssl.git
     GIT_TAG 636dfadc70ce26f2473870570bfd9ec352806b1d
-    CMAKE_ARGS
-        -DBUILD_SHARED_LIBS=OFF
-        -DUSE_STATIC_LIBS=ON
-        -DCMAKE_BUILD_TYPE=release
+    CMAKE_ARGS ""
     CONFIGURE_COMMAND 
         ${OPENSSL_CONFIGURE_COMMAND}
             --prefix=${OPENSSL_INSTALL_DIR}
             --openssldir=${OPENSSL_INSTALL_DIR}
 			--libdir=${OPENSSL_INSTALL_DIR}/lib
+            -DBUILD_SHARED_LIBS=OFF
+            -DUSE_STATIC_LIBS=ON
+            -DCMAKE_BUILD_TYPE=release
+            -no-docs 
+            -no-man
     BUILD_COMMAND make
     TEST_COMMAND ""
     INSTALL_COMMAND 
