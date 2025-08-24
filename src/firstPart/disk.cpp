@@ -39,7 +39,7 @@ void InstallerFirst::partitions() {
             continue;
         }
 
-        std::string device = options[key].value;
+        std::string device = options[key].title;
         executeCommand("cfdisk /dev/" + device);
         
         if (!optionContinueCreated) { 

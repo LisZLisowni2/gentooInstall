@@ -118,4 +118,5 @@ void helpBox() {
     std::cout << "Down arrow key - Lower option\n\n";
     std::cout << "Press any key to continue...";
     getch();
+    clearScreen();
 }
