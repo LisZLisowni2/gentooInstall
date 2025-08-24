@@ -68,12 +68,7 @@ void InstallerSecond::install() {
     clearScreen();
     networkConfig();
     bootloader();
-    std::string username;
-    std::cin.ignore(256, '\n');
-    std::cout << "Enter your username: ";
-    getline(std::cin, username);
-    executeCommand("useradd -mG wheel,audio,video,usb,cdrom -s /bin/bash " + username);
-    executeCommand("passwd " + username);
+    userCreation();
     std::cout << "You have finished installation of minimal Gentoo.\nPress enter to reboot system.";
     getch();
     executeCommand("exit && reboot");

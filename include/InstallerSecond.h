@@ -19,6 +19,7 @@ private:
     inline void kernelCompile();
     inline void networkConfig();
     inline void bootloader();
+    inline void userCreation();
     inline int profileSelection();
 };
 
