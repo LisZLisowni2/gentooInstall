@@ -27,11 +27,11 @@ private:
 
 class UsernameInvalid : public std::exception {
     private:
-        char* message;
+        std::string message;
     public:
-        UsernameInvalid(char* msg) : message(msg) {}
-        char* what() {
-            return message;
+        UsernameInvalid(const std::string& msg) : message(msg) {}
+        const char* what() const noexcept override {
+            return message.c_str();
         }
 };
 

@@ -12,7 +12,7 @@
 void InstallerSecond::isValidUsername(const std::string& username) {
     // Check if username is empty or too long
     if (username.empty() || username.length() > 32) {
-        throw UsernameInvalid("Username length isn't correct");
+        throw UsernameInvalid("Username length isn't correct (must be 1-32 characters)");
     }
     
     // Username should start with a letter or underscore
@@ -23,7 +23,7 @@ void InstallerSecond::isValidUsername(const std::string& username) {
     // Username can only contain letters, numbers, underscores, and hyphens
     std::regex usernameRegex("^[a-zA-Z_][a-zA-Z0-9_-]*$");
     if (!std::regex_match(username, usernameRegex)) {
-        throw UsernameInvalid("Username contains forbidden chars");
+        throw UsernameInvalid("Username contains forbidden characters");
     }
     
     // Check for reserved usernames
@@ -46,6 +46,9 @@ void InstallerSecond::isValidUsername(const std::string& username) {
 
 void InstallerSecond::userExists(const std::string& username) {
     std::ifstream passwdFile("/etc/passwd");
+    if (!passwdFile.is_open()) {
+        throw UsernameInvalid("Cannot access user database to verify username");
+    }
     std::string line;
     
     while (getline(passwdFile, line)) {
@@ -90,15 +93,15 @@ void InstallerSecond::userCreation() {
         try {
             isValidUsername(username);
             userExists(username);
-        } catch (UsernameInvalid err) {
+            // If username is valid, break out of loop
+            break;
+        } catch (const UsernameInvalid& err) {
             std::cout << err.what() << "\n";
             std::cout << "Press any key to continue...";
             getch();
             continue;
         }
         
-        // Username is valid, break out of loop
-        break;
     }
     
     std::cout << "\nCreating user '" << username << "'...\n";
