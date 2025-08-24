@@ -29,7 +29,7 @@ std::string InstallerFirst::partitionSelection() {
     int key = selectMenu<std::string>(options, "List of available partitions", "Choose correct partition. This operation is dangerous for your data!");
     std::cout << "\n";
  
-    return options[key].title;
+    return options[key].value;
 }
 
 std::string InstallerFirst::formatSelection() {
