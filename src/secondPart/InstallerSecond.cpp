@@ -5,6 +5,7 @@
 #include "kernel.cpp"
 #include "networkConfig.cpp"
 #include "bootloader.cpp"
+#include "user.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>

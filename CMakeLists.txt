@@ -235,7 +235,7 @@ set(SOURCES
     src/secondPart/kernel.cpp
     src/secondPart/networkConfig.cpp
     src/secondPart/bootloader.cpp
-    utils/Option.cpp
+    src/secondPart/user.cpp
     utils/requests.cpp
 )
 add_library("${PROJECT_NAME}_lib" STATIC ${SOURCES})
@@ -254,7 +254,6 @@ if (FIRST_INSTALLER_INCLUDE)
         src/firstPart/mount.cpp
         src/firstPart/tarball.cpp
         src/firstPart/chroot.cpp
-        utils/Option.cpp
         utils/requests.cpp
     )
     target_link_libraries(installer_part1 PRIVATE "${PROJECT_NAME}_lib")
@@ -266,7 +265,7 @@ add_executable(installer_part2
     src/secondPart/InstallerSecond.cpp
     utils/utils.cpp
     src/secondPart/main.cpp
-    utils/Option.cpp
+    src/secondPart/user.cpp
     src/secondPart/makeMain.cpp
     src/secondPart/networkConfig.cpp
     src/secondPart/profile.cpp

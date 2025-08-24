@@ -14,6 +14,7 @@
 #define KEY_DOWN 66
 #define KEY_RIGHT 67
 #define KEY_LEFT 68
+#define KEY_H 72
 
 int executeCommand(const std::string& command) {
     int result = std::system(command.c_str());
@@ -41,6 +42,11 @@ char getch() {
                 default: ch = '\x1b'; break;
             }
         }
+    } else {
+        switch(ch) {
+            case '\n': ch = KEY_RIGHT; break;
+            case 'h': ch = KEY_H; break;
+        }
     }
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
     return ch;
@@ -50,7 +56,7 @@ void clearScreen() {
     std::cout << "\033[2J\033[H";
 }
 
-template <typename ValueType = std::string>
+template <typename ValueType>
 int selectMenu(const std::vector<OptionMenu<ValueType>>& options, const std::string& title, const std::string& description) {
     int selected = 0;
     int optionsLength = options.size();
@@ -79,9 +85,16 @@ int selectMenu(const std::vector<OptionMenu<ValueType>>& options, const std::str
                 clearScreen();
                 return options[selected].actionID;
                 break;
+            case KEY_H:
+                clearScreen();
+                helpBox();
+                break;
         }
     }
 }
+
+template int selectMenu<std::string>(const std::vector<OptionMenu<std::string>>&, const std::string&, const std::string&);
+template int selectMenu<int>(const std::vector<OptionMenu<int>>&, const std::string&, const std::string&);
 
 void installPackages(const std::string& packages) {
     int code = executeCommand("emerge --autounmask-continue " + packages);
@@ -93,4 +106,16 @@ void installPackages(const std::string& packages) {
     std::cout << "You encountered emerge error. There are some common issues and how to resolve:\n";
     std::cout << "- Masked packages (USE changes) => Script set --autounmask-continue flag for automatic unmask masked packages. [...]";
     std::cout << "- The ebuild selected to satisfy '...' has unmet requirements => Exit the script by Ctrl+C shortcut, then open the make.conf file by `nano /etc/portage/make.conf` command. The error is about USE settings that unable to install the package. Maybe some USE flags are wrong defined.\n";
+}
+
+void helpBox() {
+    int max_width = 80;
+	clearScreen();
+	std::cout << termcolor::bright_red << "Help menu\n\n" << termcolor::reset;
+    std::cout << termcolor::bright_cyan << "Controls:\n" << termcolor::reset;
+    std::cout << "Right arrow/enter key - Select option\n";
+    std::cout << "Top arrow key - Upper option\n";
+    std::cout << "Down arrow key - Lower option\n\n";
+    std::cout << "Press any key to continue...";
+    getch();
 }
