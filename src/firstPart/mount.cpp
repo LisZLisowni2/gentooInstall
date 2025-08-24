@@ -18,12 +18,10 @@ void InstallerFirst::mount() {
         clearScreen();
         int key = selectMenu(options, "Mouting partitions", "Mounted partitions means that you can directly access to data on. In this step mount every ppartition that you created. IMPORTANT! START FROM ROOT PARTITION! If you created home partition or any else doesn't mention before use Mount another option and define your own directory. If you have already mounted the partitions (like previous step) skip this. If you want manually mount partitions click Ctrl+C and come back after.");
         std::cout << "\n";
+        if (key == -1) return;
         std::string partition;
         partition = partitionSelection();
         switch (key) {
-            case -1:
-                return;
-                break;
             case 0:
                 executeCommand("mount " + partition + " /mnt/gentoo");
                 break;

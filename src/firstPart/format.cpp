@@ -21,7 +21,7 @@ std::string InstallerFirst::partitionSelection() {
         }
 
         lineValue = line.substr(0, line.find('*')); 
-        options.push_back(OptionMenu(line, index, lineValue));
+        options.push_back(OptionMenu(line, index, "/dev/" + lineValue));
         index++;
     }
 
@@ -78,12 +78,10 @@ void InstallerFirst::format() {
         clearScreen();
         int key = selectMenu(options, "Format partitions", "Format the partitions you want. In this point I will prompt you to input the partitions you want to format, on next screen instructions. Script will format root (ext4), swap and boot (fat32) partition. But if you want own special configuration (example you have home partition), you have to exit from this program using Ctrl+C right now. You can back to it, simply rerun the script and skip this part. The script remember the last procedding menu until the reboot.");
         std::cout << "\n";
+        if (key == -1) return;
         std::string partition;
         partition = partitionSelection();
         switch (key) {
-            case -1:
-                return;
-                break;
             case 0:
                 executeCommand("mkfs.ext4 " + partition);
                 break;
