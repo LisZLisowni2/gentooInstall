@@ -12,7 +12,6 @@ void InstallerSecond::networkConfig() {
     std::cin >> hostname;
     executeCommand("echo \"" + hostname + "\" > /etc/hostname");
     executeCommand("echo \"127.0.0.1\t" + hostname + "\" >> /etc/hosts");
-    executeCommand("echo \"sys-boot/grub efi\" > /etc/portage/portage.use/grub");
     std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Use DHCPCD", 0),
         OptionMenu("Use NetworkManager", 1),
