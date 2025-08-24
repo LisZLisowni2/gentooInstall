@@ -19,13 +19,13 @@ std::string InstallerFirst::interfaceSelection() {
 
         if (line.at(line.length() - 1) == '*') { 
             line.erase(line.length() - 1);
-            options.push_back(OptionMenu<std::string>(line, index, line));
+            options.push_back(OptionMenu(line, index));
             index++;
         }
     }
 
     clearScreen();
-    int key = selectMenu<std::string>(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
+    int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
     std::cout << "\n";
  
     return options[key].title;
