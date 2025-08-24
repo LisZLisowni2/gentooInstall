@@ -64,7 +64,7 @@ void InstallerSecond::install() {
     executeCommand("emerge --autounmask-continue --deep --update --newuse --verbose @world");
     kernelConfig();
     kernelInstall();
-    installPackages("genfstab");
+    installPackages("genfstab app-portage/gentoolkit");
     executeCommand("genfstab -U / >> /etc/fstab");
     clearScreen();
     networkConfig();
