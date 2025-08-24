@@ -76,8 +76,8 @@ void InstallerSecond::userCreation() {
         std::cout << "- Must be between 1-32 characters\n";
         std::cout << "- Cannot be a system reserved name\n\n";
         
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "Enter your username: ";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         
         if (!getline(std::cin, username)) {
             std::cout << "Error reading input. Please try again.\n";

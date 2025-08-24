@@ -1,15 +1,17 @@
 #include "InstallerSecond.h"
 #include "utils.h"
+#include <limits>
 #include <string>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
-void InstallerSecond::networkConfig() {
+void InstallerSecond::networkConfig() { // BUG
     clearScreen();
     std::string hostname;
     std::cout << "Enter your hostname: ";
     std::cin >> hostname;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     executeCommand("echo \"" + hostname + "\" > /etc/hostname");
     executeCommand("echo \"127.0.0.1\t" + hostname + "\" >> /etc/hosts");
     std::vector<OptionMenu<std::string>> options = {
