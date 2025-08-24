@@ -26,7 +26,7 @@ int InstallerSecond::profileSelection() {
     }
 
     clearScreen();
-    int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
+    int key = selectMenu(options, "List of available profiles", "Remember which tarball you picked");
     std::cout << "\n";
 
     return options[key].value;
