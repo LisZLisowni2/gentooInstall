@@ -7,8 +7,8 @@
 #include <vector>
 #include <fstream>
 
-int InstallerSecond::profileSelection() { // BUG
-    executeCommand("(eselect profile list | grep \"default\" | sed 's/ //g; s/\[//g; s/\]/?/g') > /tmp/profiles.tmp");
+int InstallerSecond::profileSelection() { 
+    executeCommand("(eselect profile list | grep \"default\" | sed 's/ //g; s/\\[//g; s/\\]/?/g') > /tmp/profiles.tmp");
     std::ifstream profilesFile("/tmp/profiles.tmp");
     std::string line;
     int value;
@@ -20,7 +20,8 @@ int InstallerSecond::profileSelection() { // BUG
         }
 
         std::string numberString = line.substr(0, line.find('?'));
-        value = atoi(numberString.c_str());
+        std::cout << numberString << "\n";
+        value = std::stoi(numberString);
         options.push_back(OptionMenu<int>(line, index, value));
         index++;
     }
@@ -46,7 +47,7 @@ void InstallerSecond::profile() {
                 return;
                 break;
             case 0:
-                int id = profileSelection(); // BUG
+                int id = profileSelection();
                 executeCommand("eselect profile set " + std::to_string(id)); 
                 break;
         }

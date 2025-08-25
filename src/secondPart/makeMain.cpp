@@ -10,8 +10,8 @@ void InstallerSecond::makeMain() {
     bool autoUsed = false;
     std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Edit file", 0),
-        OptionMenu("Make.conf describe file", 1), // TODO: Download from another github repo make.conf describe file
-        OptionMenu("Automatic", 2), 
+        OptionMenu("Automatic", 1), 
+        OptionMenu("Make.conf describe file", 2), // TODO: Download from another github repo make.conf describe file
         OptionMenu("Next", -1),
     };
     while (true) {

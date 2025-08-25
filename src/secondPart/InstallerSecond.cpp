@@ -70,13 +70,7 @@ void InstallerSecond::install() {
     networkConfig();
     bootloader();
     userCreation();
-    std::cout << "\n\nYou have finished installation of minimal Gentoo.\nDo you want reboot a system now? [Y/n]";
-    char rebootOption = getch();
-    switch (rebootOption) {
-        case 'n':
-        case 'N':
-            std::cout << "\nIf you want later reboot, input exit";
-            executeCommand("bash");
-    }
+    std::cout << "\n\nYou have finished installation of minimal Gentoo.\n";
+    getch();
     executeCommand("exit");
 }
