@@ -71,7 +71,7 @@ int selectMenu(const std::vector<OptionMenu<ValueType>>& options, const std::str
 
     auto [terminalRows, terminalCols] = getTerminalSize();
 
-    int reservedLines = 6;
+    int reservedLines = 12;
 
     int maximumVisibleItems = terminalRows - reservedLines;
 

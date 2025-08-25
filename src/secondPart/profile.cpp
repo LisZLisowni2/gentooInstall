@@ -46,8 +46,8 @@ void InstallerSecond::profile() {
                 return;
                 break;
             case 0:
-                int id = profileSelection();
-                executeCommand("eselect profile set " + id); 
+                int id = profileSelection(); // BUG
+                executeCommand("eselect profile set " + std::to_string(id)); 
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";

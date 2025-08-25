@@ -22,6 +22,7 @@ private:
     inline void isValidUsername(const std::string& username);
     inline void userExists(const std::string& username);
     inline void userCreation();
+    inline std::string diskSelection();
     inline int profileSelection();
 };
 

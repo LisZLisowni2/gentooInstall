@@ -6,7 +6,7 @@
 #include <stdexcept>
 #include <vector>
 
-void InstallerSecond::networkConfig() { // BUG
+void InstallerSecond::networkConfig() { 
     clearScreen();
     std::string hostname;
     std::cout << "Enter your hostname: ";
