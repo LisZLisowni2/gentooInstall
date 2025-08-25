@@ -6,5 +6,6 @@ int main() {
     clearScreen();
     InstallerFirst installer;
     installer.install();
+    executeCommand("reboot");
     return 0;
 }

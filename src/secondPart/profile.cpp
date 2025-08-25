@@ -7,7 +7,7 @@
 #include <vector>
 #include <fstream>
 
-int InstallerSecond::profileSelection() {
+int InstallerSecond::profileSelection() { // BUG
     executeCommand("(eselect profile list | grep \"default\" | sed 's/ //g; s/\[//g; s/\]/?/g') > /tmp/profiles.tmp");
     std::ifstream profilesFile("/tmp/profiles.tmp");
     std::string line;
