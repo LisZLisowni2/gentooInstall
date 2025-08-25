@@ -4,6 +4,7 @@
 
 #include "Option.h"
 #include "utils.h"
+#include <sys/ioctl.h>
 #include <vector>
 #include <cstdlib>
 #include <string>
@@ -20,5 +21,6 @@ bool isNewer(const std::string& folderName1, const std::string& folderName2);
 std::tm parseDate(const std::string& folderName);
 std::vector<std::string> getFoldersFromServer(const std::string& url);
 void helpBox();
+std::pair<int, int> getTerminalSize();
 
 #endif

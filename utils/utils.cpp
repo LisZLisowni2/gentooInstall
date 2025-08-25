@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "Option.h"
+#include <sys/ioctl.h>
 #include <termcolor/termcolor.hpp>
 #include <iostream>
 #include <vector>
@@ -15,6 +16,12 @@
 #define KEY_RIGHT 67
 #define KEY_LEFT 68
 #define KEY_H 72
+
+std::pair<int, int> getTerminalSize() {
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    return {w.ws_row, w.ws_col};
+}
 
 int executeCommand(const std::string& command) {
     int result = std::system(command.c_str());
@@ -60,26 +67,74 @@ template <typename ValueType>
 int selectMenu(const std::vector<OptionMenu<ValueType>>& options, const std::string& title, const std::string& description) {
     int selected = 0;
     int optionsLength = options.size();
+    int topVisible = 0;
+
+    auto [terminalRows, terminalCols] = getTerminalSize();
+
+    int reservedLines = 6;
+
+    int maximumVisibleItems = terminalRows - reservedLines;
+
+    if (maximumVisibleItems < 3) {
+        maximumVisibleItems = 3;
+    }
+
     while (true) {
         std::cout << title << "\n";
         std::cout << description << "\n\n\n";
-        int i = 0;
-        for (auto option : options) {
-            if (i == selected) {
-                std::cout << " " << termcolor::on_bright_white << termcolor::dark << option.title << termcolor::reset << "\n";
-            } else {
-                std::cout << " " << option.title << "\n";
-            }
-            i++;
+        
+        if (selected >= topVisible + maximumVisibleItems) {
+            topVisible = selected - maximumVisibleItems + 1
+        } else if (selected < topVisible) {
+            topVisible = selected;
         }
+
+        if (topVisible < 0) {
+            topVisible = 0;
+        }
+        if (topVisible > optionsLength - maximumVisibleItems) {
+            topVisible = std::max(0, optionsLength - maximumVisibleItems);
+        }
+        if (topVisible > 0) {
+            std::cout << " ↑ (" << topVisible << " more above)\n";
+        }
+
+        int endVisible = std::min(topVisible + maximumVisibleItems, optionsLength)
+        for (int i = topVisible; i < endVisible; i++) {
+            std::string prefix = " ";
+
+            if (optionsLength > 10) {
+                prefix = "[" + std::to_string(i + 1) << "]";
+            }
+
+            if (i == selected) {
+                std::cout << " " << termcolor::on_bright_white << termcolor::dark << option[i].title << termcolor::reset << "\n";
+            } else {
+                std::cout << " " << option[i].title << "\n";
+            }
+        }
+
+        int hiddenBelow = optionsLength - (topVisible + maximumVisibleItems);
+        if (hiddenBelow > 0) {
+            std::cout << " ↓ (" << hiddenBelow << " more below)\n";
+        }
+
+        std::cout << "\nPosition: " << (selected + 1) << "/" << optionsLength;
+        if (optionsLength > maximumVisibleItems) {
+            std::cout << " | Use ↑↓ to scroll, → to select";
+        }
+        std::cout << "\n";
+
         int key = getch();
         clearScreen();
         switch (key) {
             case KEY_UP:
                 if (selected > 0) selected--;
+                else selected = optionsLength - 1;
                 break;
             case KEY_DOWN:
                 if (selected < optionsLength - 1) selected++;
+                else selected = 0;
                 break;
             case KEY_RIGHT:
                 clearScreen();
