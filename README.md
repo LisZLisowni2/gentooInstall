@@ -1,4 +1,4 @@
-# GentooInstaller
+# GentooInstaller 
 
 ## Introduction
 
