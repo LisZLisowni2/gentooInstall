@@ -84,7 +84,7 @@ int selectMenu(const std::vector<OptionMenu<ValueType>>& options, const std::str
         std::cout << description << "\n\n\n";
         
         if (selected >= topVisible + maximumVisibleItems) {
-            topVisible = selected - maximumVisibleItems + 1
+            topVisible = selected - maximumVisibleItems + 1;
         } else if (selected < topVisible) {
             topVisible = selected;
         }
@@ -99,18 +99,18 @@ int selectMenu(const std::vector<OptionMenu<ValueType>>& options, const std::str
             std::cout << " ↑ (" << topVisible << " more above)\n";
         }
 
-        int endVisible = std::min(topVisible + maximumVisibleItems, optionsLength)
+        int endVisible = std::min(topVisible + maximumVisibleItems, optionsLength);
         for (int i = topVisible; i < endVisible; i++) {
             std::string prefix = " ";
 
             if (optionsLength > 10) {
-                prefix = "[" + std::to_string(i + 1) << "]";
+                prefix = "[" + std::to_string(i + 1) + "]";
             }
 
             if (i == selected) {
-                std::cout << " " << termcolor::on_bright_white << termcolor::dark << option[i].title << termcolor::reset << "\n";
+                std::cout << " " << termcolor::on_bright_white << termcolor::dark << options[i].title << termcolor::reset << "\n";
             } else {
-                std::cout << " " << option[i].title << "\n";
+                std::cout << " " << options[i].title << "\n";
             }
         }
 
