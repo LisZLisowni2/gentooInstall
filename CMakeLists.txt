@@ -23,15 +23,16 @@ ExternalProject_Add(
     SOURCE_DIR ${OPENSSL_SOURCE_DIR}
     GIT_REPOSITORY https://github.com/openssl/openssl.git
     GIT_TAG 636dfadc70ce26f2473870570bfd9ec352806b1d
-    CMAKE_ARGS
-        -DBUILD_SHARED_LIBS=OFF
-        -DUSE_STATIC_LIBS=ON
-        -DCMAKE_BUILD_TYPE=release
+    CMAKE_ARGS ""
     CONFIGURE_COMMAND 
         ${OPENSSL_CONFIGURE_COMMAND}
             --prefix=${OPENSSL_INSTALL_DIR}
             --openssldir=${OPENSSL_INSTALL_DIR}
 			--libdir=${OPENSSL_INSTALL_DIR}/lib
+            -DBUILD_SHARED_LIBS=OFF
+            -DUSE_STATIC_LIBS=ON
+            -DCMAKE_BUILD_TYPE=release
+            -no-docs 
     BUILD_COMMAND make
     TEST_COMMAND ""
     INSTALL_COMMAND 
@@ -234,7 +235,7 @@ set(SOURCES
     src/secondPart/kernel.cpp
     src/secondPart/networkConfig.cpp
     src/secondPart/bootloader.cpp
-    utils/Option.cpp
+    src/secondPart/user.cpp
     utils/requests.cpp
 )
 add_library("${PROJECT_NAME}_lib" STATIC ${SOURCES})
@@ -253,7 +254,6 @@ if (FIRST_INSTALLER_INCLUDE)
         src/firstPart/mount.cpp
         src/firstPart/tarball.cpp
         src/firstPart/chroot.cpp
-        utils/Option.cpp
         utils/requests.cpp
     )
     target_link_libraries(installer_part1 PRIVATE "${PROJECT_NAME}_lib")
@@ -265,7 +265,7 @@ add_executable(installer_part2
     src/secondPart/InstallerSecond.cpp
     utils/utils.cpp
     src/secondPart/main.cpp
-    utils/Option.cpp
+    src/secondPart/user.cpp
     src/secondPart/makeMain.cpp
     src/secondPart/networkConfig.cpp
     src/secondPart/profile.cpp

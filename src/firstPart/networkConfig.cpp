@@ -2,11 +2,65 @@
 #include "utils.h"
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <stdexcept>
 #include <vector>
 
+std::string InstallerFirst::interfaceSelection() {
+    executeCommand("(ip link | awk '{ print $2 }' | sed 's/:/*/') > /tmp/interfaces.tmp");
+    std::ifstream interfacesFile("/tmp/interfaces.tmp");
+    std::string line;
+    std::vector<OptionMenu<std::string>> options = {};
+    int index = 0;
+    while (getline(interfacesFile, line)) {
+        if (!line.empty() && line[line.length() - 1] == '\n') {
+            line.erase(line.length() - 1);
+        }
+
+        if (line.at(line.length() - 1) == '*') { 
+            line.erase(line.length() - 1);
+            options.push_back(OptionMenu(line, index));
+            index++;
+        }
+    }
+
+    clearScreen();
+    int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
+    std::cout << "\n";
+ 
+    return options[key].title;
+}
+
+std::string InstallerFirst::wifiSelection() {
+    while (true) {
+        executeCommand("(iwlist wlan0 scan | awk -F ':' '/ESSID:/ {gsub(/\"/,\"\",$2); if(!seen[$2]++) print $2}' | sed 's/\"//; s/\(.*\)\"$/\1/') > /tmp/wifi.tmp");
+        std::ifstream interfacesFile("/tmp/wifi.tmp");
+        std::string line;
+        std::vector<OptionMenu<std::string>> options = {};
+        int index = 0;
+        while (getline(interfacesFile, line)) {
+            if (!line.empty() && line[line.length() - 1] == '\n') {
+                line.erase(line.length() - 1);
+            }
+    
+            options.push_back(OptionMenu(line, index));
+            index++;
+        }
+    
+        options.push_back(OptionMenu("Refresh", -1)); // -1 -> Default
+    
+        clearScreen();
+        int key = selectMenu(options, "List of available wifi access points", "To configure Wifi choose correct access point");
+        std::cout << "\n";
+    
+        if (key != -1) {
+            return options[key].title;
+        }
+    }
+}
+
 void InstallerFirst::networkConfig() {
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Test the Internet", 0),
         OptionMenu("Configure Wifi", 1),
         OptionMenu("Next", -1),
@@ -26,19 +80,15 @@ void InstallerFirst::networkConfig() {
                 std::string interface;
                 std::string ssid;
                 std::string password;
-                std::cout << "List of available network interfaces\n\n";
-                executeCommand("ip link");
-                std::cout << "\nSelect your interface";
-                std::cin >> interface;
+                interface = interfaceSelection();
                 executeCommand("ip link set " + interface + " up");
-                std::cout << "\nAll available networks";
-                executeCommand("iwlist " + interface + " scan | grep ESSID");
-                std::cout << "\nInput SSID (Network name): ";
-                std::cin >> ssid;
-                std::cout << "\nInput password for your network: ";
-                std::cin >> password;
-                executeCommand("wpa_passphrase \"" + ssid + "\" \"" + password + "\" > /etc/wpa_supplicant.conf");
-                executeCommand("wpa_supplicant -B -i " + interface + " -c /etc/wpa_supplicant.conf");
+                ssid = wifiSelection();
+                while (true) {
+                    std::cout << "\nInput password for your network: ";
+                    std::cin >> password;
+                    executeCommand("wpa_passphrase \"" + ssid + "\" \"" + password + "\" > /etc/wpa_supplicant.conf");
+                    if (executeCommand("wpa_supplicant -B -i " + interface + " -c /etc/wpa_supplicant.conf") == 0) return;
+                }
                 executeCommand("dhcpcd " + interface);
                 std::cout << "\nWifi configured";
                 break;

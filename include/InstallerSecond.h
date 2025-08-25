@@ -19,6 +19,21 @@ private:
     inline void kernelCompile();
     inline void networkConfig();
     inline void bootloader();
+    inline void isValidUsername(const std::string& username);
+    inline void userExists(const std::string& username);
+    inline void userCreation();
+    inline std::string diskSelection();
+    inline int profileSelection();
+};
+
+class UsernameInvalid : public std::exception {
+    private:
+        std::string message;
+    public:
+        UsernameInvalid(const std::string& msg) : message(msg) {}
+        const char* what() const noexcept override {
+            return message.c_str();
+        }
 };
 
 #endif

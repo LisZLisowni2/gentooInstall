@@ -1,19 +1,20 @@
 #include "InstallerSecond.h"
 #include "utils.h"
+#include <limits>
 #include <string>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
-void InstallerSecond::networkConfig() {
+void InstallerSecond::networkConfig() { 
     clearScreen();
     std::string hostname;
     std::cout << "Enter your hostname: ";
     std::cin >> hostname;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     executeCommand("echo \"" + hostname + "\" > /etc/hostname");
     executeCommand("echo \"127.0.0.1\t" + hostname + "\" >> /etc/hosts");
-    executeCommand("echo \"sys-boot/grub efi\" > /etc/portage/portage.use/grub");
-    std::vector<OptionMenu> options = {
+    std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Use DHCPCD", 0),
         OptionMenu("Use NetworkManager", 1),
     };

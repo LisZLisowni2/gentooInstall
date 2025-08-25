@@ -4,11 +4,16 @@
 
 #include <string>
 
-class OptionMenu {
+template <typename ValueType = std::string> class OptionMenu {
 public:
     std::string title;
     int actionID;
-    OptionMenu(std::string _title, int _actionID);
+    ValueType value;
+    OptionMenu(std::string _title, int _actionID, ValueType _value = "IGNORE") {
+        title = _title;
+        actionID = _actionID;
+        value = _value;
+    };
 };
 
 #endif

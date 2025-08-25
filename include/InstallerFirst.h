@@ -18,6 +18,10 @@ private:
     inline void mount();
     inline void tarball();
     inline void chroot();
+    inline std::string interfaceSelection();
+    inline std::string wifiSelection();
+    inline std::string partitionSelection();
+    inline std::string formatSelection();
 };
 
 #endif

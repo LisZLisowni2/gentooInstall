@@ -5,11 +5,37 @@
 #include <stdexcept>
 #include <map>
 #include <vector>
+#include <fstream>
+
+int InstallerSecond::profileSelection() { 
+    executeCommand("(eselect profile list | grep \"default\" | sed 's/ //g; s/\\[//g; s/\\]/?/g') > /tmp/profiles.tmp");
+    std::ifstream profilesFile("/tmp/profiles.tmp");
+    std::string line;
+    int value;
+    std::vector<OptionMenu<int>> options = {};
+    int index = 0;
+    while (getline(profilesFile, line)) {
+        if (!line.empty() && line[line.length() - 1] == '\n') {
+            line.erase(line.length() - 1);
+        }
+
+        std::string numberString = line.substr(0, line.find('?'));
+        std::cout << numberString << "\n";
+        value = std::stoi(numberString);
+        options.push_back(OptionMenu<int>(line, index, value));
+        index++;
+    }
+
+    clearScreen();
+    int key = selectMenu(options, "List of available profiles", "Remember which tarball you picked");
+    std::cout << "\n";
+
+    return options[key].value;
+}
 
 void InstallerSecond::profile() {
-    std::vector<OptionMenu> options = {
-        OptionMenu("All profiles", 0),
-        OptionMenu("Set profile", 1),
+    std::vector<OptionMenu<std::string>> options = {
+        OptionMenu("Set profile", 0),
         OptionMenu("Next", -1),
     };
     while (true) {
@@ -21,15 +47,8 @@ void InstallerSecond::profile() {
                 return;
                 break;
             case 0:
-                executeCommand("eselect profile list | less");
-                break;
-            case 1:
-                std::string id;
-                executeCommand("eselect profile list");
-                std::cout << "\n\n";
-                std::cout << "Select the id: ";
-                std::cin >> id;
-                executeCommand("eselect profile set " + id); 
+                int id = profileSelection();
+                executeCommand("eselect profile set " + std::to_string(id)); 
                 break;
         }
         std::cout << "\n\nPress any key to continue.\n";

@@ -5,6 +5,7 @@
 #include "kernel.cpp"
 #include "networkConfig.cpp"
 #include "bootloader.cpp"
+#include "user.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
@@ -63,17 +64,13 @@ void InstallerSecond::install() {
     executeCommand("emerge --autounmask-continue --deep --update --newuse --verbose @world");
     kernelConfig();
     kernelInstall();
-    installPackages("genfstab");
+    installPackages("genfstab app-portage/gentoolkit");
     executeCommand("genfstab -U / >> /etc/fstab");
     clearScreen();
     networkConfig();
     bootloader();
-    std::string username;
-    std::cin.ignore(256, '\n');
-    std::cout << "Enter your username: ";
-    getline(std::cin, username);
-    executeCommand("passwd " + username);
-    std::cout << "You have finished installation of minimal Gentoo.\nPress enter to reboot system.";
+    userCreation();
+    std::cout << "\n\nYou have finished installation of minimal Gentoo.\n";
     getch();
-    executeCommand("exit && reboot");
+    executeCommand("exit");
 }
