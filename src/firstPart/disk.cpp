@@ -35,7 +35,7 @@ void InstallerFirst::partitions() {
         }
 
         if (key == -2) {
-            // executeCommand("cat  | less"); TODO: Download from another github repo example layouts
+            // executeCommand("cat  | less"); TODO: Read file
             continue;
         }
 
