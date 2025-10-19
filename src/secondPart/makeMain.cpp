@@ -11,7 +11,7 @@ void InstallerSecond::makeMain() {
     std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Edit file", 0),
         OptionMenu("Automatic", 1), 
-        OptionMenu("Make.conf describe file", 2), // TODO: Download from another github repo make.conf describe file
+        OptionMenu("Make.conf describe file", 2), // TODO: Read file
         OptionMenu("Next", -1),
     };
     while (true) {

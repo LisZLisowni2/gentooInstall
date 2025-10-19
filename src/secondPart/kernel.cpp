@@ -32,7 +32,7 @@ void InstallerSecond::kernelInstall() {
                 installPackages("sys-kernel/gentoo-sources sys-kernel/installkernel sys-apps/pciutils");
                 executeCommand("lspci > /tmp/lspci.tmp");
                 std::cout << "Preconfiguration\n";
-                executeCommand("mv /usr/src/linux-* /usr/src/linux");
+                executeCommand("ln -sf /usr/src/linux-* /usr/src/linux");
                 executeCommand("cd /usr/src/linux && make localmodconfig");
                 kernelCompile();
                 break;
