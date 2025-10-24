@@ -19,6 +19,7 @@ private:
     inline void kernelCompile();
     inline void networkConfig();
     inline void bootloader();
+    inline void utils();
     inline void isValidUsername(const std::string& username);
     inline void userExists(const std::string& username);
     inline void userCreation();

@@ -236,6 +236,7 @@ set(SOURCES
     src/secondPart/networkConfig.cpp
     src/secondPart/bootloader.cpp
     src/secondPart/user.cpp
+    src/secondPart/utils.cpp
     utils/requests.cpp
 )
 add_library("${PROJECT_NAME}_lib" STATIC ${SOURCES})
@@ -271,4 +272,5 @@ add_executable(installer_part2
     src/secondPart/profile.cpp
     src/secondPart/kernel.cpp
     src/secondPart/bootloader.cpp
+    src/secondPart/utils.cpp
 )
