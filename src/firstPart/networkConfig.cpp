@@ -93,7 +93,5 @@ void InstallerFirst::networkConfig() {
                 std::cout << "\nWifi configured";
                 break;
         }
-        std::cout << "\n\nPress any key to continue.\n";
-        getch();
     }
 }
