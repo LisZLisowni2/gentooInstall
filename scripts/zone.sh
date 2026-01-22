@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ZONES=$(find /usr/share/zoneinfo -type d)
 
