@@ -18,6 +18,7 @@ private:
     inline void kernelInstall();
     inline void kernelCompile();
     inline void networkConfig();
+    inline void zoneConfig();
     inline void bootloader();
     inline void utils();
     inline void isValidUsername(const std::string& username);

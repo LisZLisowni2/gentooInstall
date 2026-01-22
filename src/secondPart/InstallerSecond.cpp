@@ -62,6 +62,7 @@ void InstallerSecond::install() {
     makeMain();
     profile();
     executeCommand("emerge --autounmask-continue --deep --update --newuse --verbose @world");
+    zoneConfig();
     kernelConfig();
     kernelInstall();
     networkConfig();
