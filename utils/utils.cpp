@@ -27,6 +27,7 @@ int executeCommand(const std::string& command) {
     int result = std::system(command.c_str());
     if (result != 0) {
         std::cout << "Command failed: " << command << " | Error code: " << result << "\n";
+        getch();
     }
     return result;
 }

@@ -64,7 +64,7 @@ void InstallerSecond::localeConfig() {
     std::ifstream localeFile("/tmp/locales.tmp");
     std::string line;
     int value;
-    std::vector<OptionMenu<std::string>> options = {};
+    options.clear();
     int index = 0;
     while (getline(localeFile, line)) {
         if (!line.empty() && line[line.length() - 1] == '\n') {
@@ -76,7 +76,7 @@ void InstallerSecond::localeConfig() {
     }
 
     clearScreen();
-    int key = selectMenu(options, "List of generated locales", "Choose correct locale");
+    key = selectMenu(options, "List of generated locales", "Choose correct locale");
     std::cout << "\n";
     executeCommand("eselect locale set " + options[key].title);
 }

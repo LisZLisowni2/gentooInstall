@@ -30,10 +30,9 @@ void InstallerSecond::zoneConfig() {
     clearScreen();
     int key = selectMenu<std::string>(options, "List of available zones", "Choose correct zone");
     std::cout << "\n";
-    std::string zone = options[key].title;
+    std::string rootZone = options[key].title;
     zoneFile.close();
 
-    std::string rootZone = options[key].title;
     // executeCommand("rm /tmp/zone.tmp");
     executeCommand("/tmp/subZone.sh " + rootZone);
     std::ifstream subZoneFile("/tmp/subZone.tmp");
@@ -54,6 +53,6 @@ void InstallerSecond::zoneConfig() {
     // executeCommand("rm /tmp/zone.tmp");
     // executeCommand("rm /tmp/subZone.sh");
     // executeCommand("rm /tmp/zone.sh");
-    executeCommand("ln -sf /usr/share/zoneinfo/" + zone + "/" + options[key].title + " /etc/localtime");
+    executeCommand("ln -sf /usr/share/zoneinfo/" + rootZone+ "/" + options[key].title + " /etc/localtime");
     zoneFile.close();
 }
