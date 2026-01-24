@@ -1,5 +1,5 @@
-#include "InstallerFirst.h"
-#include "utils.h"
+#include "InstallerFirst.hpp"
+#include "utils.hpp"
 #include <fstream>
 #include <string>
 #include <iostream>

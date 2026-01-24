@@ -1,6 +1,6 @@
-#include "InstallerFirst.h"
+#include "InstallerFirst.hpp"
 #include "termcolor/termcolor.hpp"
-#include "utils.h"
+#include "utils.hpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>

@@ -1,5 +1,5 @@
-#ifndef OPTION_H
-#define OPTION_H
+#ifndef OPTION_HPP
+#define OPTION_HPP
 #pragma once
 
 #include <string>

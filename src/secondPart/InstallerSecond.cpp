@@ -1,5 +1,5 @@
-#include "InstallerSecond.h"
-#include "utils.h"
+#include "InstallerSecond.hpp"
+#include "utils.hpp"
 #include "makeMain.cpp"
 #include "profile.cpp"
 #include "kernel.cpp"

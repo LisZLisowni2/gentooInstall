@@ -1,9 +1,8 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef UTILS_HPP
+#define UTILS_HPP
 #pragma once
 
-#include "Option.h"
-#include "utils.h"
+#include "Option.hpp"
 #include <sys/ioctl.h>
 #include <vector>
 #include <cstdlib>

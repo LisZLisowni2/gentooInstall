@@ -1,5 +1,5 @@
-#include "utils.h"
-#include "Option.h"
+#include "utils.hpp"
+#include "Option.hpp"
 #include <sys/ioctl.h>
 #include <termcolor/termcolor.hpp>
 #include <iostream>

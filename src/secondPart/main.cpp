@@ -1,5 +1,5 @@
-#include "InstallerSecond.h"
-#include "utils.h"
+#include "InstallerSecond.hpp"
+#include "utils.hpp"
 #include <iostream>
 
 int main() {

@@ -1,9 +1,9 @@
-#ifndef INSTALLER_SECOND_H
-#define INSTALLER_SECOND_H
+#ifndef INSTALLER_SECOND_HPP
+#define INSTALLER_SECOND_HPP
 #pragma once
 
 #include <string>
-#include "GentooInstaller.h"
+#include "GentooInstaller.hpp"
 
 class InstallerSecond : GentooInstaller {
 public:
