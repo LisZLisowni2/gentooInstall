@@ -46,5 +46,19 @@ void localeSelection() {
 }
 
 void InstallerSecond::localeConfig() {
-    
+    localeSelection();
+    std::vector<OptionMenu<std::string>> options = {
+        OptionMenu("Add locale", 1),
+        OptionMenu("Next", -1),
+    };
+
+    clearScreen();
+    int key = selectMenu(options, "List of available locales", "Choose correct locale");
+    std::cout << "\n";
+    if (key == 1) {
+        localeSelection();
+    }
+
+    executeCommand("locale-gen");
+    executeCommand("eselect locale list | grep \"UTF-8\" | awk '{ print $2 }' > /tmp/locales.tmp");
 }
