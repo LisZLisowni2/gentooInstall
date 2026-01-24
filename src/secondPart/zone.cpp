@@ -54,5 +54,5 @@ void InstallerSecond::zoneConfig() {
     // executeCommand("rm /tmp/subZone.sh");
     // executeCommand("rm /tmp/zone.sh");
     executeCommand("ln -sf /usr/share/zoneinfo/" + rootZone+ "/" + options[key].title + " /etc/localtime");
-    zoneFile.close();
+    subZoneFile.close();
 }
