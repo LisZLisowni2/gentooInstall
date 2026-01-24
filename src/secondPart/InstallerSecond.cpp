@@ -5,6 +5,7 @@
 #include "kernel.cpp"
 #include "networkConfig.cpp"
 #include "bootloader.cpp"
+#include "locale.cpp"
 #include "user.cpp"
 #include "zone.cpp"
 #include <iostream>
@@ -64,6 +65,7 @@ void InstallerSecond::install() {
     profile();
     executeCommand("emerge --autounmask-continue --deep --update --newuse --verbose @world");
     zoneConfig();
+    localeConfig();
     kernelConfig();
     kernelInstall();
     networkConfig();
