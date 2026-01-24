@@ -61,4 +61,22 @@ void InstallerSecond::localeConfig() {
 
     executeCommand("locale-gen");
     executeCommand("eselect locale list | grep \"UTF-8\" | awk '{ print $2 }' > /tmp/locales.tmp");
+    std::ifstream localeFile("/tmp/locales.tmp");
+    std::string line;
+    int value;
+    std::vector<OptionMenu<std::string>> options = {};
+    int index = 0;
+    while (getline(localeFile, line)) {
+        if (!line.empty() && line[line.length() - 1] == '\n') {
+            line.erase(line.length() - 1);
+        }
+
+        options.push_back(OptionMenu<std::string>(line, index));
+        index++;
+    }
+
+    clearScreen();
+    int key = selectMenu(options, "List of generated locales", "Choose correct locale");
+    std::cout << "\n";
+    executeCommand("eselect locale set " + options[key].title);
 }
