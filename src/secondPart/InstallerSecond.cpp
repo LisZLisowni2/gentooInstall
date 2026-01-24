@@ -6,6 +6,7 @@
 #include "networkConfig.cpp"
 #include "bootloader.cpp"
 #include "user.cpp"
+#include "zone.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>

@@ -7,3 +7,4 @@ build
 .DS_STORE
 *.local
 .sync-exclude.lst
+gentooInstall
