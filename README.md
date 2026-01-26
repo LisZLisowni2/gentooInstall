@@ -1,10 +1,17 @@
+![Static Badge](https://img.shields.io/badge/GPL-3?label=License)
+![](https://img.shields.io/badge/Version-2.2-red?style=flat)
+
 # GentooInstaller 
 
-## Introduction
+### Introduction
 
 Gentoo linux is hard to install and only manual. You have to configure everything manually from language to kernel.
-GentooInstaller is iteractive installation script for Gentoo that automate many processes.
+GentooInstaller is interactive installation script for Gentoo that automate many processes.
 It is easy to use using arrows and beginner-friendly.
+
+## Definition
+GentooInstaller is an interactive C++ CLI tool designed to automate the tedious parts of a Gentoo installation while keeping the flexibility that makes Gentoo great. No more copy-pasting from the handbook for hours—just follow the prompts and build your system.
+All configuration is provided using official Handbook.
 
 ## Features
 
@@ -26,19 +33,26 @@ It is easy to use using arrows and beginner-friendly.
 Installation of GentooInstaller depends on your needs. If you want install all your system using GentooInstaller use first or third method,<br>
 if you want finish installation after chroot to environment, use second method.
 
+|   |   |   |
+| --- | --- | --- |
+| Method |	Best For... | 	Difficulty |
+| Precompiled (Recommended) |	Most users who want to get started fast. |	⭐ |
+| Host Compilation |	Users who want to verify source code before running. |	⭐⭐ |
+| Chroot Compilation |	Advanced users repairing an existing install. |	⭐⭐⭐ |
+
 ### First method: Precompiled
 
 Download the build directory in bin folder.
 
 ```
-wget https://github.com/LisZLisowni2/gentooInstall/releases/download/v2.1.2/gentooInstall.tar.gz
+wget https://github.com/LisZLisowni2/gentooInstall/releases/download/v2.2/gentooInstall.tar.gz
 ```
 
 Move to created folder, run `./installer_part1` and follow the instructions.
 
-### Second method: Compilation from source in chrooted environment (DO NOT USE IT RIGHT NOW! IN FUTURE WILL BE AVAILABLE)
+### Second method: Chroot compilation
 
-**WARNING! YOU HAVE TO CONFIG NETWORK, CONFIG DISK'S PARTITIONS, MOUNTING PARTITIONS, DOWNLOAD TARBALL FILE, COPY DNS INFO AND MOUNT NECESSARY PARTITIONS (LIKE /proc) AND CHROOTING TO NEW SYSTEM BY YOURSELF BEFORE USING THAT METHOD.**
+> [!WARNING] Method 2 is currently in development. Ensure you have manually configured networking and partitions before attempting.
 
 Sync with emerge using `emerge-webrsync`  
 
@@ -51,9 +65,9 @@ emerge --ask cmake dev/vcs-git
 Download all files from github and unpack it.
 
 ```
-wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/v2.1.2.tar.gz
-tar xzvf v2.1.2.tar.gz
-cd gentooInstall-v2.1.2
+wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/v2.2.tar.gz
+tar xzvf v2.2.tar.gz
+cd gentooInstall-v2.2
 git clone https://github.com/ikalnytskyi/termcolor.git
 ```
 
@@ -69,16 +83,16 @@ make
 
 Run `./installer_part2` and follow the instructions.
 
-### Third method: Compilation from source in host system
+### Third method: Host compilation
 
 To use that method you have to compile it in your host system. Make sure you have cmake, make and gcc/g++ compilers.
 
 Download all files from github.
 
 ```
-wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/v2.1.2.tar.gz
-tar xzvf v2.1.2.tar.gz
-cd gentooInstall-v2.1.2
+wget https://github.com/LisZLisowni2/gentooInstall/archive/refs/tags/v2.2.tar.gz
+tar xzvf v2.2.tar.gz
+cd gentooInstall-v2.2
 git clone https://github.com/ikalnytskyi/termcolor.git
 ```
 
@@ -106,4 +120,4 @@ Details: The tarball doesn't download correctly. I got information about no spac
 
 You can use bug or feature template also.
 
-If you have idea how to improve programe, fork the repo, made changes you want and pull request to main repo.
+If you have idea how to improve program, fork the repo, made changes you want and pull request to main repo.
