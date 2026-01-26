@@ -7,9 +7,9 @@
 #include <vector>
 #include <fstream>
 
-void localeSelection() {
-    executeCommand("(grep \"UTF-8\" /etc/locale.gen | awk '{ print $2 }') > /tmp/localeValues.tmp");
-    executeCommand("(grep \"UTF-8\" /etc/locale.gen | awk '{ s = \"\"; for (i = 5; i <= NF; i++) s = s \" \" $i; print s }') > /tmp/localeNames.tmp");
+void InstallerSecond::localeSelection() {
+    executeCommand("(cat /etc/locale.gen | tail -n+3 | awk '{ print $2 }') > /tmp/localeValues.tmp");
+    executeCommand("(cat /etc/locale.gen | tail -n+3 | awk \'{ s = \"\"; for (i = 4; i <= NF; i++) s = s \" \" $i; print s }\') > /tmp/localeNames.tmp");
     std::ifstream localeNameFile("/tmp/localeNames.tmp");
     std::ifstream localeValueFile("/tmp/localeValues.tmp");
     std::string line;
@@ -31,36 +31,43 @@ void localeSelection() {
             line.erase(line.length() - 1);
         }
 
-        names.push_back(line);
+        values.push_back(line);
     }
 
     for (int i = 0; i < names.size(); i++) {
-        options.push_back(OptionMenu(names[i], index, values[i]));
+        options.push_back(OptionMenu(values[i] + " " + names[i], index, values[i]));
         index++;
     }
 
     clearScreen();
     int key = selectMenu(options, "List of available locales", "Choose correct locale");
     std::cout << "\n";
-    executeCommand("echo " + options[key].value + " > /etc/locale.gen");
+    if (options[key].value.find('@') == std::string::npos) {
+        executeCommand("echo \"" + options[key].value + ".UTF-8 UTF-8\" >> /etc/locale.gen");
+    } else {
+        std::string newString = options[key].value.substr(0, options[key].value.find("@") - 1) + ".UTF-8" + options[key].value.substr(options[key].value.find("@") - 1) + " UTF-8";
+        executeCommand("echo \"" + newString + "\" > /etc/locale.gen");
+    }
 }
 
 void InstallerSecond::localeConfig() {
-    localeSelection();
     std::vector<OptionMenu<std::string>> options = {
         OptionMenu("Add locale", 1),
         OptionMenu("Next", -1),
     };
 
-    clearScreen();
-    int key = selectMenu(options, "List of available locales", "Choose correct locale");
-    std::cout << "\n";
-    if (key == 1) {
+    while (true) {
         localeSelection();
+        clearScreen();
+        int key = selectMenu(options, "Do you want add more locales?", "Choose correct option");
+        std::cout << "\n";
+        if (key == -1) {
+            break;
+        }
     }
 
     executeCommand("locale-gen");
-    executeCommand("eselect locale list | grep \"UTF-8\" | awk '{ print $2 }' > /tmp/locales.tmp");
+    executeCommand("eselect locale list | tail -n+1 | awk '{ print $2 }' > /tmp/locales.tmp");
     std::ifstream localeFile("/tmp/locales.tmp");
     std::string line;
     int value;
@@ -76,7 +83,7 @@ void InstallerSecond::localeConfig() {
     }
 
     clearScreen();
-    key = selectMenu(options, "List of generated locales", "Choose correct locale");
+    int key = selectMenu(options, "List of generated locales", "Choose correct locale");
     std::cout << "\n";
     executeCommand("eselect locale set " + options[key].title);
 }

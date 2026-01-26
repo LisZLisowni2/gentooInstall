@@ -32,7 +32,15 @@ ExternalProject_Add(
             -DBUILD_SHARED_LIBS=OFF
             -DUSE_STATIC_LIBS=ON
             -DCMAKE_BUILD_TYPE=release
-            -no-docs 
+            -no-docs
+            -no-tests
+            -no-md2 
+            -no-rc4 
+            -no-des
+            -no-deprecated
+            -no-ssl3
+            -no-tls1
+            -no-tls1_1
     BUILD_COMMAND make
     TEST_COMMAND ""
     INSTALL_COMMAND 
@@ -238,6 +246,7 @@ set(SOURCES
     src/secondPart/user.cpp
     src/secondPart/utils.cpp
     src/secondPart/zone.cpp
+    src/secondPart/locale.cpp
     utils/requests.cpp
 )
 add_library("${PROJECT_NAME}_lib" STATIC ${SOURCES})
@@ -275,4 +284,5 @@ add_executable(installer_part2
     src/secondPart/bootloader.cpp
     src/secondPart/utils.cpp
     src/secondPart/zone.cpp
+    src/secondPart/locale.cpp
 )

@@ -16,7 +16,6 @@ void InstallerSecond::zoneConfig() {
     std::ifstream zoneFile("/tmp/zone.tmp");
     std::string line;
     std::vector<OptionMenu<std::string>> options = {};
-    std::string lineValue;
     int index = 0;
     while (getline(zoneFile, line)) {
         if (!line.empty() && line[line.length() - 1] == '\n') {
@@ -53,6 +52,6 @@ void InstallerSecond::zoneConfig() {
     // executeCommand("rm /tmp/zone.tmp");
     // executeCommand("rm /tmp/subZone.sh");
     // executeCommand("rm /tmp/zone.sh");
-    executeCommand("ln -sf /usr/share/zoneinfo/" + rootZone+ "/" + options[key].title + " /etc/localtime");
+    executeCommand("ln -sf /usr/share/zoneinfo/" + rootZone + "/" + options[key].title + " /etc/localtime");
     subZoneFile.close();
 }

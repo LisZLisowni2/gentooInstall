@@ -27,6 +27,7 @@ private:
     inline void userCreation();
     inline std::string diskSelection();
     inline int profileSelection();
+    inline void localeSelection();
 };
 
 class UsernameInvalid : public std::exception {
