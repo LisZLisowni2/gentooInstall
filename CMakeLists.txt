@@ -32,6 +32,8 @@ ExternalProject_Add(
             -DBUILD_SHARED_LIBS=OFF
             -DUSE_STATIC_LIBS=ON
             -DCMAKE_BUILD_TYPE=release
+            -O3
+            -enable-ec_nistp_64_gcc_128
             -no-docs
             -no-tests
             -no-md2 
