@@ -51,7 +51,5 @@ void InstallerSecond::profile() {
                 executeCommand("eselect profile set " + std::to_string(id)); 
                 break;
         }
-        std::cout << "\n\nPress any key to continue.\n";
-        getch();
     }
 }

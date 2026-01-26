@@ -117,7 +117,5 @@ void InstallerFirst::format() {
                 }
                 break;
         }
-        std::cout << "\n\nPress any key to continue.\n";
-        getch();
     }
 }

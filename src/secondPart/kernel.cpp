@@ -37,8 +37,6 @@ void InstallerSecond::kernelInstall() {
                 kernelCompile();
                 break;
         }
-        std::cout << "\n\nPress any key to continue.\n";
-        getch();
         return;
     }
 }
@@ -70,7 +68,5 @@ void InstallerSecond::kernelCompile() {
                 std::cout << "Something wrong is in your kernel configuration. Check out the config and retry compilation";
                 break;
         }
-        std::cout << "\n\nPress any key to continue.\n";
-        getch();
     }
 }

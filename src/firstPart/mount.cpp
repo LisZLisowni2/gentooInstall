@@ -36,7 +36,5 @@ void InstallerFirst::mount() {
                 executeCommand("mount --mkdir " + partition + " " + path);
                 break;
             }
-        std::cout << "\n\nPress any key to continue.\n";
-        getch();
     }
 }

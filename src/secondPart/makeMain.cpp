@@ -41,7 +41,5 @@ void InstallerSecond::makeMain() {
                 autoUsed = true;
                 break;
         }
-        std::cout << "\n\nPress any key to continue.\n";
-        getch();
     }
 }

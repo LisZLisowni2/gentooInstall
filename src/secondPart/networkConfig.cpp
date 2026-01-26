@@ -36,7 +36,5 @@ void InstallerSecond::networkConfig() {
                 return;
                 break;
         }
-        std::cout << "\n\nPress any key to continue.\n";
-        getch();
     }
 }
