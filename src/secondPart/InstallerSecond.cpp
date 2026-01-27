@@ -17,7 +17,7 @@ InstallerSecond::InstallerSecond() {
     std::cout << "Gentoo Installer Initialized.\n"; 
     executeCommand("uname -m > /tmp/uname.tmp");
     executeCommand("echo $([ -d /sys/firmware/efi ] && echo UEFI || echo BIOS) > /tmp/uefi.tmp");
-    executeCommand("echo $(! rc-service --version && echo SYSTEMD || echo OPENRC) > /tmp/init.tmp");
+    executeCommand("echo $(! rc-service --version 1>/dev/null && echo SYSTEMD || echo OPENRC) > /tmp/init.tmp");
     std::ifstream unameFile("/tmp/uname.tmp");
     std::ifstream uefiFile("/tmp/uefi.tmp");
     std::ifstream initFile("/tmp/init.tmp");
