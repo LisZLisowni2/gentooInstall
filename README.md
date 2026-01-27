@@ -1,16 +1,16 @@
 ![Static Badge](https://img.shields.io/badge/GPL-3?label=License)
 ![](https://img.shields.io/badge/Version-2.2-red?style=flat)
 
-# GentooInstaller 
+# GentooInstall 
 
 ### Introduction
 
 Gentoo linux is hard to install and only manual. You have to configure everything manually from language to kernel.
-GentooInstaller is interactive installation script for Gentoo that automate many processes.
+GentooInstall is interactive installation script for Gentoo that automate many processes.
 It is easy to use using arrows and beginner-friendly.
 
 ## Definition
-GentooInstaller is an interactive C++ CLI tool designed to automate the tedious parts of a Gentoo installation while keeping the flexibility that makes Gentoo great. No more copy-pasting from the handbook for hours—just follow the prompts and build your system.
+GentooInstall is an interactive C++ CLI tool designed to automate the tedious parts of a Gentoo installation while keeping the flexibility that makes Gentoo great. No more copy-pasting from the handbook for hours—just follow the prompts and build your system.
 All configuration is provided using official Handbook.
 
 ## Features
