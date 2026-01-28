@@ -1,9 +1,9 @@
-#ifndef INSTALLER_SECOND_H
-#define INSTALLER_SECOND_H
+#ifndef INSTALLER_SECOND_HPP
+#define INSTALLER_SECOND_HPP
 #pragma once
 
 #include <string>
-#include "GentooInstaller.h"
+#include "GentooInstaller.hpp"
 
 class InstallerSecond : GentooInstaller {
 public:
@@ -18,6 +18,8 @@ private:
     inline void kernelInstall();
     inline void kernelCompile();
     inline void networkConfig();
+    inline void zoneConfig();
+    inline void localeConfig();
     inline void bootloader();
     inline void utils();
     inline void isValidUsername(const std::string& username);
@@ -25,6 +27,7 @@ private:
     inline void userCreation();
     inline std::string diskSelection();
     inline int profileSelection();
+    inline void localeSelection();
 };
 
 class UsernameInvalid : public std::exception {

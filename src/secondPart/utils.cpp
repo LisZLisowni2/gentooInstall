@@ -1,6 +1,6 @@
-#include "InstallerSecond.h"
+#include "InstallerSecond.hpp"
 #include <string>
-#include "utils.h"
+#include "utils.hpp"
 #include <iostream>
 #include <stdexcept>
 

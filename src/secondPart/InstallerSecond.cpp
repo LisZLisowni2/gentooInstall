@@ -1,11 +1,13 @@
-#include "InstallerSecond.h"
-#include "utils.h"
+#include "InstallerSecond.hpp"
+#include "utils.hpp"
 #include "makeMain.cpp"
 #include "profile.cpp"
 #include "kernel.cpp"
 #include "networkConfig.cpp"
 #include "bootloader.cpp"
+#include "locale.cpp"
 #include "user.cpp"
+#include "zone.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
@@ -15,7 +17,7 @@ InstallerSecond::InstallerSecond() {
     std::cout << "Gentoo Installer Initialized.\n"; 
     executeCommand("uname -m > /tmp/uname.tmp");
     executeCommand("echo $([ -d /sys/firmware/efi ] && echo UEFI || echo BIOS) > /tmp/uefi.tmp");
-    executeCommand("echo $(! rc-service --version && echo SYSTEMD || echo OPENRC) > /tmp/init.tmp");
+    executeCommand("echo $(! rc-service --version 1>/dev/null && echo SYSTEMD || echo OPENRC) > /tmp/init.tmp");
     std::ifstream unameFile("/tmp/uname.tmp");
     std::ifstream uefiFile("/tmp/uefi.tmp");
     std::ifstream initFile("/tmp/init.tmp");
@@ -62,6 +64,8 @@ void InstallerSecond::install() {
     makeMain();
     profile();
     executeCommand("emerge --autounmask-continue --deep --update --newuse --verbose @world");
+    zoneConfig();
+    localeConfig();
     kernelConfig();
     kernelInstall();
     networkConfig();

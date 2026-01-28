@@ -1,5 +1,5 @@
-#include "InstallerSecond.h"
-#include "utils.h"
+#include "InstallerSecond.hpp"
+#include "utils.hpp"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -31,7 +31,7 @@ std::string InstallerSecond::diskSelection() {
 }
 
 void InstallerSecond::bootloader() {
-    if (isEFI) executeCommand("echo \"sys-boot/grub efi\" > /etc/portage/portage.use/grub");
+    if (isEFI) executeCommand("echo \"sys-boot/grub efi\" > /etc/portage/package.use/grub");
     installPackages("sys-boot/grub");
     if (isEFI) executeCommand("grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GENTOO");
     else  {

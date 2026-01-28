@@ -1,4 +1,4 @@
-#include "InstallerFirst.h"
+#include "InstallerFirst.hpp"
 #include "startMenu.cpp"
 #include "networkConfig.cpp"
 #include "format.cpp"
@@ -6,7 +6,7 @@
 #include "mount.cpp"
 #include "chroot.cpp"
 #include "tarball.cpp"
-#include "utils.h"
+#include "utils.hpp"
 #include <iostream>
 #include <fstream>
 #include <stdexcept>

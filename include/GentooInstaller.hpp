@@ -1,5 +1,5 @@
-#ifndef GENTOO_INSTALLER_H
-#define GENTOO_INSTALLER_H
+#ifndef GENTOO_INSTALLER_HPP
+#define GENTOO_INSTALLER_HPP
 #pragma once
 
 #include <string>

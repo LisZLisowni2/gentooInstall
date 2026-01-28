@@ -1,9 +1,9 @@
-#ifndef REQUESTS_H
-#define REQUESTS_H
+#ifndef REQUESTS_HPP
+#define REQUESTS_HPP
 #pragma once
 
-#include "Option.h"
-#include "utils.h"
+#include "Option.hpp"
+#include "utils.hpp"
 #include <vector>
 #include <cstdlib>
 #include <string>
