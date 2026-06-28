@@ -17,7 +17,7 @@ std::string InstallerFirst::interfaceSelection() {
     executeCommand("(ip link | awk '{ print $2 }' | sed 's/:/*/') > /tmp/interfaces.tmp");
     std::ifstream interfacesFile("/tmp/interfaces.tmp");
     std::string line;
-    std::vector<OptionMenu<std::string>> options = {};
+    std::vector<std::string> options = {};
     int index = 0;
     while (getline(interfacesFile, line)) {
         if (!line.empty() && line[line.length() - 1] == '\n') {
@@ -26,44 +26,134 @@ std::string InstallerFirst::interfaceSelection() {
 
         if (line.at(line.length() - 1) == '*') { 
             line.erase(line.length() - 1);
-            options.push_back(OptionMenu(line, index));
+            options.push_back(line);
             index++;
         }
     }
 
-    clearScreen();
-    int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
-    std::cout << "\n";
- 
-    return options[key].title;
+    int selected_index = 0;
+
+    auto menu = Menu(&options, &selected_index); 
+
+    auto layout = Renderer(menu, [&] {
+        return vbox({
+            text(" GentooInstall ") | bold | center | border,
+            separator(),
+            text("Use UP/DOWN arrow keys to navigate. Press ENTER to select"),
+            separator(),
+            menu->Render() | border,
+        }) | border;
+    });
+
+    auto screen = App::Fullscreen();
+    
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if (event == Event::Return) {
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
+        return false;
+    });
+
+    screen.Loop(inputHandler);
+    
+    return options[selected_index];
+
+    // clearScreen();
+    // int key = selectMenu(options, "List of available network interfaces", "To configure Wifi choose correct internet interface, most often wireless interface starts with wl");
+    // std::cout << "\n";
+    
+    // return options[key].title;
 }
 
 std::string InstallerFirst::wifiSelection() {
+    std::vector<std::string> options = {};
+    int selected_index = 0;
+
     while (true) {
+        options.clear();
         executeCommand("(iwlist wlan0 scan | awk -F ':' '/ESSID:/ {gsub(/\"/,\"\",$2); if(!seen[$2]++) print $2}' | sed 's/\"//; s/\(.*\)\"$/\1/') > /tmp/wifi.tmp");
         std::ifstream interfacesFile("/tmp/wifi.tmp");
         std::string line;
-        std::vector<OptionMenu<std::string>> options = {};
+        options.push_back("Refresh"); 
+        
         int index = 0;
         while (getline(interfacesFile, line)) {
             if (!line.empty() && line[line.length() - 1] == '\n') {
                 line.erase(line.length() - 1);
             }
-    
-            options.push_back(OptionMenu(line, index));
+
+            options.push_back(line);
             index++;
         }
-    
-        options.push_back(OptionMenu("Refresh", -1)); // -1 -> Default
-    
-        clearScreen();
-        int key = selectMenu(options, "List of available wifi access points", "To configure Wifi choose correct access point");
-        std::cout << "\n";
-    
-        if (key != -1) {
-            return options[key].title;
-        }
+
+        auto menu = Menu(&options, &selected_index); 
+
+        auto layout = Renderer(menu, [&] {
+            return vbox({
+                text(" GentooInstall ") | bold | center | border,
+                separator(),
+                text("Use UP/DOWN arrow keys to navigate. Press ENTER to select"),
+                separator(),
+                menu->Render() | border,
+            }) | border;
+        });
+
+        auto screen = App::Fullscreen();
+        
+        auto inputHandler = CatchEvent(layout, [&](Event event) {
+            if (event == Event::Return) {
+                screen.ExitLoopClosure()();
+                return true;
+            }
+
+            return false;
+        });
+
+        screen.Loop(inputHandler);
+
+        if (selected_index != 0) break;
     }
+    
+    return options[selected_index];
+}
+
+std::string InstallerFirst::passwordInput() {
+    InputOption option;
+    option.password = true;
+
+    std::string password = "";
+    std::string placeholder = "Type password for your wifi...";
+
+    auto inputField = Input(&password, &placeholder, option);
+
+    auto layout = Renderer(inputField, [&] {
+        return vbox({
+            text(" GentooInstall "),
+            separator(),
+            window(text(""), inputField->Render()),
+        });
+    });
+
+    auto screen = App::Fullscreen();
+
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if (event == Event::Return) {
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
+        if (event == Event::Backspace && password.empty()) {
+            return true;
+        }
+
+        return false;
+    });
+
+    screen.Loop(inputHandler);
+
+    return password;
 }
 
 void InstallerFirst::networkConfig() {
@@ -105,9 +195,15 @@ void InstallerFirst::networkConfig() {
             case 0:
                 executeCommand("ping google.com -c 5");
                 break;
-            case 1:
-                std::cout << "WIFI config\n";
-                break;
+            case 1: {
+                std::string interface;
+                std::string ssid;
+                std::string password;
+                interface = interfaceSelection();
+                ssid = wifiSelection();
+                password = passwordInput();
+                break; 
+            }
             case 2:
                 return;
         };
