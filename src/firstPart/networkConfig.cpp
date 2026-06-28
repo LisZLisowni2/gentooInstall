@@ -6,6 +6,13 @@
 #include <stdexcept>
 #include <vector>
 
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/app.hpp>
+#include <ftxui/component/event.hpp>
+
+using namespace ftxui;
+
 std::string InstallerFirst::interfaceSelection() {
     executeCommand("(ip link | awk '{ print $2 }' | sed 's/:/*/') > /tmp/interfaces.tmp");
     std::ifstream interfacesFile("/tmp/interfaces.tmp");
@@ -60,38 +67,49 @@ std::string InstallerFirst::wifiSelection() {
 }
 
 void InstallerFirst::networkConfig() {
-    std::vector<OptionMenu<std::string>> options = {
-        OptionMenu("Test the Internet", 0),
-        OptionMenu("Configure Wifi", 1),
-        OptionMenu("Next", -1),
+    std::vector<std::string> options = {
+        "Test the internet",
+        "Configure Wifi",
+        "Next"
     };
+
+    int selected_index = 0;
+
+    auto menu = Menu(&options, &selected_index); 
+
+    auto layout = Renderer(menu, [&] {
+        return vbox({
+            text(" GentooInstall ") | bold | center | border,
+            separator(),
+            text("Use UP/DOWN arrow keys to navigate. Press ENTER to select"),
+            separator(),
+            menu->Render() | border,
+        }) | border;
+    });
+
+    auto screen = App::Fullscreen();
+    
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if (event == Event::Return) {
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
+        return false;
+    });
+
     while (true) {
-        clearScreen();
-        int key = selectMenu(options, "Internet configuration", "Internet is required to continue, because we have to in future sync with emerge database to install or update packages.");
-        std::cout << "\n";
-        switch (key) {
-            case -1:
-                return;
-                break;
+        screen.Loop(inputHandler);
+    
+        switch (selected_index) {
             case 0:
                 executeCommand("ping google.com -c 5");
                 break;
             case 1:
-                std::string interface;
-                std::string ssid;
-                std::string password;
-                interface = interfaceSelection();
-                executeCommand("ip link set " + interface + " up");
-                ssid = wifiSelection();
-                while (true) {
-                    std::cout << "\nInput password for your network: ";
-                    std::cin >> password;
-                    executeCommand("wpa_passphrase \"" + ssid + "\" \"" + password + "\" > /etc/wpa_supplicant.conf");
-                    if (executeCommand("wpa_supplicant -B -i " + interface + " -c /etc/wpa_supplicant.conf") == 0) return;
-                }
-                executeCommand("dhcpcd " + interface);
-                std::cout << "\nWifi configured";
+                std::cout << "WIFI config\n";
                 break;
-        }
+            case 2:
+                return;
+        };
     }
 }

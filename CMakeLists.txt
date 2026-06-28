@@ -13,6 +13,50 @@ option(FIRST_INSTALLER_INCLUDE "First installer has enabled, compiling first par
 include(ExternalProject)
 add_compile_definitions(__gnuc_va_list=va_list)
 
+# FTXUI
+set(FTXUI_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/ftxui)
+set(FTXUI_SOURCE_DIR  ${CMAKE_CURRENT_BINARY_DIR}/ftxui-src)
+set(FTXUI_INCLUDE_DIR ${FTXUI_INSTALL_DIR}/include)
+file(MAKE_DIRECTORY ${FTXUI_INCLUDE_DIR})
+
+ExternalProject_Add(
+    ftxui_ext
+    SOURCE_DIR  ${FTXUI_SOURCE_DIR}
+    GIT_REPOSITORY https://github.com/ArthurSonzogni/FTXUI.git
+    GIT_TAG        v7.0.0
+    CMAKE_ARGS
+        -DBUILD_SHARED_LIBS=OFF
+        -DFTXUI_BUILD_EXAMPLES=OFF
+        -DFTXUI_BUILD_TESTS=OFF
+        -DCMAKE_INSTALL_PREFIX=${FTXUI_INSTALL_DIR}
+        -DCMAKE_INSTALL_LIBDIR=${FTXUI_INSTALL_DIR}/lib
+    TEST_COMMAND   ""
+    INSTALL_COMMAND
+        ${CMAKE_COMMAND} --build <BINARY_DIR> --target install
+        && ${CMAKE_COMMAND} -E remove_directory ${FTXUI_SOURCE_DIR}
+)
+
+add_library(ftxui_screen    STATIC IMPORTED GLOBAL)
+add_library(ftxui_dom       STATIC IMPORTED GLOBAL)
+add_library(ftxui_component STATIC IMPORTED GLOBAL)
+
+set_target_properties(ftxui_screen PROPERTIES
+    IMPORTED_LOCATION          "${FTXUI_INSTALL_DIR}/lib/libftxui-screen.a"
+    INTERFACE_INCLUDE_DIRECTORIES "${FTXUI_INCLUDE_DIR}"
+)
+set_target_properties(ftxui_dom PROPERTIES
+    IMPORTED_LOCATION          "${FTXUI_INSTALL_DIR}/lib/libftxui-dom.a"
+    INTERFACE_INCLUDE_DIRECTORIES "${FTXUI_INCLUDE_DIR}"
+)
+set_target_properties(ftxui_component PROPERTIES
+    IMPORTED_LOCATION          "${FTXUI_INSTALL_DIR}/lib/libftxui-component.a"
+    INTERFACE_INCLUDE_DIRECTORIES "${FTXUI_INCLUDE_DIR}"
+)
+
+add_dependencies(ftxui_screen    ftxui_ext)
+add_dependencies(ftxui_dom       ftxui_ext)
+add_dependencies(ftxui_component ftxui_ext)
+
 # OpenSSL
 set(OPENSSL_SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/openssl-src)
 set(OPENSSL_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/openssl)
@@ -221,7 +265,7 @@ endif()
 
 add_dependencies(nghttp2_lib nghttp2)
 
-include_directories(${OPENSSL_INCLUDE_DIR} ${CPR_INCLUDE_DIR} ${LIBSSH2_INCLUDE_DIR} ${NGHTTP2_INCLUDE_DIR})
+include_directories(${OPENSSL_INCLUDE_DIR} ${CPR_INCLUDE_DIR} ${LIBSSH2_INCLUDE_DIR} ${NGHTTP2_INCLUDE_DIR} ${FTXUI_INCLUDE_DIR})
 
 include_directories(include)
 add_subdirectory(termcolor)
@@ -252,7 +296,24 @@ set(SOURCES
     utils/requests.cpp
 )
 add_library("${PROJECT_NAME}_lib" STATIC ${SOURCES})
-target_link_libraries("${PROJECT_NAME}_lib" PRIVATE cpr_lib libcurl OpenSSL_Lib OpenSSL::Crypto libssh2_lib zlib_lib nghttp2_lib idn2 psl ssl crypto dl pthread)
+target_link_libraries("${PROJECT_NAME}_lib" PRIVATE 
+    ftxui_component
+    ftxui_dom
+    ftxui_screen    
+    cpr_lib 
+    libcurl 
+    OpenSSL_Lib 
+    OpenSSL::Crypto 
+    libssh2_lib 
+    zlib_lib 
+    nghttp2_lib 
+    idn2 
+    psl 
+    ssl 
+    crypto 
+    dl 
+    pthread
+)
 
 if (FIRST_INSTALLER_INCLUDE)
     message(STATUS "Installer first part included")
@@ -288,3 +349,5 @@ add_executable(installer_part2
     src/secondPart/zone.cpp
     src/secondPart/locale.cpp
 )
+
+target_link_libraries(installer_part2 PRIVATE "${PROJECT_NAME}_lib")
