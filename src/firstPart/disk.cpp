@@ -68,10 +68,47 @@ void InstallerFirst::partitions() {
     while (true) {
         screen.Loop(inputHandler);
 
-        if (options[selected] != "Continue") {
-            executeCommand("cfdisk /dev/" + options[selected].substr(0, options[selected].find(" ")));
-        } else {
+        if (options[selected] == "Continue") {
             break;
+        } else {
+            std::vector<std::string> options2 = {
+                "Yes",
+                "No"
+            };
+
+            int selected2 = 0;
+
+            auto menu2 = Menu(&options2, &selected2);
+
+            auto layout2 = Renderer(menu2, [&] {
+                return vbox({
+                    text(" GentooInstall ") | bold | center | border,
+                    separator(),
+                    text("Use UP/DOWN arrow keys to navigate. Press ENTER to select"),
+                    separator(),
+                    text("Do you want clean all device (format)?") | center,
+                    text("CAUTION! THIS OPERATION IS NOT REVERSIBLE!") | bold | center | color(Color::Red),
+                    menu2->Render() | vscroll_indicator | frame | border | size(HEIGHT, LESS_THAN, 15),
+                });
+            });
+
+            auto inputHandler2 = CatchEvent(layout2, [&](Event event) {
+                if (event == Event::Return) {
+                    screen.ExitLoopClosure()();
+                    
+                    return true;
+                }
+
+                return false;
+            });
+
+            screen.Loop(inputHandler2);
+            
+            if (options2[selected2] == "Yes") {
+                executeCommand("cfdisk -z /dev/" + options[selected].substr(0, options[selected].find(' ')));
+            } else {
+                executeCommand("cfdisk /dev/" + options[selected].substr(0, options[selected].find(' ')));
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ private:
     inline std::string wifiSelection(std::string& interface);
     inline std::string partitionSelection();
     inline std::string formatSelection();
+    inline void formatPartition(std::string& format, std::string& partition);
 };
 
 #endif
