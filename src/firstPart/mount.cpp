@@ -87,15 +87,15 @@ void InstallerFirst::mount() {
             std::string partition = partitionSelection();
             switch (selected) {
                 case 0:
-                    executeCommand("mount " + partition + " /mnt/gentoo");
+                    executeCommand("sudo mount " + partition + " /mnt/gentoo");
                     break;
                 case 1:
-                    if (isEFI) executeCommand("mount --mkdir " + partition + " /mnt/gentoo/boot/efi");
-                    else executeCommand("mount --mkdir " + partition + " /mnt/gentoo/boot/");
+                    if (isEFI) executeCommand("sudo mount --mkdir " + partition + " /mnt/gentoo/boot/efi");
+                    else executeCommand("sudo mount --mkdir " + partition + " /mnt/gentoo/boot/");
                     break;
                 case 2:
                     std::string path = mountPathInput();
-                    executeCommand("mount --mkdir " + partition + " " + path);
+                    executeCommand("sudo mount --mkdir " + partition + " " + path);
                     break;
             }
         }
