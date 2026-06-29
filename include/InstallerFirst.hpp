@@ -20,7 +20,7 @@ private:
     inline void chroot();
     inline std::string passwordInput();
     inline std::string interfaceSelection();
-    inline std::string wifiSelection();
+    inline std::string wifiSelection(std::string& interface);
     inline std::string partitionSelection();
     inline std::string formatSelection();
 };

@@ -18,7 +18,7 @@ std::string InstallerFirst::interfaceSelection() {
     std::ifstream interfacesFile("/tmp/interfaces.tmp");
     std::string line;
     std::vector<std::string> options = {};
-    int index = 0;
+ 
     while (getline(interfacesFile, line)) {
         if (!line.empty() && line[line.length() - 1] == '\n') {
             line.erase(line.length() - 1);
@@ -27,7 +27,6 @@ std::string InstallerFirst::interfaceSelection() {
         if (line.at(line.length() - 1) == '*') { 
             line.erase(line.length() - 1);
             options.push_back(line);
-            index++;
         }
     }
 
@@ -67,13 +66,13 @@ std::string InstallerFirst::interfaceSelection() {
     // return options[key].title;
 }
 
-std::string InstallerFirst::wifiSelection() {
+std::string InstallerFirst::wifiSelection(std::string& interface) {
     std::vector<std::string> options = {};
     int selected_index = 0;
 
     while (true) {
         options.clear();
-        executeCommand("(iwlist wlan0 scan | awk -F ':' '/ESSID:/ {gsub(/\"/,\"\",$2); if(!seen[$2]++) print $2}' | sed 's/\"//; s/\(.*\)\"$/\1/') > /tmp/wifi.tmp");
+        executeCommand("(iwlist " + interface + " scan | awk -F ':' '/ESSID:/ {gsub(/\"/,\"\",$2); if(!seen[$2]++) print $2}' | sed 's/\"//; s/\(.*\)\"$/\1/') > /tmp/wifi.tmp");
         std::ifstream interfacesFile("/tmp/wifi.tmp");
         std::string line;
         options.push_back("Refresh"); 
@@ -200,7 +199,7 @@ void InstallerFirst::networkConfig() {
                 std::string ssid;
                 std::string password;
                 interface = interfaceSelection();
-                ssid = wifiSelection();
+                ssid = wifiSelection(interface);
                 password = passwordInput();
                 break; 
             }
