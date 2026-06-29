@@ -54,6 +54,15 @@ std::string InstallerFirst::partitionSelection() {
             separator(),
             menu->Render() | vscroll_indicator | frame | border | size(HEIGHT, LESS_THAN, 15),
             separator(),
+            vbox({
+                text(" Partition Management Guide ") | bold,
+                text(" Ensure your target drive has the following layout for a standard UEFI system:"),
+                text("  • /dev/sdX1 - EFI System Partition (esp) -> 512MB to 1GB (FAT32)"),
+                text("  • /dev/sdX2 - Swap Partition            -> 2GB to 16GB (SWAP)"),
+                text("  • /dev/sdX3 - Root Partition (/)         -> Remaining Space (ext4/btrfs)"),
+                text(""),
+                text(" Note: Select your root partition to begin installation, or choose 'Continue'.") | color(Color::Yellow),
+            }) | border,
         });
     });
 

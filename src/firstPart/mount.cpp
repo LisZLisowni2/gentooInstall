@@ -7,34 +7,97 @@
 #include <vector>
 #include <map>
 
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/app.hpp>
+#include <ftxui/component/event.hpp>
+using namespace ftxui;
+
+std::string InstallerFirst::mountPathInput() {
+    std::string path = "";
+    std::string placeholder = "Type path where you want mount the partition...";
+
+    auto inputField = Input(&path, &placeholder);
+
+    auto layout = Renderer(inputField, [&] {
+        return vbox({
+            text(" GentooInstall "),
+            separator(),
+            window(text(""), inputField->Render()),
+        });
+    });
+
+    auto screen = App::Fullscreen();
+
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if (event == Event::Return) {
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
+        if (event == Event::Backspace && path.empty()) {
+            return true;
+        }
+
+        return false;
+    });
+
+    screen.Loop(inputHandler);
+
+    return path;
+}
+
 void InstallerFirst::mount() {
-    std::vector<OptionMenu<std::string>> options = {
-        OptionMenu("Mount root partition", 0),
-        OptionMenu("Mount boot partition", 1),
-        OptionMenu("Mount other partition", 2),
-        OptionMenu("Next", -1),
+    std::vector<std::string> options = {
+        "Mount root partition",
+        "Mount boot partition",
+        "Mount other partition",
+        "Continue",
     };
+
+    int selected = 0;
+    
+    auto screen = App::Fullscreen();
+    auto menu = Menu(&options, &selected);
+
+    auto layout = Renderer(menu, [&] {
+        return vbox({
+            text(" GentooInstall ") | bold | center | border,
+            separator(),
+            text("Use UP/DOWN arrow keys to navigate. Press ENTER to select"),
+            separator(),
+            menu->Render() | vscroll_indicator | frame | border | size(HEIGHT, LESS_THAN, 15),
+        });
+    });
+
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if (event == Event::Return) {
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
+        return false;
+    });
+
     while (true) {
-        clearScreen();
-        int key = selectMenu(options, "Mouting partitions", "Mounted partitions means that you can directly access to data on. In this step mount every ppartition that you created. IMPORTANT! START FROM ROOT PARTITION! If you created home partition or any else doesn't mention before use Mount another option and define your own directory. If you have already mounted the partitions (like previous step) skip this. If you want manually mount partitions click Ctrl+C and come back after.");
-        std::cout << "\n";
-        if (key == -1) return;
-        std::string partition;
-        partition = partitionSelection();
-        switch (key) {
-            case 0:
-                executeCommand("mount " + partition + " /mnt/gentoo");
-                break;
-            case 1:
-                if (isEFI) executeCommand("mount --mkdir " + partition + " /mnt/gentoo/boot/efi");
-                else executeCommand("mount --mkdir " + partition + " /mnt/gentoo/boot/");
-                break;
-            case 2:
-                std::string path;
-                std::cout << "\nInput path where mount: ";
-                std::getline(std::cin, path);
-                executeCommand("mount --mkdir " + partition + " " + path);
-                break;
+        screen.Loop(inputHandler);
+        if (options[selected] == "Continue") {
+            break;
+        } else {
+            std::string partition = partitionSelection();
+            switch (selected) {
+                case 0:
+                    executeCommand("mount " + partition + " /mnt/gentoo");
+                    break;
+                case 1:
+                    if (isEFI) executeCommand("mount --mkdir " + partition + " /mnt/gentoo/boot/efi");
+                    else executeCommand("mount --mkdir " + partition + " /mnt/gentoo/boot/");
+                    break;
+                case 2:
+                    std::string path = mountPathInput();
+                    executeCommand("mount --mkdir " + partition + " " + path);
+                    break;
             }
+        }
     }
 }

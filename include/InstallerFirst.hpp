@@ -24,6 +24,7 @@ private:
     inline std::string partitionSelection();
     inline std::string formatSelection();
     inline void formatPartition(std::string& format, std::string& partition);
+    inline std::string mountPathInput();
 };
 
 #endif
