@@ -37,7 +37,7 @@ Installation of GentooInstaller requires manual compilation on Gentoo LiveCD due
 1. Open terminal and download the latest version of GentooInstall (unzip it after download) or clone the repository
 2. Move (by command `cd`) to that folder and run `cmake -S . -B build`
 3. Move to `build` folder and run `make -j$(nproc) -l$(nproc)`
-4. After compilation back upper and run with sudo `./installer_part1` => `sudo ./installer_part1`
+4. After compilation run installer: `./installer_part1`
 
 ## Support 
 

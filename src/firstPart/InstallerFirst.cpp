@@ -1,6 +1,5 @@
 #include "InstallerFirst.hpp"
 #include "startMenu.cpp"
-#include "networkConfig.cpp"
 #include "format.cpp"
 #include "disk.cpp"
 #include "mount.cpp"
@@ -51,7 +50,6 @@ InstallerFirst::~InstallerFirst() {
 
 void InstallerFirst::install() {
     startMenu();
-    networkConfig();
     partitions();
     format();
     mount();
