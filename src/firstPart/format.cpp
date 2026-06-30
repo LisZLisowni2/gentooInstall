@@ -122,6 +122,7 @@ std::string InstallerFirst::formatSelection() {
 
 void InstallerFirst::formatPartition(std::string& format, std::string& partition) {
     std::map<std::string, Formats> formatsMap = {
+        {"swap", swap},
         {"ext4", ext4},
         {"fat32", fat32},
         {"ntfs", ntfs},
@@ -133,6 +134,9 @@ void InstallerFirst::formatPartition(std::string& format, std::string& partition
     switch (formatsMap[format]) {
         case Formats::swap:
             executeCommand("mkswap " + partition);
+            break;
+        case Formats::ext4:
+            executeCommand("mkfs.ext4 " + partition);
             break;
         case Formats::fat32:
             executeCommand("mkfs.fat -F 32 " + partition);
@@ -199,7 +203,7 @@ void InstallerFirst::format() {
         } else {
             std::string partition = partitionSelection();
             std::string format = formatSelection();
-            formatPartition(partition, format);
+            formatPartition(format, partition);
         }
     }
 }

@@ -55,39 +55,39 @@ void InstallerFirst::tarball() {
     if (!isARM) {
         switch (selected) {
             case 0:
-                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
-                executeCommand("cd /mnt/gentoo && tar xpvf stage3-amd64-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("sudo wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && sudo tar xpvf stage3-amd64-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
             case 1:
-                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
-                executeCommand("cd /mnt/gentoo && tar xpvf stage3-amd64-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("sudo wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && sudo tar xpvf stage3-amd64-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
             case 2:
-                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-desktop-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
-                executeCommand("cd /mnt/gentoo && tar xpvf stage3-amd64-desktop-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("sudo wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-desktop-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && sudo tar xpvf stage3-amd64-desktop-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
             case 3:
-                executeCommand("wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-desktop-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
-                executeCommand("cd /mnt/gentoo && tar xpvf stage3-amd64-desktop-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("sudo wget https://distfiles.gentoo.org/releases/amd64/autobuilds/" + DATETIME + "/stage3-amd64-desktop-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && sudo tar xpvf stage3-amd64-desktop-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
         }
     } else {
         switch (selected) {
             case 0:
-                executeCommand("wget https://distfiles.gentoo.org/releases/arm64/autobuilds/" + DATETIME + "/stage3-arm64-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
-                executeCommand("cd /mnt/gentoo && tar xpvf stage3-arm64-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("sudo wget https://distfiles.gentoo.org/releases/arm64/autobuilds/" + DATETIME + "/stage3-arm64-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && sudo tar xpvf stage3-arm64-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
             case 1:
-                executeCommand("wget https://distfiles.gentoo.org/releases/arm64/autobuilds/" + DATETIME + "/stage3-arm64-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
-                executeCommand("cd /mnt/gentoo && tar xpvf stage3-arm64-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("sudo wget https://distfiles.gentoo.org/releases/arm64/autobuilds/" + DATETIME + "/stage3-arm64-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && sudo tar xpvf stage3-arm64-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
             case 2:
-                executeCommand("wget https://distfiles.gentoo.org/releases/arm64/autobuilds/" + DATETIME + "/stage3-arm64-desktop-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
-                executeCommand("cd /mnt/gentoo && tar xpvf stage3-arm64-desktop-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("sudo wget https://distfiles.gentoo.org/releases/arm64/autobuilds/" + DATETIME + "/stage3-arm64-desktop-openrc-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && sudo tar xpvf stage3-arm64-desktop-openrc-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
             case 3:
-                executeCommand("wget https://distfiles.gentoo.org/releases/arm64/autobuilds/" + DATETIME + "/stage3-arm64-desktop-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
-                executeCommand("cd /mnt/gentoo && tar xpvf stage3-arm64-desktop-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
+                executeCommand("sudo wget https://distfiles.gentoo.org/releases/arm64/autobuilds/" + DATETIME + "/stage3-arm64-desktop-systemd-" + DATETIME + ".tar.xz -P /mnt/gentoo");
+                executeCommand("cd /mnt/gentoo && sudo tar xpvf stage3-arm64-desktop-systemd-" + DATETIME + ".tar.xz --xattrs-include='*.*' --numeric-owner");
                 break;
         }
     }

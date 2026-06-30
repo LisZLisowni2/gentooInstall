@@ -276,7 +276,6 @@ set(SOURCES
     src/secondPart/main.cpp
     src/firstPart/InstallerFirst.cpp
     src/secondPart/InstallerSecond.cpp
-    src/firstPart/networkConfig.cpp
     utils/utils.cpp
     src/firstPart/startMenu.cpp
     src/firstPart/disk.cpp
@@ -321,7 +320,6 @@ if (FIRST_INSTALLER_INCLUDE)
         src/firstPart/InstallerFirst.cpp
         src/firstPart/main.cpp
         src/firstPart/startMenu.cpp
-        src/firstPart/networkConfig.cpp
         utils/utils.cpp
         src/firstPart/disk.cpp
         src/firstPart/format.cpp
