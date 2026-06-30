@@ -6,40 +6,60 @@
 #include <map>
 #include <vector>
 
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/app.hpp>
+#include <ftxui/component/event.hpp>
+
+using namespace ftxui;
+
 void InstallerSecond::makeMain() {
-    bool autoUsed = false;
-    std::vector<OptionMenu<std::string>> options = {
-        OptionMenu("Edit file", 0),
-        OptionMenu("Automatic", 1), 
-        OptionMenu("Make.conf describe file", 2), // TODO: Read file
-        OptionMenu("Next", -1),
+
+    // bool autoUsed = false;
+    std::vector<std::string> options = {
+        "Wizard - not supported currently",
+        "Edit file manually",
+        "Next",
     };
+
+    auto screen = App::Fullscreen();
+
+    int selected = 0;
+    
+    auto menu = Menu(&options, &selected);
+
+    auto layout = Renderer(menu, [&] {
+        return vbox({
+            text(" GentooInstall ") | bold | center | border,
+            separator(),
+            text("Use UP/DOWN arrow keys to navigate. Press ENTER to select"),
+            separator(),
+            menu->Render() | vscroll_indicator | frame | border | size(HEIGHT, LESS_THAN, 15),
+        });
+    });
+
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if(event == Event::Return) {
+            screen.ExitLoopClosure();
+            return true;
+        }
+
+        return false;
+    });
+
     while (true) {
-        clearScreen();
-        int key = selectMenu(options, "make.conf file", "Portage is a Gentoo's package manager that compiles every package from source. It is excellent for customizing your experience for your needs but it costs... time. Installing firefox package can take hours, so the best idea is the optimize the make.conf file. In version v2.1.1 I will create file that describe make.conf options. If you are new user I recommend 'Automatic' option.");
-        std::cout << "\n";
-        switch (key) {
-            case -1:
-                return;
-                break;
-            case 0:
-                executeCommand("nano /etc/portage/make.conf");
-                break;
-            case 1:
-                if (autoUsed) {
+        screen.Loop(inputHandler);
+
+        if (options[selected] != "Next") {
+            switch (selected) {
+                case 0:
                     break;
-                }
-                executeCommand("cp /etc/portage/make.conf /etc/portage/make.conf.old");
-                executeCommand("echo 'MAKEOPTS=\"-j'$(nproc)' -l'$(nproc)'\"' >> /etc/portage/make.conf");
-                executeCommand("echo 'EMERGE_DEFAULT_OPTS=\"--jobs='$(nproc)' --load-average='$(nproc)'\"' >> /etc/portage/make.conf");
-                executeCommand("echo 'FEATURES=\"parallel-fetch\"' >> /etc/portage/make.conf");
-                executeCommand("echo 'COMMON_FLAGS=\"${COMMON_FLAGS} -march=native\"' >> /etc/portage/make.conf");
-                executeCommand("echo 'ACCEPT_LICENSE=\"*\"' >> /etc/portage/make.conf");
-                executeCommand("echo 'PORTDIR=\"/var/db/repos/gentoo\"' >> /etc/portage/make.conf");
-                executeCommand("echo 'DISTDIR=\"/var/cache/distfiles\"' >> /etc/portage/make.conf");
-                executeCommand("echo 'PKGDIR=\"/var/cache/binpkgs\"' >> /etc/portage/make.conf");
-                autoUsed = true;
-                break;
+                case 1:
+                    executeCommand("nano /etc/portage/make.conf");
+                    break;
+            }
+        } else {
+            break;
         }
     }
 }
