@@ -76,9 +76,7 @@ void InstallerSecond::profile() {
         executeCommand("eselect profile show | grep 'default' > /tmp/profile.tmp");
         std::ifstream file("/tmp/profile.tmp");
         
-        while (getline(file, selectedProfile)) {
-            NULL;
-        }
+        getline(file, selectedProfile);
 
         auto layout = Renderer(menu, [&] {
             return vbox({
