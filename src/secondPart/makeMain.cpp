@@ -14,12 +14,10 @@
 using namespace ftxui;
 
 void InstallerSecond::makeMain() {
-
-    // bool autoUsed = false;
     std::vector<std::string> options = {
         "Wizard - not supported currently",
         "Edit file manually",
-        "Next",
+        "Continue",
     };
 
     auto screen = App::Fullscreen();
@@ -40,7 +38,7 @@ void InstallerSecond::makeMain() {
 
     auto inputHandler = CatchEvent(layout, [&](Event event) {
         if(event == Event::Return) {
-            screen.ExitLoopClosure();
+            screen.ExitLoopClosure()();
             return true;
         }
 
@@ -50,7 +48,7 @@ void InstallerSecond::makeMain() {
     while (true) {
         screen.Loop(inputHandler);
 
-        if (options[selected] != "Next") {
+        if (options[selected] != "Continue") {
             switch (selected) {
                 case 0:
                     break;
