@@ -7,6 +7,13 @@
 #include <vector>
 #include <fstream>
 
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/app.hpp>
+#include <ftxui/component/event.hpp>
+
+using namespace ftxui;
+
 void InstallerSecond::kernelConfig() {
     clearScreen();
     installPackages("sys-kernel/linux-firmware");
@@ -15,43 +22,91 @@ void InstallerSecond::kernelConfig() {
 
 void InstallerSecond::kernelInstall() {
     executeCommand("echo \"sys-kernel/installkernel dracut\" > /etc/portage/package.use/installkernel");
-    std::vector<OptionMenu<std::string>> options = {
-        OptionMenu("Install precompiled kernel", 0),
-        OptionMenu("Install and configure kernel (For Advanced Users)", 1)
+    std::vector<std::string> options = {
+        "Install precompiled kernel",
+        "Install and configure kernel (For Advanced Users)",
     };
-    while (true) {
-        clearScreen();
-        int key = selectMenu(options, "Kernel - Install", "After basic configuration we can install kernel. There are some options, I mention only two.\n1) Precompiled - The fastest and the easiest way. Installs the precompiled kernel that doesn't need to config.\n2) Own kernel - For more advanced users there is option for them. Second option give free hand to configure own kernel for your specific requirements.");
-        int id;
-        std::cout << "\n";
-        switch (key) {
-            case 0:
-                installPackages("gentoo-kernel-bin");
-                break;
-            case 1:
-                installPackages("sys-kernel/gentoo-sources sys-kernel/installkernel sys-apps/pciutils");
-                executeCommand("lspci > /tmp/lspci.tmp");
-                std::cout << "Preconfiguration\n";
-                executeCommand("ln -sf /usr/src/linux-* /usr/src/linux");
-                executeCommand("cd /usr/src/linux && make localmodconfig");
-                kernelCompile();
-                break;
+
+    int selected = 0;
+
+    auto screen = App::Fullscreen();
+
+    auto menu = Menu(&options, &selected);
+
+    auto layout = Renderer(menu, [&] {
+        return vbox({
+            text(" GentooInstall ") | bold | center | border,
+            separator(),
+            text("Use UP/DOWN arrow keys to navigate. Press ENTER to select"),
+            separator(),
+            menu->Render() | vscroll_indicator | frame | border | size(HEIGHT, LESS_THAN, 15),
+        });
+    });
+
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if(event == Event::Return) {
+            screen.ExitLoopClosure()();
+            return true;
         }
-        return;
+
+        return false;
+    });
+
+    screen.Loop(inputHandler);
+
+    switch (selected) {
+        case 0:
+            installPackages("gentoo-kernel-bin");
+            break;
+        case 1:
+            installPackages("sys-kernel/gentoo-sources sys-kernel/installkernel sys-apps/pciutils");
+            executeCommand("lspci > /tmp/lspci.tmp");
+            std::cout << "Preconfiguration\n";
+            executeCommand("ln -sf /usr/src/linux-* /usr/src/linux");
+            executeCommand("cd /usr/src/linux && make localmodconfig");
+            kernelCompile();
+            break;
     }
+    return;
 }
 
 void InstallerSecond::kernelCompile() {
-    std::vector<OptionMenu<std::string>> options = {
-        OptionMenu("Read the lspci file (your PC's specs)", 0),
-        OptionMenu("Config kernel", 1),
-        OptionMenu("Compile", 2)
+    std::vector<std::string> options = {
+        "Read the lspci file (your PC's specs)",
+        "Config kernel",
+        "Compile", 
     };
+
+    int selected = 0;
+
+    auto screen = App::Fullscreen();
+
+    auto menu = Menu(&options, &selected);
+
+    auto layout = Renderer(menu, [&] {
+        return vbox({
+            text(" GentooInstall ") | bold | center | border,
+            separator(),
+            text("Use UP/DOWN arrow keys to navigate. Press ENTER to select"),
+            separator(),
+            menu->Render() | vscroll_indicator | frame | border | size(HEIGHT, LESS_THAN, 15),
+        });
+    });
+
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if(event == Event::Return) {
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
+        return false;
+    });
+    
     while (true) {
+        screen.Loop(inputHandler);
         clearScreen();
-        int key = selectMenu(options, "Kernel - Compilation", "It is important to correctly configure the kernel unless you don't want to run the OS. If you have no idea, what to do, check the official Gentoo Handbook");
-        std::cout << "\n";
-        switch (key) {
+        
+        switch (selected) {
             case 0:
                 executeCommand("less /tmp/lspci.tmp");
                 break;

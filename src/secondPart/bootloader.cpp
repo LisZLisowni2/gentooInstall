@@ -7,27 +7,62 @@
 #include <map>
 #include <vector>
 
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/app.hpp>
+#include <ftxui/component/event.hpp>
+
+using namespace ftxui;
+
 std::string InstallerSecond::diskSelection() {
-    executeCommand("(lsblk -rd | awk '!/NAME/ { print $1 }') > /tmp/disks.tmp");
-    std::ifstream disksFile("/tmp/disks.tmp");
+    executeCommand("(lsblk -rd | awk '!/NAME/ { print $1 \" \" $4 }') > /tmp/devices.tmp");
+    std::ifstream deviceFile("/tmp/devices.tmp");
     std::string line;
-    std::vector<OptionMenu<std::string>> options = {};
-    std::string lineValue;
-    int index = 0;
-    while (getline(disksFile, line)) {
+    std::vector<std::string> options = {};
+    
+    while (getline(deviceFile, line)) {
         if (!line.empty() && line[line.length() - 1] == '\n') {
             line.erase(line.length() - 1);
         }
 
-        options.push_back(OptionMenu(line, index, "/dev/" + line));
-        index++;
+        options.push_back(line);
     }
 
-    clearScreen();
-    int key = selectMenu<std::string>(options, "List of available disks", "Choose disk where you installed an system.");
-    std::cout << "\n";
- 
-    return options[key].value;
+    options.push_back("Continue");
+
+    auto screen = App::Fullscreen();
+
+    int selected = 0;
+
+    auto menu = Menu(&options, &selected);
+
+    auto layout = Renderer(menu, [&] {
+        return vbox({
+            text(" GentooInstall ") | bold | center | border,
+            separator(),
+            text("Use UP/DOWN arrow keys to navigate. Press ENTER to select"),
+            separator(),
+            menu->Render() | vscroll_indicator | frame | border | size(HEIGHT, LESS_THAN, 15),
+            separator(),
+            vbox({
+                text(" Select your main disk ") | bold,
+            }) | border,
+        });
+    });
+
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if (event == Event::Return) {
+            screen.ExitLoopClosure()();
+            
+            return true;
+        }
+
+        return false;
+    });
+
+    screen.Loop(inputHandler);
+
+    return options[selected];
 }
 
 void InstallerSecond::bootloader() {
