@@ -17,13 +17,13 @@ void InstallerSecond::hostnameSet() {
     std::string hostname;
     std::string placeholder = "Type hostname for your system...";
 
-    auto input = Input(&hostname, &placeholder);
+    auto inputField = Input(&hostname, &placeholder);
 
-    auto layout = Renderer(input, [&] {
+    auto layout = Renderer(inputField, [&] {
         return vbox({
             text(" GentooInstall "),
             separator(),
-            window(text(""), input->Render()),
+            window(text(""), inputField->Render()),
         });
     });
 
