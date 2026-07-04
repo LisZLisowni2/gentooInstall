@@ -8,6 +8,7 @@
 #include "locale.cpp"
 #include "user.cpp"
 #include "zone.cpp"
+#include "rootPasswd.cpp"
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
@@ -70,6 +71,7 @@ void InstallerSecond::install() {
     kernelInstall();
     networkConfig();
     bootloader();
+    rootPasswd();
     userCreation();
     std::cout << "\n\nYou have finished installation of minimal Gentoo.\n";
     getch();

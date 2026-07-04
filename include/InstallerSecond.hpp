@@ -22,6 +22,7 @@ private:
     inline void localeConfig();
     inline void bootloader();
     inline void utils();
+    inline void rootPasswd();
     inline void isValidUsername(const std::string& username);
     inline void userExists(const std::string& username);
     inline void userCreation();

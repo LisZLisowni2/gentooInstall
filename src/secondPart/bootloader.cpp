@@ -74,5 +74,5 @@ void InstallerSecond::bootloader() {
         executeCommand("grub-install --target=i386-pc " + disk); 
     }
     executeCommand("grub-mkconfig -o /boot/grub/grub.cfg");
-    executeCommand("passwd");
+    
 }

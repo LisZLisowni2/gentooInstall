@@ -292,6 +292,7 @@ set(SOURCES
     src/secondPart/utils.cpp
     src/secondPart/zone.cpp
     src/secondPart/locale.cpp
+    src/secondPart/rootPasswd.cpp
     utils/requests.cpp
 )
 add_library("${PROJECT_NAME}_lib" STATIC ${SOURCES})
@@ -345,6 +346,7 @@ add_executable(installer_part2
     src/secondPart/bootloader.cpp
     src/secondPart/utils.cpp
     src/secondPart/zone.cpp
+    src/secondPart/rootPasswd.cpp
     src/secondPart/locale.cpp
 )
 

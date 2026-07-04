@@ -95,8 +95,6 @@ void InstallerSecond::userCreation() {
         });
     });
 
-    auto screen = App::Fullscreen();
-
     auto inputHandler = CatchEvent(layout, [&](Event event) {
         if (event == Event::Return) {
             try {
@@ -131,7 +129,7 @@ void InstallerSecond::userCreation() {
 
     auto passwordInput = Input(&password, &placeholder, passwordInputOption);
 
-    auto layout = Renderer(passwordInput, [&] {
+    layout = Renderer(passwordInput, [&] {
         return vbox({
             text(" GentooInstall "),
             separator(),
@@ -139,7 +137,7 @@ void InstallerSecond::userCreation() {
         });
     });
 
-    auto inputHandler = CatchEvent(layout, [&](Event event) {
+    inputHandler = CatchEvent(layout, [&](Event event) {
         if (event == Event::Return) {
             try {
                 executeCommand("echo -e \"" + password + "\n" + password + "\" | passwd " + username);
