@@ -16,13 +16,15 @@ using namespace ftxui;
 
 void InstallerSecond::rootPasswd() {
     std::string password = "";
-    placeholder = "Input password for root...";
+    std::string placeholder = "Input password for root...";
     InputOption passwordInputOption;
     passwordInputOption.password = true;
 
+    auto screen = App::Fullscreen();
+
     auto passwordInput = Input(&password, &placeholder, passwordInputOption);
 
-    layout = Renderer(passwordInput, [&] {
+    auto layout = Renderer(passwordInput, [&] {
         return vbox({
             text(" GentooInstall "),
             separator(),
@@ -30,7 +32,7 @@ void InstallerSecond::rootPasswd() {
         });
     });
 
-    inputHandler = CatchEvent(layout, [&](Event event) {
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
         if (event == Event::Return) {
             try {
                 executeCommand("echo -e \"" + password + "\n" + password + "\" | passwd");

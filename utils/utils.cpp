@@ -3,6 +3,26 @@
 #include <cstdlib>
 #include <string>
 #include <stdexcept>
+#include <termios.h>
+#include <unistd.h>
+
+char getch() {
+    struct termios oldt, newt;
+    char ch;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON | ECHO); // disable bufforing and echoing
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+    ch = getchar();
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
+}
+
+void clearScreen() {
+    std::cout << "\033[2J\033[H";
+}
 
 int executeCommand(const std::string& command) {
     int result = std::system(command.c_str());
