@@ -3,9 +3,9 @@ project(gentooInstall)
 include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
-set(CMAKE_FIND_LIBRARY_SUFFIXES ".so;.dylib;.dll")
-set(ENABLE_STATIC OFF CACHE BOOL "Enable static library" FORCE)
-set(BUILD_SHARED_LIBS ON CACHE BOOL "Use shared libraries" FORCE)
+set(CMAKE_FIND_LIBRARY_SUFFIXES ".a;.lib")
+set(ENABLE_STATIC ON CACHE BOOL "Enable static library" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Use static libraries" FORCE)
 set(CMAKE_INSTALL_LIBDIR "lib" CACHE PATH "Library install directory" FORCE)
 
 option(FIRST_INSTALLER_INCLUDE "First installer has enabled, compiling first part." ON)
@@ -25,7 +25,7 @@ ExternalProject_Add(
     GIT_REPOSITORY https://github.com/ArthurSonzogni/FTXUI.git
     GIT_TAG        v7.0.0
     CMAKE_ARGS
-        -DBUILD_SHARED_LIBS=ON
+        -DBUILD_SHARED_LIBS=OFF
         -DFTXUI_BUILD_EXAMPLES=OFF
         -DFTXUI_BUILD_TESTS=OFF
         -DCMAKE_INSTALL_PREFIX=${FTXUI_INSTALL_DIR}
@@ -36,20 +36,20 @@ ExternalProject_Add(
         && ${CMAKE_COMMAND} -E remove_directory ${FTXUI_SOURCE_DIR}
 )
 
-add_library(ftxui_screen    SHARED IMPORTED GLOBAL)
-add_library(ftxui_dom       SHARED IMPORTED GLOBAL)
-add_library(ftxui_component SHARED IMPORTED GLOBAL)
+add_library(ftxui_screen    STATIC IMPORTED GLOBAL)
+add_library(ftxui_dom       STATIC IMPORTED GLOBAL)
+add_library(ftxui_component STATIC IMPORTED GLOBAL)
 
 set_target_properties(ftxui_screen PROPERTIES
-    IMPORTED_LOCATION          "${FTXUI_INSTALL_DIR}/lib/libftxui-screen.so"
+    IMPORTED_LOCATION          "${FTXUI_INSTALL_DIR}/lib/libftxui-screen.a"
     INTERFACE_INCLUDE_DIRECTORIES "${FTXUI_INCLUDE_DIR}"
 )
 set_target_properties(ftxui_dom PROPERTIES
-    IMPORTED_LOCATION          "${FTXUI_INSTALL_DIR}/lib/libftxui-dom.so"
+    IMPORTED_LOCATION          "${FTXUI_INSTALL_DIR}/lib/libftxui-dom.a"
     INTERFACE_INCLUDE_DIRECTORIES "${FTXUI_INCLUDE_DIR}"
 )
 set_target_properties(ftxui_component PROPERTIES
-    IMPORTED_LOCATION          "${FTXUI_INSTALL_DIR}/lib/libftxui-component.so"
+    IMPORTED_LOCATION          "${FTXUI_INSTALL_DIR}/lib/libftxui-component.a"
     INTERFACE_INCLUDE_DIRECTORIES "${FTXUI_INCLUDE_DIR}"
 )
 
@@ -73,9 +73,8 @@ ExternalProject_Add(
             --prefix=${OPENSSL_INSTALL_DIR}
             --openssldir=${OPENSSL_INSTALL_DIR}
 			--libdir=${OPENSSL_INSTALL_DIR}/lib
-            shared
-            -DBUILD_SHARED_LIBS=ON
-            -DUSE_STATIC_LIBS=OFF
+            -DBUILD_SHARED_LIBS=OFF
+            -DUSE_STATIC_LIBS=ON
             -DCMAKE_BUILD_TYPE=release
             -O3
             -enable-ec_nistp_64_gcc_128
@@ -95,15 +94,15 @@ ExternalProject_Add(
     INSTALL_DIR ${OPENSSL_INSTALL_DIR}
 )
 
-add_library(OpenSSL_Lib SHARED IMPORTED GLOBAL)
-add_library(OpenSSL::Crypto SHARED IMPORTED GLOBAL)
+add_library(OpenSSL_Lib STATIC IMPORTED GLOBAL)
+add_library(OpenSSL::Crypto STATIC IMPORTED GLOBAL)
 
 set_target_properties(OpenSSL_Lib PROPERTIES
-    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib/libssl.so
+    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib/libssl.a
 )
 
 set_target_properties(OpenSSL::Crypto PROPERTIES
-    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib/libcrypto.so
+    IMPORTED_LOCATION ${OPENSSL_INSTALL_DIR}/lib/libcrypto.a
 )
 
 if (EXISTS "${OPENSSL_INCLUDE_DIR}")
@@ -116,7 +115,7 @@ if (EXISTS "${OPENSSL_INCLUDE_DIR}")
 endif()
 
 add_dependencies(OpenSSL_Lib openssl)
-add_dependencies(OpenSSL::Crypto SHARED IMPORTED GLOBAL)
+add_dependencies(OpenSSL::Crypto STATIC IMPORTED GLOBAL)
 
 # CPR
 set(CPR_SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/cpr-src)
@@ -131,8 +130,8 @@ ExternalProject_Add(
     CMAKE_ARGS ""
     CONFIGURE_COMMAND 
         ${CPR_CONFIGURE_COMMAND}
-			-DBUILD_SHARED_LIBS=ON
-	        -DUSE_STATIC_LIBS=OFF
+			-DBUILD_SHARED_LIBS=OFF
+	        -DUSE_STATIC_LIBS=ON
 	        -DCPR_ENABLE_SSL=ON
 			-DWITH_SSL=ON
 	  		-DWITH_ZLIB=ON
@@ -150,20 +149,20 @@ ExternalProject_Add(
     INSTALL_DIR ${CPR_INSTALL_DIR}
 )
 
-add_library(cpr_lib SHARED IMPORTED GLOBAL)
-add_library(libcurl SHARED IMPORTED GLOBAL)
-add_library(zlib_lib SHARED IMPORTED GLOBAL)
+add_library(cpr_lib STATIC IMPORTED GLOBAL)
+add_library(libcurl STATIC IMPORTED GLOBAL)
+add_library(zlib_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(cpr_lib PROPERTIES 
-	IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libcpr.so"
+	IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libcpr.a"
 )
 
 set_target_properties(libcurl PROPERTIES
-    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libcurl.so"
+    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libcurl.a"
 )
 
 set_target_properties(zlib_lib PROPERTIES
-    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libz.so"
+    IMPORTED_LOCATION "${CPR_INSTALL_DIR}/lib/libz.a"
 )
 
 if (EXISTS "${CPR_INCLUDE_DIR}")
@@ -200,8 +199,8 @@ ExternalProject_Add(
         ${LIBSSH2_CONFIGURE_COMMAND}
 			-DLIBSSH2_BUILD_EXAMPLES=OFF
 	        -DLIBSSH2_BUILD_TESTING=OFF
-	        -DBUILD_SHARED_LIBS=ON
-	        -DUSE_STATIC_LIBS=OFF
+	        -DBUILD_SHARED_LIBS=OFF
+	        -DUSE_STATIC_LIBS=ON
 			-DCMAKE_INSTALL_PREFIX=${LIBSSH2_INSTALL_DIR}
 	  		-DCMAKE_INSTALL_LIBDIR=${LIBSSH2_INSTALL_DIR}/lib
     BUILD_COMMAND make -C ${LIBSSH2_SOURCE_DIR}/build
@@ -211,10 +210,10 @@ ExternalProject_Add(
     INSTALL_DIR ${LIBSSH2_INSTALL_DIR}
 )
 
-add_library(libssh2_lib SHARED IMPORTED GLOBAL)
+add_library(libssh2_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(libssh2_lib PROPERTIES
-    IMPORTED_LOCATION ${LIBSSH2_INSTALL_DIR}/lib/libssh2.so
+    IMPORTED_LOCATION ${LIBSSH2_INSTALL_DIR}/lib/libssh2.a
 )
 
 if(EXISTS "${LIBSSH2_INCLUDE_DIR}")
@@ -239,10 +238,10 @@ ExternalProject_Add(
     CONFIGURE_COMMAND 
         ${NGHTTP2_CONFIGURE_COMMAND}
 			-DENABLE_LIB_ONLY=ON
-	        -DBUILD_SHARED_LIBS=ON
+	        -DBUILD_SHARED_LIBS=OFF
 	        -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-	        -DBUILD_STATIC_LIBS=OFF
-	        -DUSE_STATIC_LIBS=OFF
+	        -DBUILD_STATIC_LIBS=ON
+	        -DUSE_STATIC_LIBS=ON
 			-DCMAKE_INSTALL_LIBDIR=${NGHTTP2_INSTALL_DIR}/lib
 	        -DCMAKE_INSTALL_PREFIX=${NGHTTP2_INSTALL_DIR}
     BUILD_COMMAND make -C ${NGHTTP2_SOURCE_DIR}/build
@@ -252,10 +251,10 @@ ExternalProject_Add(
     INSTALL_DIR ${NGHTTP2_INSTALL_DIR}
 )
 
-add_library(nghttp2_lib SHARED IMPORTED GLOBAL)
+add_library(nghttp2_lib STATIC IMPORTED GLOBAL)
 
 set_target_properties(nghttp2_lib PROPERTIES
-    IMPORTED_LOCATION ${NGHTTP2_INSTALL_DIR}/lib/libnghttp2.so
+    IMPORTED_LOCATION ${NGHTTP2_INSTALL_DIR}/lib/libnghttp2.a
 )
 
 if(EXISTS "${NGHTTP2_INCLUDE_DIR}")
@@ -269,8 +268,6 @@ add_dependencies(nghttp2_lib nghttp2)
 include_directories(${OPENSSL_INCLUDE_DIR} ${CPR_INCLUDE_DIR} ${LIBSSH2_INCLUDE_DIR} ${NGHTTP2_INCLUDE_DIR} ${FTXUI_INCLUDE_DIR})
 
 include_directories(include)
-add_subdirectory(termcolor)
-include_directories(${termcolor_SOURCE_DIR}/include)
 
 set(SOURCES 
     src/firstPart/main.cpp
@@ -296,7 +293,7 @@ set(SOURCES
     src/secondPart/rootPasswd.cpp
     utils/requests.cpp
 )
-add_library("${PROJECT_NAME}_lib" SHARED ${SOURCES})
+add_library("${PROJECT_NAME}_lib" STATIC ${SOURCES})
 target_link_libraries("${PROJECT_NAME}_lib" PRIVATE 
     ftxui_component
     ftxui_dom
