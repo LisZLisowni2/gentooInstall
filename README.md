@@ -23,7 +23,6 @@ All configuration is provided using official Handbook.
 ## Used libraries
 
 - [**CPR**](https://github.com/libcpr/cpr) - Modern API to serve HTTP requests in C++
-- [**termcolor**](https://github.com/ikalnytskyi/termcolor) - Single-header library to add colors in C++
 - [**libssh2**](https://www.libssh2.org/) - Library to operate SSH2 protocol
 - [**OpenSSL**](https://www.openssl.org/) - Software to provide secure communications over computer network
 - [**nghttp2**](https://nghttp2.org/) - Implementaion of HTTP/2
@@ -35,7 +34,7 @@ Installation of GentooInstaller requires manual compilation on Gentoo LiveCD due
 **THE LIVEGUI USB IMAGE IS REQUIRED, NOT MINIMAL ONE**
 
 1. Open terminal and download the latest version of GentooInstall (unzip it after download) or clone the repository
-2. Move (by command `cd`) and run script `buildAndRun.sh` => `./buildAndRun.sh`
+2. Move (by command `cd`) to project directory (where is `buildAndRun.sh` file) and run script `buildAndRun.sh` => `./buildAndRun.sh`
 
 ## Support 
 
