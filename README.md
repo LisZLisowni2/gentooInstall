@@ -1,5 +1,5 @@
 ![Static Badge](https://img.shields.io/badge/GPL-3?label=License)
-![](https://img.shields.io/badge/Version-2.2-red?style=flat)
+![](https://img.shields.io/badge/Version-3.0-red?style=flat)
 
 # GentooInstall 
 
