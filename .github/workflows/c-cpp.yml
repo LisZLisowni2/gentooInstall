@@ -27,4 +27,4 @@ jobs:
       - name: Compile
         run: |
           cd build
-          make -j$(nproc)
+          make -j$(nproc) -l$(nproc)

@@ -9,6 +9,13 @@
 #include <regex>
 #include <fstream>
 
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/event.hpp>
+#include <ftxui/component/app.hpp>
+
+using namespace ftxui;
+
 void InstallerSecond::isValidUsername(const std::string& username) {
     // Check if username is empty or too long
     if (username.empty() || username.length() > 32) {
@@ -64,87 +71,89 @@ void InstallerSecond::userExists(const std::string& username) {
 
 void InstallerSecond::userCreation() {
     std::string username;
+    std::string placeholder = "Enter username...";
+    std::string error = "";
     
-    while (true) {
-        clearScreen();
-        std::cout << "User Account Creation\n";
-        std::cout << "=====================\n\n";
-        
-        std::cout << "Username requirements:\n";
-        std::cout << "- Must start with a letter or underscore\n";
-        std::cout << "- Can contain letters, numbers, underscores, and hyphens\n";
-        std::cout << "- Must be between 1-32 characters\n";
-        std::cout << "- Cannot be a system reserved name\n\n";
-        
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Enter your username: ";
-        
-        if (!getline(std::cin, username)) {
-            std::cout << "Error reading input. Please try again.\n";
-            std::cout << "Press any key to continue...";
-            getch();
-            continue;
-        }
-        
-        // Trim whitespace
-        username.erase(0, username.find_first_not_of(" \t\n\r\f\v"));
-        username.erase(username.find_last_not_of(" \t\n\r\f\v") + 1);
-        
-        try {
-            isValidUsername(username);
-            userExists(username);
-            // If username is valid, break out of loop
-            break;
-        } catch (const UsernameInvalid& err) {
-            std::cout << err.what() << "\n";
-            std::cout << "Press any key to continue...";
-            getch();
-            continue;
-        }
-        
-    }
-    
-    std::cout << "\nCreating user '" << username << "'...\n";
-    
-    int result = executeCommand("useradd -mG wheel,audio,video,usb,cdrom -s /bin/bash " + username);
-    
-    if (result != 0) {
-        std::cout << "\nError: Failed to create user '" << username << "'.\n";
-        std::cout << "This might be due to system constraints or permissions.\n";
-        std::cout << "Press any key to continue...";
-        getch();
-        return;
-    }
-    
-    std::cout << "User '" << username << "' created successfully!\n\n";
-    
-    // Set password with validation
-    while (true) {
-        std::cout << "Setting password for user '" << username << "'...\n";
-        int passwdResult = executeCommand("passwd " + username);
-        
-        if (passwdResult == 0) {
-            std::cout << "\nPassword set successfully!\n";
-            break;
-        } else {
-            std::cout << "\nPassword setting failed. This might be due to:\n";
-            std::cout << "- Password doesn't meet system requirements\n";
-            std::cout << "- Passwords don't match\n";
-            std::cout << "- System error\n\n";
-            
-            std::cout << "Would you like to try again? (y/n): ";
-            std::string retry;
-            getline(std::cin, retry);
-            
-            if (retry.empty() || (retry[0] != 'y' && retry[0] != 'Y')) {
-                std::cout << "Warning: User created but password not set!\n";
-                std::cout << "You can set the password later using 'passwd " << username << "' command.\n";
-                break;
+    auto screen = App::Fullscreen();
+    auto inputField = Input(&username, &placeholder);
+
+    auto layout = Renderer(inputField, [&] {
+        return vbox({
+            text(" GentooInstall "),
+            separator(),
+            window(text(""), inputField->Render()),
+            separator(),
+            vbox({
+                text("Username requirements:"),
+                text("- Must start with a letter or underscore"),
+                text("- Can contain letters, numbers, underscores, and hyphens"),
+                text("- Must be between 1-32 characters\n"),
+                text("- Cannot be a system reserved name\n\n"),
+                separator(),
+                text("Status: " + error),
+            })
+        });
+    });
+
+    auto inputHandler = CatchEvent(layout, [&](Event event) {
+        if (event == Event::Return) {
+            try {
+                username.erase(0, username.find_first_not_of(" \t\n\r\f\v"));
+                username.erase(username.find_last_not_of(" \t\n\r\f\v") + 1);
+
+                isValidUsername(username);
+                userExists(username);
+                
+                screen.ExitLoopClosure()();
+            } catch (const UsernameInvalid& err) {
+                error = err.what();
             }
+            return true;
         }
-    }
-    
-    std::cout << "\nUser creation completed.\n";
-    std::cout << "Press any key to continue...";
-    getch();
+
+        if (event == Event::Backspace && username.empty()) {
+            return true;
+        }
+
+        return false;
+    });
+
+    screen.Loop(inputHandler);
+
+    executeCommand("useradd -mG wheel,audio,video,usb,cdrom -s /bin/bash " + username);
+
+    std::string password = "";
+    placeholder = "Input password...";
+    InputOption passwordInputOption;
+    passwordInputOption.password = true;
+
+    auto passwordInput = Input(&password, &placeholder, passwordInputOption);
+
+    layout = Renderer(passwordInput, [&] {
+        return vbox({
+            text(" GentooInstall "),
+            separator(),
+            window(text(""), passwordInput->Render()),
+        });
+    });
+
+    inputHandler = CatchEvent(layout, [&](Event event) {
+        if (event == Event::Return) {
+            try {
+                executeCommand("echo -e \"" + password + "\n" + password + "\" | passwd " + username);
+                screen.ExitLoopClosure()();
+            } catch (...) {
+                NULL;
+            }
+            return true;
+        }
+
+        if (event == Event::Backspace && password.empty()) {
+            return true;
+        }
+
+        return false;
+    });
+
+    screen.Loop(inputHandler);
 }
