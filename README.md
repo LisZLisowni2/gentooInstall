@@ -45,7 +45,8 @@ Installation of GentooInstaller by manual compilation requires be on Gentoo Live
 Installation doesn't require certain type of live ISO of Gentoo.
 
   1. Download zip file from [releases](https://github.com/LisZLisowni2/gentooInstall/releases)
-  2. Unzip zip file
+    If you on minimal, use `wget https://github.com/LisZLisowni2/gentooInstall/releases/download/v3.0.1/gentooInstall.zip`
+  2. Unzip zip file (`unzip gentooInstall.zip`) and change directory to unziped directory (`cd gentooInstall`)
   3. Run installer_part1 (`./installer_part1`)
 
 ## Support 
