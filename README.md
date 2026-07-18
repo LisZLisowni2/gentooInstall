@@ -30,11 +30,23 @@ All configuration is provided using official Handbook.
 
 ## Installation
 
-Installation of GentooInstaller requires manual compilation on Gentoo LiveCD due to GLIBC version compatibility. 
+There are two methods of installation:
+
+### Manual compilation
+
+Installation of GentooInstaller by manual compilation requires be on Gentoo LiveCD with DE due to GLIBC version compatibility. 
 **THE LIVEGUI USB IMAGE IS REQUIRED, NOT MINIMAL ONE**
 
 1. Open terminal and download the latest version of GentooInstall (unzip it after download) or clone the repository
 2. Move (by command `cd`) to project directory (where is `buildAndRun.sh` file) and run script `buildAndRun.sh` => `./buildAndRun.sh`
+
+### Download zip
+
+Installation doesn't require certain type of live ISO of Gentoo.
+
+  1. Download zip file from [releases](https://github.com/LisZLisowni2/gentooInstall/releases)
+  2. Unzip zip file
+  3. Run installer_part1 (`./installer_part1`)
 
 ## Support 
 
