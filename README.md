@@ -10,7 +10,7 @@ GentooInstall is interactive installation script for Gentoo that automate many p
 It is easy to use using arrows and beginner-friendly.
 
 ## Definition
-GentooInstall is an interactive C++ CLI tool designed to automate the tedious parts of a Gentoo installation while keeping the flexibility that makes Gentoo great. No more copy-pasting from the handbook for hours—just follow the prompts and build your system.
+GentooInstall is an interactive C++ TUI tool designed to automate the tedious parts of a Gentoo installation while keeping the flexibility that makes Gentoo great. No more copy-pasting from the handbook for hours—just follow the prompts and build your system.
 All configuration is provided using official Handbook.
 
 ## Features
@@ -30,23 +30,32 @@ All configuration is provided using official Handbook.
 
 ## Installation
 
-Installation of GentooInstaller requires manual compilation and to be on Gentoo LiveCD with DE due to GLIBC version compatibility. 
-**THE LIVEGUI USB IMAGE IS REQUIRED, NOT MINIMAL ONE**
+> ⚠️ **IMPORTANT REQUIREMENT**  
+> Due to `glibc` version dependencies and build requirements, **you MUST use the official Gentoo LiveGUI image**, not the Minimal Installation CD.
 
-1. Open terminal and download the latest version of GentooInstall (unzip it after download) or clone the repository
-2. Move (by command `cd`) to project directory (where is `buildAndRun.sh` file) and run script `buildAndRun.sh` => `./buildAndRun.sh`
+1. Boot into the **Gentoo LiveGUI** environment and open a terminal.
+2. Clone this repository (or download and extract the latest release archive):
+```bash
+   git clone https://github.com/LisZLisowni2/gentooInstall.git
+   cd gentooInstall
+```
+Run the automated build and launch script:
+```bash
+  chmod +x buildAndRun.sh
+    ./buildAndRun.sh
+```
+## Contributing and Support 
+Contributions, bug reports, and feature requests are very welcome!
+### Reporting Issues
 
-## Support 
+If you encounter a bug, please open an issue in the repository with the following details:
+- Architecture: (e.g., amd64)
+- Installation Stage: (e.g., Downloading tarball, Kernel configuration)
+- Error Details: Relevant logs or error output from the terminal.
 
-If you encounter the issue write it in issue section. Describe your machine, architecture, method you used to install the script, which step has issue, details of error and any other useful information.
-
-Example:
-Architecture: AMD64
-Method of installation: First method
-Step: Downloading tarball
-Details: The tarball doesn't download correctly. I got information about no space left.
-...HERE SOME LOGS FROM TERMINAL...
-
-You can use bug or feature template also.
-
-If you have idea how to improve program, fork the repo, made changes you want and pull request to main repo.
+### Contributing
+1. Fork the project repository.
+2. Create your feature/bugfix branch (git checkout -b feature/AmazingFeature).
+3. Commit your changes (git commit -m 'Add some AmazingFeature').
+4. Push to the branch (git push origin feature/AmazingFeature).
+5. Open a Pull Request against the main branch.
